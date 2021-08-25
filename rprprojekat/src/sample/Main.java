@@ -20,8 +20,9 @@ public class Main extends Application {
 
 
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/frontpage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/language.fxml"));
         Parent root = loader.load();
+        primaryStage.setResizable(false);
         primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         primaryStage.show();
 
