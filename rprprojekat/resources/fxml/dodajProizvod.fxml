@@ -24,8 +24,8 @@
       <Label layoutX="10.0" layoutY="31.0" text="Kategorija proizvoda" GridPane.rowIndex="2" />
       <Label text="Cijena proizvoda" GridPane.rowIndex="3" />
       <TextField fx:id="fieldPrice" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Button fx:id="btnAdd" mnemonicParsing="false" text="Dodaj proizvod" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-      <Button fx:id="btnCancel" mnemonicParsing="false" text="Odustani" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#btnAddClick" text="Dodaj proizvod" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelClick" text="Odustani" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
       <ChoiceBox fx:id="choiceCategory" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    </children>
    <padding>

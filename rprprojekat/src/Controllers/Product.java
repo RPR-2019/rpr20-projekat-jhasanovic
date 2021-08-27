@@ -48,7 +48,7 @@ public class Product {
     }
 
     public String getPrice() {
-        return price;
+        return price+" KM";
     }
 
     public void setPrice(String price) {
