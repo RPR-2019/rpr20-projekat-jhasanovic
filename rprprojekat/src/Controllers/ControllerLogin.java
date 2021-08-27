@@ -4,10 +4,19 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class ControllerLogin {
     @FXML
@@ -34,7 +43,7 @@ public class ControllerLogin {
 
     }
 
-    public void loginClick(ActionEvent actionEvent) {
+    public void loginClick(ActionEvent actionEvent) throws IOException {
         //provjeriti da li se username i odgovarajuci password nalaze u bazi
         //admina hardkodirati na pocetku
 
@@ -44,5 +53,14 @@ public class ControllerLogin {
         alert.setHeaderText("");
         alert.setContentText("Pogrešan username ili password!");
         alert.showAndWait();*/
+
+        //ako je login uspjesan
+        Stage myStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"));
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.show();
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
     }
 }

@@ -13,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class ControllerPregled {
@@ -36,6 +38,8 @@ public class ControllerPregled {
     public Button btnUpdateProduct;
     @FXML
     public TextField searchBar;
+    @FXML
+    public Button addToCartBtn;
 
     ObservableList<String> options = FXCollections.observableArrayList("Po nazivu","Po šifri");
     @FXML
@@ -75,12 +79,15 @@ public class ControllerPregled {
             });
         });
 
+        choiceSearch.setOnAction((event) -> {
+            System.out.println("   ChoiceBox.getValue(): " + choiceSearch.getValue());
+            searchBar.setText("");
+        });
+
         SortedList<Product> sortedData=new SortedList<>(filteredProducts);
         sortedData.comparatorProperty().bind(productList.comparatorProperty());
         productList.setItems(sortedData);
         }
-
-
 
 
     public void addBtnClick(ActionEvent actionEvent) throws Exception{
@@ -94,4 +101,14 @@ public class ControllerPregled {
 
     }
 
+    public void cartBtnClick(ActionEvent actionEvent) {
+    }
+
+    public void addToCartBtnClick(ActionEvent actionEvent) throws IOException {
+        Stage myStage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/productInfo.fxml"));
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.setResizable(false);
+        myStage.show();
+    }
 }

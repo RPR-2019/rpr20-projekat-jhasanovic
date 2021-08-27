@@ -10,6 +10,8 @@
         <buttons>
             <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#addBtnClick" text="Dodaj proizvod" />
           <Button fx:id="btnUpdateProduct" mnemonicParsing="false" onAction="#updateBtnClick" text="Ažuriraj proizvod" />
+            <Button fx:id="addToCartBtn" mnemonicParsing="false" onAction="#addToCartBtnClick" text="Dodaj u korpu" />
+            <Button fx:id="cartBtn" mnemonicParsing="false" onAction="#cartBtnClick" text="Korpa" />
         </buttons>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -45,7 +47,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <MenuBar nodeOrientation="LEFT_TO_RIGHT" GridPane.columnSpan="2147483647">
+            <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
               <menus>
                   <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -72,12 +74,15 @@
             </MenuBar>
             <ChoiceBox fx:id="choiceSearch" prefWidth="150.0" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets />
+                  <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                </GridPane.margin></ChoiceBox>
-            <TextField fx:id="searchBar" promptText="Pretraga" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="searchBar" promptText="Pretraga" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+               </GridPane.margin></TextField>
          </children>
          <BorderPane.margin>
-            <Insets left="10.0" right="10.0" />
+            <Insets />
          </BorderPane.margin>
       </GridPane>
    </top>
