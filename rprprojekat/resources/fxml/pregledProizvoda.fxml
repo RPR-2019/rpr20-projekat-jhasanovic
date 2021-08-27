@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerPregled">
+   <top>
+      <MenuBar nodeOrientation="LEFT_TO_RIGHT" BorderPane.alignment="CENTER">
+        <menus>
+            <Menu mnemonicParsing="false" text="File">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Kreiraj izvještaj" />
+                <MenuItem mnemonicParsing="false" text="Exit" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Language">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Bosanski" />
+                  <MenuItem mnemonicParsing="false" text="English" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="?Help" />
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </MenuBar>
+   </top>
+   <bottom>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <buttons>
+            <Button fx:id="btnAddProduct" mnemonicParsing="false" text="Dodaj proizvod" />
+          <Button fx:id="btnUpdateProduct" mnemonicParsing="false" text="Ažuriraj proizvod" />
+        </buttons>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </ButtonBar>
+   </bottom>
+   <center>
+      <TableView fx:id="productList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="columnName" prefWidth="75.0" text="Naziv" />
+          <TableColumn fx:id="columnID" prefWidth="75.0" text="Šifra" />
+            <TableColumn fx:id="columnCategory" prefWidth="75.0" text="Kategorija" />
+            <TableColumn fx:id="columnPrice" prefWidth="75.0" text="Cijena" />
+            <TableColumn fx:id="columnQuantity" prefWidth="75.0" text="Količina" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </TableView>
+   </center>
+</BorderPane>
