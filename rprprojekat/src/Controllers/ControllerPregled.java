@@ -80,13 +80,13 @@ public class ControllerPregled {
         });
 
         choiceSearch.setOnAction((event) -> {
-            System.out.println("   ChoiceBox.getValue(): " + choiceSearch.getValue());
             searchBar.setText("");
         });
 
         SortedList<Product> sortedData=new SortedList<>(filteredProducts);
         sortedData.comparatorProperty().bind(productList.comparatorProperty());
         productList.setItems(sortedData);
+
         }
 
 
@@ -106,9 +106,33 @@ public class ControllerPregled {
 
     public void addToCartBtnClick(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/productInfo.fxml"));
-        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-        myStage.setResizable(false);
-        myStage.show();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/productInfo.fxml"));
+        Parent root = loader.load();
+        ProductInfoController productInfo = loader.getController();
+        if(productList.getSelectionModel().getSelectedItem()!=null) {
+            if (productList.getSelectionModel().getSelectedItem().getQuantity()==0) {
+                //proizvod nije dostupan, ali nije ni obrisan u slucaju ako bi se kasnije azurirao
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Greška");
+                alert.setHeaderText("Proizvod nije na stanju!");
+                alert.setContentText("Odabrani proizvod trenutno nije dostupan.");
+
+                alert.showAndWait();
+            } else {
+                productInfo.nameFld.setText(productList.getSelectionModel().getSelectedItem().getName());
+                productInfo.idFld.setText(productList.getSelectionModel().getSelectedItem().getID());
+                productInfo.categoryFld.setText(productList.getSelectionModel().getSelectedItem().getCategory());
+                productInfo.quantityFld.setText("1");
+
+                //slanje kolicine u drugi kontroler
+                productInfo.maxQuantity(productList.getSelectionModel().getSelectedItem().getQuantity());
+                productInfo.getPrice(productList.getSelectionModel().getSelectedItem().getPrice());
+                //promjena kolicine treba mijenjati i cijenu
+
+                myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+                myStage.setResizable(false);
+                myStage.show();
+            }
+        }
     }
 }

@@ -34,7 +34,7 @@
             <children>
                 <Label text="Količina:" />
                 <Button fx:id="minusBtn" mnemonicParsing="false" onAction="#minusBtnClick" prefHeight="26.0" prefWidth="26.0" text="-" />
-                <TextField fx:id="quantityFld" alignment="CENTER" onAction="#quantityFld" prefHeight="26.0" prefWidth="50.0" />
+                <TextField fx:id="quantityFld" alignment="CENTER" prefHeight="26.0" prefWidth="50.0" />
                 <Button fx:id="plusBtn" mnemonicParsing="false" onAction="#plusBtnClick" prefHeight="26.0" prefWidth="26.0" text="+" />
             </children>
         </HBox>
