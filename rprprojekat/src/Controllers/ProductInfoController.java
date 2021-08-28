@@ -36,6 +36,7 @@ public class ProductInfoController implements Initializable {
     private Integer maxQt;
     private Integer price;
 
+
     public void maxQuantity(int max){
         maxQt = max;
     }
@@ -45,7 +46,10 @@ public class ProductInfoController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
-        totalFld.textProperty().bind(quantityFld.textProperty());
+        quantityFld.textProperty().addListener((observable, oldValue, newValue) -> {
+           if(!newValue.equals("")) totalFld.setText(Integer.parseInt(quantityFld.getText()) * price + " KM");
+           else totalFld.setText("0 KM");
+        });
     }
 
     public void addToCartBtnClick(ActionEvent actionEvent) {
@@ -53,18 +57,27 @@ public class ProductInfoController implements Initializable {
     }
 
     public void minusBtnClick(ActionEvent actionEvent) {
-        int qt = Integer.parseInt(quantityFld.getText());
-        if(qt>1) {
-            qt = qt - 1;
-            quantityFld.setText(Integer.toString(qt));
+        if(!quantityFld.getText().equals("")) {
+            int qt = Integer.parseInt(quantityFld.getText());
+            if(qt>1) {
+                qt = qt - 1;
+                quantityFld.setText(Integer.toString(qt));
+            }
         }
+        else if(quantityFld.getText().equals(""))
+            quantityFld.setText("1");
     }
 
     public void plusBtnClick(ActionEvent actionEvent) {
-        int qt = Integer.parseInt(quantityFld.getText());
-        qt = qt + 1;
-        if(qt<=maxQt)
-        quantityFld.setText(Integer.toString(qt));
+        if(!quantityFld.getText().equals("")){
+            int qt = Integer.parseInt(quantityFld.getText());
+            if(qt<=maxQt){
+                qt = qt + 1;
+                quantityFld.setText(Integer.toString(qt));
+            }
+        }
+        else if(quantityFld.getText().equals(""))
+            quantityFld.setText("1");
     }
 
     public void cancelBtnClick(ActionEvent actionEvent) {

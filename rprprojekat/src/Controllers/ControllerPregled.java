@@ -119,15 +119,16 @@ public class ControllerPregled {
 
                 alert.showAndWait();
             } else {
+                //slanje kolicine u drugi kontroler
+                productInfo.maxQuantity(productList.getSelectionModel().getSelectedItem().getQuantity());
+                productInfo.getPrice(productList.getSelectionModel().getSelectedItem().getPrice());
+
                 productInfo.nameFld.setText(productList.getSelectionModel().getSelectedItem().getName());
                 productInfo.idFld.setText(productList.getSelectionModel().getSelectedItem().getID());
                 productInfo.categoryFld.setText(productList.getSelectionModel().getSelectedItem().getCategory());
                 productInfo.quantityFld.setText("1");
+                productInfo.totalFld.setText (productList.getSelectionModel().getSelectedItem().getPrice() + " KM");
 
-                //slanje kolicine u drugi kontroler
-                productInfo.maxQuantity(productList.getSelectionModel().getSelectedItem().getQuantity());
-                productInfo.getPrice(productList.getSelectionModel().getSelectedItem().getPrice());
-                //promjena kolicine treba mijenjati i cijenu
 
                 myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                 myStage.setResizable(false);
