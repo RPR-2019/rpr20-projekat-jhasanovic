@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
@@ -32,6 +33,7 @@ public class ControllerLanguage implements Initializable {
 
         //otvoriti login prozor
         Stage myStage = new Stage();
+        Locale.setDefault(new Locale("bs", "BA"));
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));

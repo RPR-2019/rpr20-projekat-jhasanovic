@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
@@ -99,6 +100,7 @@ public class ControllerPregled {
 
     public void addBtnClick(ActionEvent actionEvent) throws Exception{
         Stage myStage = new Stage();
+        Locale.setDefault(new Locale("bs", "BA"));
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/dodajProizvod.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -107,6 +109,7 @@ public class ControllerPregled {
 
     public void updateBtnClick(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
+        Locale.setDefault(new Locale("bs", "BA"));
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/azurirajProizvod.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -118,6 +121,7 @@ public class ControllerPregled {
 
     public void addToCartBtnClick(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
+        Locale.setDefault(new Locale("bs", "BA"));
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/productInfo.fxml"),bundle);
         Parent root = loader.load();
@@ -146,6 +150,14 @@ public class ControllerPregled {
                 myStage.setResizable(false);
                 myStage.show();
             }
+        }
+        else if(productList.getSelectionModel().getSelectedItem()==null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Upozorenje");
+            alert.setHeaderText("Niste odabrali proizvod!");
+            alert.setContentText("Za dodavanje proizvoda u korpu odaberite proizvod iz liste");
+
+            alert.showAndWait();
         }
     }
 }
