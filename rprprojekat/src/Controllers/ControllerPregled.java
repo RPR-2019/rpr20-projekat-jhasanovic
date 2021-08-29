@@ -14,6 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import sample.Language;
+import sample.Product;
+
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -76,7 +78,7 @@ public class ControllerPregled {
 
             columnName.setCellValueFactory(new PropertyValueFactory<>("name")); //s mora biti isto kao naziv atributa u modelu Product
             columnID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-            columnCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+            columnCategory.setCellValueFactory(new PropertyValueFactory<>("medicationType"));
             columnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
             columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
@@ -157,7 +159,7 @@ public class ControllerPregled {
 
                 productInfo.nameFld.setText(productList.getSelectionModel().getSelectedItem().getName());
                 productInfo.idFld.setText(productList.getSelectionModel().getSelectedItem().getID());
-                productInfo.categoryFld.setText(productList.getSelectionModel().getSelectedItem().getCategory());
+                productInfo.categoryFld.setText(productList.getSelectionModel().getSelectedItem().getMedicationType());
                 productInfo.quantityFld.setText("1");
                 productInfo.totalFld.setText (productList.getSelectionModel().getSelectedItem().getPrice() + " KM");
                 myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));

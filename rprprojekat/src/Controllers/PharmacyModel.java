@@ -3,6 +3,7 @@ package Controllers;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Product;
 
 public class PharmacyModel {
   private ObservableList<Product> products= FXCollections.observableArrayList();
@@ -29,8 +30,8 @@ public class PharmacyModel {
     }
 
     public void napuni(){
-        products.add(new Product("Paracetamol","1","Tablete",2,0));
-        products.add(new Product("Flonidan","2","Tablete",2,11));
-        products.add(new Product("Analgin","3","Tablete",2,15));
+        products.add(new Product("Paracetamol","1","Tablete",2,0,"","","","","",""));
+        products.add(new Product("Flonidan","2","Tablete",2,11,"","","","","",""));
+        products.add(new Product("Analgin","3","Tablete",2,15,"","","","","",""));
     }
 }
