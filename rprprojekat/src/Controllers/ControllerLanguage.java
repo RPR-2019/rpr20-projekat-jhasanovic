@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import sample.Language;
 
 
 import java.net.URL;
@@ -26,16 +27,26 @@ public class ControllerLanguage implements Initializable {
     @FXML
     public Button startBtn;
     @FXML
-    public ChoiceBox<String> languageChoice=new ChoiceBox<>(options);
+    public ChoiceBox<String> languageChoice = new ChoiceBox<>(options);
 
-    public void btnClick(ActionEvent actionEvent) throws Exception{
+    Language l = Language.getInstance();
+
+    public void btnClick(ActionEvent actionEvent) throws Exception {
         //postaviti odabrani jezik
 
         //otvoriti login prozor
         Stage myStage = new Stage();
-        Locale.setDefault(new Locale("bs", "BA"));
+        if (languageChoice.getSelectionModel().getSelectedItem().equals("Bosanski")) {
+            Locale.setDefault(new Locale("bs", "BA"));
+            l.setLang("bs");
+        }
+        else if (languageChoice.getSelectionModel().getSelectedItem().equals("English")) {
+            Locale.setDefault(new Locale("en", "US"));
+            l.setLang("en");
+        }
+
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"),bundle);
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"), bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.show();
         Node n = (Node) actionEvent.getSource();

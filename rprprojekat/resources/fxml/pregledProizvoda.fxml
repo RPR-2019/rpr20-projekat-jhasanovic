@@ -47,24 +47,24 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <MenuBar fx:id="menu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
               <menus>
                   <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Kreiraj izvještaj" />
-                      <MenuItem mnemonicParsing="false" text="Exit" />
+                        <MenuItem mnemonicParsing="false" text="%createReport" />
+                      <MenuItem mnemonicParsing="false" text="%exit" />
                     </items>
                   </Menu>
-                <Menu mnemonicParsing="false" text="Language">
+                <Menu mnemonicParsing="false" text="%language">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Bosanski" />
-                        <MenuItem mnemonicParsing="false" text="English" />
+                    <MenuItem fx:id="bsMenu" mnemonicParsing="false" onAction="#bsMenuClick" text="Bosanski" />
+                        <MenuItem fx:id="enMenu" mnemonicParsing="false" onAction="#enMenuClick" text="English" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                        <MenuItem mnemonicParsing="false" text="?Help" />
-                    <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" text="%help" />
+                    <MenuItem mnemonicParsing="false" text="%about" />
                   </items>
                 </Menu>
               </menus>

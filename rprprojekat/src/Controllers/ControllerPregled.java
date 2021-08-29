@@ -13,11 +13,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
+import sample.Language;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class ControllerPregled {
@@ -47,12 +46,21 @@ public class ControllerPregled {
     public BorderPane mainWindow;
     @FXML
     public Button cartBtn;
-
-    ObservableList<String> options = FXCollections.observableArrayList("Po nazivu","Po šifri");
     @FXML
-    public ChoiceBox<String> choiceSearch=new ChoiceBox<>(options);
+    public MenuItem bsMenu;
+    @FXML
+    public MenuItem enMenu;
+    @FXML
+    public MenuBar menu;
+
+    ObservableList<String> opcije = FXCollections.observableArrayList("Po nazivu","Po šifri");
+    ObservableList<String> options = FXCollections.observableArrayList("By category","By ID");
+
+    @FXML
+    public ChoiceBox<String> choiceSearch=new ChoiceBox<>(opcije);
 
     private PharmacyModel model;
+    Language l = Language.getInstance();
 
     public ControllerPregled(){
         model=new PharmacyModel();
@@ -61,7 +69,9 @@ public class ControllerPregled {
 
     @FXML
     public void initialize(){
-        choiceSearch.setItems(options);
+        if(l.getLang().equals("bs")) choiceSearch.setItems(opcije);
+        else if(l.getLang().equals("en")) choiceSearch.setItems(options);
+
         choiceSearch.getSelectionModel().select(0);
 
             columnName.setCellValueFactory(new PropertyValueFactory<>("name")); //s mora biti isto kao naziv atributa u modelu Product
@@ -100,7 +110,6 @@ public class ControllerPregled {
 
     public void addBtnClick(ActionEvent actionEvent) throws Exception{
         Stage myStage = new Stage();
-        Locale.setDefault(new Locale("bs", "BA"));
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/dodajProizvod.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -109,7 +118,6 @@ public class ControllerPregled {
 
     public void updateBtnClick(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
-        Locale.setDefault(new Locale("bs", "BA"));
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/azurirajProizvod.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -121,7 +129,6 @@ public class ControllerPregled {
 
     public void addToCartBtnClick(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
-        Locale.setDefault(new Locale("bs", "BA"));
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/productInfo.fxml"),bundle);
         Parent root = loader.load();
@@ -131,10 +138,17 @@ public class ControllerPregled {
             if (productList.getSelectionModel().getSelectedItem().getQuantity()==0) {
                 //proizvod nije dostupan, ali nije ni obrisan u slucaju ako bi se kasnije azurirao
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Greška");
-                alert.setHeaderText("Proizvod nije na stanju!");
-                alert.setContentText("Odabrani proizvod trenutno nije dostupan.");
 
+                if(l.getLang().equals("bs")) {
+                    alert.setTitle("Greška");
+                    alert.setHeaderText("Proizvod nije na stanju!");
+                    alert.setContentText("Odabrani proizvod trenutno nije dostupan.");
+                }
+                else if(l.getLang().equals(("en"))){
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Product not available!");
+                    alert.setContentText("Selected product is currently not available.");
+                }
                 alert.showAndWait();
             } else {
                 //slanje kolicine u drugi kontroler
@@ -153,11 +167,45 @@ public class ControllerPregled {
         }
         else if(productList.getSelectionModel().getSelectedItem()==null){
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Upozorenje");
-            alert.setHeaderText("Niste odabrali proizvod!");
-            alert.setContentText("Za dodavanje proizvoda u korpu odaberite proizvod iz liste");
-
+            if(l.getLang().equals("bs")) {
+                alert.setTitle("Upozorenje");
+                alert.setHeaderText("Niste odabrali proizvod!");
+                alert.setContentText("Za dodavanje proizvoda u korpu odaberite proizvod iz liste");
+            }
+            if(l.getLang().equals("en")) {
+                alert.setTitle("Warning");
+                alert.setHeaderText("No product is selected!");
+                alert.setContentText("Select a product from the list to add to cart");
+            }
             alert.showAndWait();
         }
+    }
+
+    public void bsMenuClick(ActionEvent actionEvent) throws IOException {
+        //otvoriti prozor opet
+        Stage stage = (Stage) menu.getScene().getWindow();
+        stage.close();
+
+        l.setLang("bs");
+        Locale.setDefault(new Locale("bs", "BA"));
+        Stage myStage = new Stage();
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"),bundle);
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.show();
+    }
+
+    public void enMenuClick(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) menu.getScene().getWindow();
+        stage.close();
+
+        l.setLang("en");
+        Locale.setDefault(new Locale("en", "US"));
+        Stage myStage = new Stage();
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"),bundle);
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.show();
+
     }
 }
