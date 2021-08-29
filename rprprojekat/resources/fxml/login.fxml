@@ -19,17 +19,17 @@
             <Image url="@../png/logo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="usernameTextField" promptText="username">
+      <TextField fx:id="usernameTextField" promptText="%username">
          <VBox.margin>
             <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
          </VBox.margin>
       </TextField>
-      <PasswordField fx:id="passwordTextField" promptText="password">
+      <PasswordField fx:id="passwordTextField" promptText="%lozinka">
          <VBox.margin>
             <Insets bottom="50.0" left="50.0" right="50.0" />
          </VBox.margin>
       </PasswordField>
-      <Button fx:id="loginBtn" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#loginClick" text="Prijava">
+      <Button fx:id="loginBtn" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#loginClick" text="%prijava">
          <VBox.margin>
             <Insets left="149.0" right="149.0" />
          </VBox.margin>

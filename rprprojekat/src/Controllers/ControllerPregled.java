@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
@@ -98,13 +99,18 @@ public class ControllerPregled {
 
     public void addBtnClick(ActionEvent actionEvent) throws Exception{
         Stage myStage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/dodajProizvod.fxml"));
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/dodajProizvod.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.show();
     }
 
-    public void updateBtnClick(ActionEvent actionEvent) {
-
+    public void updateBtnClick(ActionEvent actionEvent) throws IOException {
+        Stage myStage = new Stage();
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/azurirajProizvod.fxml"),bundle);
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.show();
     }
 
     public void cartBtnClick(ActionEvent actionEvent) {
@@ -112,7 +118,8 @@ public class ControllerPregled {
 
     public void addToCartBtnClick(ActionEvent actionEvent) throws IOException {
         Stage myStage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/productInfo.fxml"));
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/productInfo.fxml"),bundle);
         Parent root = loader.load();
         ProductInfoController productInfo = loader.getController();
 

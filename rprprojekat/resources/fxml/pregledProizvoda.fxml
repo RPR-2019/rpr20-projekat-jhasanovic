@@ -8,10 +8,10 @@
     <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-            <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#addBtnClick" text="Dodaj proizvod" />
-          <Button fx:id="btnUpdateProduct" mnemonicParsing="false" onAction="#updateBtnClick" text="Ažuriraj proizvod" />
-            <Button fx:id="addToCartBtn" mnemonicParsing="false" onAction="#addToCartBtnClick" text="Dodaj u korpu" />
-            <Button fx:id="cartBtn" mnemonicParsing="false" onAction="#cartBtnClick" text="Korpa" />
+            <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#addBtnClick" text="%dodaj" />
+          <Button fx:id="btnUpdateProduct" mnemonicParsing="false" onAction="#updateBtnClick" text="%azurirajProizvod" />
+            <Button fx:id="addToCartBtn" mnemonicParsing="false" onAction="#addToCartBtnClick" text="%cartAdd" />
+            <Button fx:id="cartBtn" mnemonicParsing="false" onAction="#cartBtnClick" text="%cart" />
         </buttons>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -21,11 +21,11 @@
    <center>
       <TableView fx:id="productList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="columnName" prefWidth="75.0" text="Naziv" />
-          <TableColumn fx:id="columnID" prefWidth="75.0" text="Šifra" />
-            <TableColumn fx:id="columnCategory" prefWidth="75.0" text="Kategorija" />
-            <TableColumn fx:id="columnPrice" prefWidth="75.0" text="Cijena" />
-            <TableColumn fx:id="columnQuantity" prefWidth="75.0" text="Količina" />
+          <TableColumn fx:id="columnName" prefWidth="75.0" text="%kolona1" />
+          <TableColumn fx:id="columnID" prefWidth="75.0" text="%kolona2" />
+            <TableColumn fx:id="columnCategory" prefWidth="75.0" text="%kolona3" />
+            <TableColumn fx:id="columnPrice" prefWidth="75.0" text="%kolona4" />
+            <TableColumn fx:id="columnQuantity" prefWidth="75.0" text="%kolona5" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -76,7 +76,7 @@
                <GridPane.margin>
                   <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                </GridPane.margin></ChoiceBox>
-            <TextField fx:id="searchBar" promptText="Pretraga" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="searchBar" promptText="%pretraga" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                </GridPane.margin></TextField>

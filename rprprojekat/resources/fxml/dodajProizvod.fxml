@@ -18,14 +18,14 @@
   </rowConstraints>
    <children>
       <TextField fx:id="fieldName" GridPane.columnIndex="1" />
-      <Label text="Naziv proizvoda" />
-      <Label text="Šifra proizvoda" GridPane.rowIndex="1" />
+      <Label text="%ime" />
+      <Label text="%sifra" GridPane.rowIndex="1" />
       <TextField fx:id="fieldID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label layoutX="10.0" layoutY="31.0" text="Kategorija proizvoda" GridPane.rowIndex="2" />
-      <Label text="Cijena proizvoda" GridPane.rowIndex="3" />
+      <Label layoutX="10.0" layoutY="31.0" text="%kategorija" GridPane.rowIndex="2" />
+      <Label text="%cijena" GridPane.rowIndex="3" />
       <TextField fx:id="fieldPrice" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#btnAddClick" text="Dodaj proizvod" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#btnCancelClick" text="Odustani" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <Button fx:id="btnAdd" defaultButton="true" mnemonicParsing="false" onAction="#btnAddClick" text="%dodaj" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <Button fx:id="btnCancel" cancelButton="true" mnemonicParsing="false" onAction="#btnCancelClick" text="%odustani" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
       <ChoiceBox fx:id="choiceCategory" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    </children>
    <padding>
