@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -40,6 +41,10 @@ public class ControllerPregled {
     public TextField searchBar;
     @FXML
     public Button addToCartBtn;
+    @FXML
+    public BorderPane mainWindow;
+    @FXML
+    public Button cartBtn;
 
     ObservableList<String> options = FXCollections.observableArrayList("Po nazivu","Po šifri");
     @FXML
@@ -51,6 +56,7 @@ public class ControllerPregled {
         model=new PharmacyModel();
         model.napuni();
     }
+
     @FXML
     public void initialize(){
         choiceSearch.setItems(options);
@@ -109,6 +115,7 @@ public class ControllerPregled {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/productInfo.fxml"));
         Parent root = loader.load();
         ProductInfoController productInfo = loader.getController();
+
         if(productList.getSelectionModel().getSelectedItem()!=null) {
             if (productList.getSelectionModel().getSelectedItem().getQuantity()==0) {
                 //proizvod nije dostupan, ali nije ni obrisan u slucaju ako bi se kasnije azurirao
@@ -128,8 +135,6 @@ public class ControllerPregled {
                 productInfo.categoryFld.setText(productList.getSelectionModel().getSelectedItem().getCategory());
                 productInfo.quantityFld.setText("1");
                 productInfo.totalFld.setText (productList.getSelectionModel().getSelectedItem().getPrice() + " KM");
-
-
                 myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                 myStage.setResizable(false);
                 myStage.show();

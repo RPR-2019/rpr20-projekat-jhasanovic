@@ -33,6 +33,7 @@ public class ProductInfoController implements Initializable {
     @FXML
     public Button cancelBtn;
 
+
     private Integer maxQt;
     private Integer price;
 
@@ -46,9 +47,20 @@ public class ProductInfoController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
+
         quantityFld.textProperty().addListener((observable, oldValue, newValue) -> {
-           if(!newValue.equals("")) totalFld.setText(Integer.parseInt(quantityFld.getText()) * price + " KM");
-           else totalFld.setText("0 KM");
+            try {
+                if (!newValue.equals("") && Integer.parseInt(newValue) > maxQt)
+                    quantityFld.setText(Integer.toString(maxQt));
+                else if (!newValue.equals("") && Integer.parseInt(newValue) < 1) quantityFld.setText("1");
+                else if (!newValue.equals(""))
+                    totalFld.setText(Integer.parseInt(quantityFld.getText()) * price + " KM");
+                else totalFld.setText("0 KM");
+            }
+            catch(NumberFormatException e){ //nije dopusten unos bilo cega sto nije broj u textfield za kolicinu
+                quantityFld.setText("1");
+            }
+
         });
     }
 
