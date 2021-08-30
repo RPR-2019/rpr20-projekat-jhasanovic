@@ -36,6 +36,7 @@ public class ControllerLanguage implements Initializable {
 
         //otvoriti login prozor
         Stage myStage = new Stage();
+        myStage.setResizable(false);
         if (languageChoice.getSelectionModel().getSelectedItem().equals("Bosanski")) {
             Locale.setDefault(new Locale("bs", "BA"));
             l.setLang("bs");

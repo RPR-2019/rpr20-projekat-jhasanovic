@@ -19,7 +19,7 @@ public class ProductInfoController implements Initializable {
     @FXML
     public Label idFld;
     @FXML
-    public Label categoryFld;
+    public Label typeFld;
     @FXML
     public Button minusBtn;
     @FXML
@@ -32,6 +32,18 @@ public class ProductInfoController implements Initializable {
     public Button addToCartBtn;
     @FXML
     public Button cancelBtn;
+    @FXML
+    public Label manufacturerFld;
+    @FXML
+    public Label administrationFld;
+    @FXML
+    public Label descriptionFld;
+    @FXML
+    public Label ingredientsFld;
+    @FXML
+    public Label purposeFld;
+    @FXML
+    public Label notesFld;
 
 
     private Integer maxQt;

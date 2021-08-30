@@ -78,7 +78,7 @@ public class ControllerPregled {
 
             columnName.setCellValueFactory(new PropertyValueFactory<>("name")); //s mora biti isto kao naziv atributa u modelu Product
             columnID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-            columnCategory.setCellValueFactory(new PropertyValueFactory<>("medicationType"));
+            columnCategory.setCellValueFactory(new PropertyValueFactory<>("purpose"));
             columnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
             columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
@@ -106,7 +106,6 @@ public class ControllerPregled {
         SortedList<Product> sortedData=new SortedList<>(filteredProducts);
         sortedData.comparatorProperty().bind(productList.comparatorProperty());
         productList.setItems(sortedData);
-
         }
 
 
@@ -153,15 +152,24 @@ public class ControllerPregled {
                 }
                 alert.showAndWait();
             } else {
+
                 //slanje kolicine u drugi kontroler
                 productInfo.maxQuantity(productList.getSelectionModel().getSelectedItem().getQuantity());
                 productInfo.getPrice(productList.getSelectionModel().getSelectedItem().getPrice());
 
                 productInfo.nameFld.setText(productList.getSelectionModel().getSelectedItem().getName());
                 productInfo.idFld.setText(productList.getSelectionModel().getSelectedItem().getID());
-                productInfo.categoryFld.setText(productList.getSelectionModel().getSelectedItem().getMedicationType());
+                productInfo.typeFld.setText(productList.getSelectionModel().getSelectedItem().getPurpose());
                 productInfo.quantityFld.setText("1");
                 productInfo.totalFld.setText (productList.getSelectionModel().getSelectedItem().getPrice() + " KM");
+
+                productInfo.manufacturerFld.setText(productList.getSelectionModel().getSelectedItem().getManufacturer());
+                productInfo.purposeFld.setText(productList.getSelectionModel().getSelectedItem().getPurpose());
+                productInfo.administrationFld.setText(productList.getSelectionModel().getSelectedItem().getAdministrationMethod());
+                productInfo.notesFld.setText(productList.getSelectionModel().getSelectedItem().getNotes());
+                productInfo.descriptionFld.setText(productList.getSelectionModel().getSelectedItem().getDescription());
+                productInfo.ingredientsFld.setText(productList.getSelectionModel().getSelectedItem().getIngredients());
+
                 myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                 myStage.setResizable(false);
                 myStage.show();
