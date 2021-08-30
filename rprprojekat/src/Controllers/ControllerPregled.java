@@ -47,8 +47,6 @@ public class ControllerPregled {
     @FXML
     public BorderPane mainWindow;
     @FXML
-    public Button cartBtn;
-    @FXML
     public MenuItem bsMenu;
     @FXML
     public MenuItem enMenu;
@@ -123,9 +121,6 @@ public class ControllerPregled {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/azurirajProizvod.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.show();
-    }
-
-    public void cartBtnClick(ActionEvent actionEvent) {
     }
 
     public void addToCartBtnClick(ActionEvent actionEvent) throws IOException {
@@ -217,5 +212,14 @@ public class ControllerPregled {
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.show();
 
+    }
+
+    public void aboutMenuClick(ActionEvent actionEvent) throws IOException {
+        Stage myStage = new Stage();
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/about.fxml"),bundle);
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.setResizable(false);
+        myStage.show();
     }
 }

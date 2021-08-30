@@ -11,4 +11,20 @@ public class SoldProduct extends Product {
         this.sellerName = sellerName;
         this.datum = datum;
     }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
+    public Date getDatum() {
+        return datum;
+    }
+
+    public void setDatum(Date datum) {
+        this.datum = datum;
+    }
 }
