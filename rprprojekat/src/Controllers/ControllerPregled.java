@@ -47,11 +47,15 @@ public class ControllerPregled {
     @FXML
     public BorderPane mainWindow;
     @FXML
-    public MenuItem bsMenu;
+    public MenuItem mniBS;
     @FXML
-    public MenuItem enMenu;
+    public MenuItem mniEN;
     @FXML
     public MenuBar menu;
+    @FXML
+    public Button btnCancelCart;
+    @FXML
+    public Button btnFinalize;
 
     ObservableList<String> opcije = FXCollections.observableArrayList("Po nazivu","Po šifri");
     ObservableList<String> options = FXCollections.observableArrayList("By category","By ID");
@@ -221,5 +225,14 @@ public class ControllerPregled {
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.show();
+    }
+
+    public void cancelSartCLick(ActionEvent actionEvent) {
+        //isprazni korpu i vrati kolicine na staro stanje
+    }
+
+    public void finalizeBtnClick(ActionEvent actionEvent) {
+        //smanji kolicine trajno
+        //kreiraj instancu klase sold object za svaki prodani proizvod
     }
 }

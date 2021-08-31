@@ -58,6 +58,7 @@ public class ControllerLanguage implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         languageChoice.setItems(options);
+
         languageChoice.getSelectionModel().select(0);
     }
 }

@@ -1,101 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 
 <TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerPregled">
+    <stylesheets>
+        <URL value="@/css/ikonice.css" />
+    </stylesheets>
     <tabs>
-        <Tab fx:id="fooTabPage" closable="false" text="%homepage">
+        <Tab fx:id="tabHomepage" closable="false" text="%homepage">
 
-                <BorderPane fx:id="mainWindow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+            <BorderPane fx:id="mainWindow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+                <bottom>
+                    <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <buttons>
+                            <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#addBtnClick" text="%dodaj" />
+                            <Button fx:id="btnUpdateProduct" mnemonicParsing="false" onAction="#updateBtnClick" text="%azurirajProizvod" />
+                            <Button fx:id="addToCartBtn" mnemonicParsing="false" onAction="#addToCartBtnClick" text="%cartAdd" />
+                        </buttons>
+                        <padding>
+                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </padding>
+                    </ButtonBar>
+                </bottom>
+                <center>
+                    <TableView fx:id="productList" BorderPane.alignment="CENTER">
+                        <columns>
+                            <TableColumn fx:id="columnName" prefWidth="75.0" text="%kolona1" />
+                            <TableColumn fx:id="columnID" prefWidth="75.0" text="%kolona2" />
+                            <TableColumn fx:id="columnCategory" prefWidth="75.0" text="%kolona3" />
+                            <TableColumn fx:id="columnPrice" prefWidth="75.0" text="%kolona4" />
+                            <TableColumn fx:id="columnQuantity" prefWidth="75.0" text="%kolona5" />
+                        </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                        </columnResizePolicy>
+                        <BorderPane.margin>
+                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </BorderPane.margin>
+                    </TableView>
+                </center>
+                <top>
+                    <GridPane BorderPane.alignment="CENTER">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="180.6" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="361.6" minWidth="10.0" prefWidth="314.6" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="211.0" minWidth="10.0" prefWidth="63.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                            <MenuBar fx:id="menu" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                <menus>
+                                    <Menu fx:id="mniFile" text="_File">
+                                        <items>
+                                            <MenuItem fx:id="mniReport" text="%createReport">
+                                                <accelerator>
+                                                    <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                                </accelerator></MenuItem>
+                                            <MenuItem fx:id="mniExit" text="E_xit">
+                                                <accelerator>
+                                                    <KeyCodeCombination alt="DOWN" code="X" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                                </accelerator></MenuItem>
+                                        </items>
+                                        <accelerator>
+                                            <KeyCodeCombination alt="DOWN" code="F" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                        </accelerator>
+                                    </Menu>
+                                    <Menu fx:id="mniLanguage" text="%language">
+                                        <items>
+                                            <MenuItem fx:id="mniBS" onAction="#bsMenuClick" text="_Bosanski">
+                                                <accelerator>
+                                                    <KeyCodeCombination alt="DOWN" code="B" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                                </accelerator></MenuItem>
+                                            <MenuItem fx:id="mniEN" onAction="#enMenuClick" text="_English">
+                                                <accelerator>
+                                                    <KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                                </accelerator></MenuItem>
+                                        </items>
+                                        <accelerator>
+                                            <KeyCodeCombination alt="DOWN" code="L" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                        </accelerator>
+                                    </Menu>
+                                    <Menu fx:id="mniHelp" text="%help">
+                                        <items>
+                                            <MenuItem fx:id="mniHelp2" text="%help">
+                                                <accelerator>
+                                                    <KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                                </accelerator></MenuItem>
+                                            <MenuItem fx:id="mniAbout" onAction="#aboutMenuClick" text="%about">
+                                                <accelerator>
+                                                    <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                                </accelerator></MenuItem>
+                                        </items>
+                                        <accelerator>
+                                            <KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                        </accelerator>
+                                    </Menu>
+                                </menus>
+                                <GridPane.margin>
+                                    <Insets />
+                                </GridPane.margin>
+                            </MenuBar>
+                            <ChoiceBox fx:id="choiceSearch" prefWidth="150.0" GridPane.rowIndex="1">
+                                <GridPane.margin>
+                                    <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                </GridPane.margin>
+                            </ChoiceBox>
+                            <TextField fx:id="searchBar" promptText="%pretraga" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <GridPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                                </GridPane.margin>
+                            </TextField>
+                        </children>
+                        <BorderPane.margin>
+                            <Insets />
+                        </BorderPane.margin>
+                    </GridPane>
+                </top>
+            </BorderPane>
+
+        </Tab>
+        <Tab fx:id="barTabPage" closable="false" text="%cart">
+            <content>
+                <BorderPane prefHeight="200.0" prefWidth="200.0">
+                    <center>
+                        <TableView BorderPane.alignment="CENTER">
+                            <columns>
+                                <TableColumn prefWidth="75.0" text="%kolona1" />
+                                <TableColumn prefWidth="75.0" text="%kolona2" />
+                        <TableColumn prefWidth="75.0" text="%kolona4" />
+                        <TableColumn prefWidth="75.0" text="%kolona5" />
+                            </columns>
+                     <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </BorderPane.margin>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                        </TableView>
+                    </center>
                     <bottom>
                         <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <buttons>
-                                <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#addBtnClick" text="%dodaj" />
-                                <Button fx:id="btnUpdateProduct" mnemonicParsing="false" onAction="#updateBtnClick" text="%azurirajProizvod" />
-                                <Button fx:id="addToCartBtn" mnemonicParsing="false" onAction="#addToCartBtnClick" text="%cartAdd" />
+                                <Button fx:id="btnCancelCart" mnemonicParsing="false" onAction="#cancelSartCLick" text="%odbaci" />
+                                <Button fx:id="btnFinalize" mnemonicParsing="false" onAction="#finalizeBtnClick" text="%finish" />
                             </buttons>
                             <padding>
                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </padding>
                         </ButtonBar>
                     </bottom>
-                    <center>
-                        <TableView fx:id="productList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                            <columns>
-                                <TableColumn fx:id="columnName" prefWidth="75.0" text="%kolona1" />
-                                <TableColumn fx:id="columnID" prefWidth="75.0" text="%kolona2" />
-                                <TableColumn fx:id="columnCategory" prefWidth="75.0" text="%kolona3" />
-                                <TableColumn fx:id="columnPrice" prefWidth="75.0" text="%kolona4" />
-                                <TableColumn fx:id="columnQuantity" prefWidth="75.0" text="%kolona5" />
-                            </columns>
-                            <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                            </columnResizePolicy>
-                            <BorderPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </BorderPane.margin>
-                        </TableView>
-                    </center>
-                    <top>
-                        <GridPane BorderPane.alignment="CENTER">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="180.6" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="361.6" minWidth="10.0" prefWidth="314.6" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="211.0" minWidth="10.0" prefWidth="63.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <MenuBar fx:id="menu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                                    <menus>
-                                        <Menu mnemonicParsing="false" text="File">
-                                            <items>
-                                                <MenuItem mnemonicParsing="false" text="%createReport" />
-                                                <MenuItem mnemonicParsing="false" text="%exit" />
-                                            </items>
-                                        </Menu>
-                                        <Menu mnemonicParsing="false" text="%language">
-                                            <items>
-                                                <MenuItem fx:id="bsMenu" mnemonicParsing="false" onAction="#bsMenuClick" text="Bosanski" />
-                                                <MenuItem fx:id="enMenu" mnemonicParsing="false" onAction="#enMenuClick" text="English" />
-                                            </items>
-                                        </Menu>
-                                        <Menu mnemonicParsing="false" text="%help">
-                                            <items>
-                                                <MenuItem mnemonicParsing="false" text="%help" />
-                                                <MenuItem mnemonicParsing="false" onAction="#aboutMenuClick" text="%about" />
-                                            </items>
-                                        </Menu>
-                                    </menus>
-                                    <GridPane.margin>
-                                        <Insets />
-                                    </GridPane.margin>
-                                </MenuBar>
-                                <ChoiceBox fx:id="choiceSearch" prefWidth="150.0" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
-                                    </GridPane.margin>
-                                </ChoiceBox>
-                                <TextField fx:id="searchBar" promptText="%pretraga" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                    <GridPane.margin>
-                                        <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
-                                    </GridPane.margin>
-                                </TextField>
-                            </children>
-                            <BorderPane.margin>
-                                <Insets />
-                            </BorderPane.margin>
-                        </GridPane>
-                    </top>
                 </BorderPane>
-
-        </Tab>
-        <Tab fx:id="barTabPage" closable="false" text="%cart">
-        </Tab>
+            </content></Tab>
     </tabs>
 
 </TabPane>

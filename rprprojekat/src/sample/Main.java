@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.sql.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -28,7 +29,27 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
+        Class.forName("org.sqlite.JDBC");
+        //String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/.mojapp/apoteka.db";
+        String url = "jdbc:sqlite:apoteka.db";
+        try {
+            Connection conn = DriverManager.getConnection(url);
+           /* Statement stmt = conn.createStatement();
+           */
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM proizvod WHERE name=?");
+            ps.setString(1,"Paracetamol");
+            ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                System.out.println(rs.getString("id"));
+            }
+
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Greška u radu sa bazom podataka");
+            System.out.println(e.getMessage());
+        }
         launch(args);
     }
 }
