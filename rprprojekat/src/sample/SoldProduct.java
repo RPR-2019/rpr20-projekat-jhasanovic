@@ -6,8 +6,8 @@ public class SoldProduct extends Product {
     private String sellerName;
     private Date datum;
 
-    public SoldProduct(String name, String ID, String medicationType, Integer price, Integer quantity, String purpose, String notes, String administrationMethod, String manufacturer, String description, String ingredients, String sellerName, Date datum) {
-        super(name, ID, medicationType, price, quantity, purpose, notes, administrationMethod, manufacturer, description, ingredients);
+    public SoldProduct(String name, String ID, Double price, Integer quantity, String purpose, String notes, String administrationMethod, String manufacturer, String description, String ingredients, String medicationType, String sellerName, Date datum) {
+        super(name, ID, price, quantity, purpose, notes, administrationMethod, manufacturer, description, ingredients, medicationType);
         this.sellerName = sellerName;
         this.datum = datum;
     }

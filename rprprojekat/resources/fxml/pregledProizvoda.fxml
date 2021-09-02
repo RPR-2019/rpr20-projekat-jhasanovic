@@ -7,18 +7,20 @@
 <?import javafx.scene.layout.*?>
 
 <TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerPregled">
+
     <stylesheets>
         <URL value="@/css/ikonice.css" />
     </stylesheets>
+
     <tabs>
         <Tab fx:id="tabHomepage" closable="false" text="%homepage">
-
             <BorderPane fx:id="mainWindow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
                 <bottom>
                     <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                         <buttons>
                             <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#addBtnClick" text="%dodaj" />
                             <Button fx:id="btnUpdateProduct" mnemonicParsing="false" onAction="#updateBtnClick" text="%azurirajProizvod" />
+                     <Button fx:id="btnRemoveProduct" mnemonicParsing="false" onAction="#removeBtnClick" text="%obrisi_proizvod" />
                             <Button fx:id="addToCartBtn" mnemonicParsing="false" onAction="#addToCartBtnClick" text="%cartAdd" />
                         </buttons>
                         <padding>
@@ -29,8 +31,8 @@
                 <center>
                     <TableView fx:id="productList" BorderPane.alignment="CENTER">
                         <columns>
-                            <TableColumn fx:id="columnName" prefWidth="75.0" text="%kolona1" />
-                            <TableColumn fx:id="columnID" prefWidth="75.0" text="%kolona2" />
+                            <TableColumn fx:id="columnID" prefWidth="75.0" text="%kolona1" />
+                            <TableColumn fx:id="columnName" prefWidth="75.0" text="%kolona2" />
                             <TableColumn fx:id="columnCategory" prefWidth="75.0" text="%kolona3" />
                             <TableColumn fx:id="columnPrice" prefWidth="75.0" text="%kolona4" />
                             <TableColumn fx:id="columnQuantity" prefWidth="75.0" text="%kolona5" />
@@ -126,6 +128,7 @@
             </BorderPane>
 
         </Tab>
+
         <Tab fx:id="barTabPage" closable="false" text="%cart">
             <content>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -148,7 +151,7 @@
                     <bottom>
                         <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <buttons>
-                                <Button fx:id="btnCancelCart" mnemonicParsing="false" onAction="#cancelSartCLick" text="%odbaci" />
+                                <Button fx:id="btnCancelCart" mnemonicParsing="false" onAction="#cancelCartCLick" text="%odbaci" />
                                 <Button fx:id="btnFinalize" mnemonicParsing="false" onAction="#finalizeBtnClick" text="%finish" />
                             </buttons>
                             <padding>

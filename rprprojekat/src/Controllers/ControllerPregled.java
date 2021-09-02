@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,10 +14,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import sample.Language;
 import sample.Product;
-
+import sample.ProductDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
@@ -56,37 +59,26 @@ public class ControllerPregled {
     public Button btnCancelCart;
     @FXML
     public Button btnFinalize;
+    @FXML
+    public Button btnRemoveProduct;
 
     ObservableList<String> opcije = FXCollections.observableArrayList("Po nazivu","Po šifri");
     ObservableList<String> options = FXCollections.observableArrayList("By category","By ID");
 
+
     @FXML
     public ChoiceBox<String> choiceSearch=new ChoiceBox<>(opcije);
 
-    private PharmacyModel model;
-    Language l = Language.getInstance();
+    private ProductDAO dao;
+    private Language l;
+
 
     public ControllerPregled(){
-        model=new PharmacyModel();
-        model.napuni();
     }
 
-    @FXML
-    public void initialize(){
-        if(l.getLang().equals("bs")) choiceSearch.setItems(opcije);
-        else if(l.getLang().equals("en")) choiceSearch.setItems(options);
 
-        choiceSearch.getSelectionModel().select(0);
-
-            columnName.setCellValueFactory(new PropertyValueFactory<>("name")); //s mora biti isto kao naziv atributa u modelu Product
-            columnID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-            columnCategory.setCellValueFactory(new PropertyValueFactory<>("purpose"));
-            columnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-            columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-
-            productList.setItems(model.getProducts());
-
-        FilteredList<Product> filteredProducts=new FilteredList<>(model.getProducts(),b->true);
+    public void filtriraj(){
+        FilteredList<Product> filteredProducts=new FilteredList<>(dao.getProducts(),b->true);
         searchBar.textProperty().addListener((observable,oldValue,newValue )-> {
             filteredProducts.setPredicate(p->{
                 if(newValue==null || newValue.isEmpty()){
@@ -101,30 +93,104 @@ public class ControllerPregled {
             });
         });
 
+        SortedList<Product> sortedData=new SortedList<>(filteredProducts);
+        sortedData.comparatorProperty().bind(productList.comparatorProperty());
+        productList.setItems(sortedData);
+    }
+    @FXML
+    public void initialize() throws SQLException {
+
+        l=Language.getInstance();
+        if(l.getLang().equals("bs")) choiceSearch.setItems(opcije);
+        else if(l.getLang().equals("en")) choiceSearch.setItems(options);
+
+        choiceSearch.getSelectionModel().select(0);
+
+            columnName.setCellValueFactory(new PropertyValueFactory<>("name")); //s mora biti isto kao naziv atributa u modelu Product
+            columnID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+            columnCategory.setCellValueFactory(new PropertyValueFactory<>("purpose"));
+            columnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+            columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+            dao=ProductDAO.getInstance();
+
+        productList.setItems(dao.getProducts());
+        filtriraj();
         choiceSearch.setOnAction((event) -> {
             searchBar.setText("");
         });
 
-        SortedList<Product> sortedData=new SortedList<>(filteredProducts);
-        sortedData.comparatorProperty().bind(productList.comparatorProperty());
-        productList.setItems(sortedData);
         }
 
 
     public void addBtnClick(ActionEvent actionEvent) throws Exception{
         Stage myStage = new Stage();
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/dodajProizvod.fxml"),bundle);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/dodajProizvod.fxml"),bundle);
+        Parent root = loader.load();
+
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                productList.getSelectionModel().clearSelection();
+                productList.setItems(dao.getProducts());
+                filtriraj();
+            }
+        });
+        myStage.setResizable(false);
         myStage.show();
     }
 
     public void updateBtnClick(ActionEvent actionEvent) throws IOException {
-        Stage myStage = new Stage();
-        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/azurirajProizvod.fxml"),bundle);
-        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-        myStage.show();
+        if(productList.getSelectionModel().getSelectedItem()!=null) {
+            Stage myStage = new Stage();
+            ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/azurirajProizvod.fxml"),bundle);
+            Parent root = loader.load();
+            ControllerUpdateProduct updateProduct = loader.getController();
+
+            updateProduct.setIndex(productList.getSelectionModel().getSelectedItem().getID());
+            updateProduct.fldID.setText(productList.getSelectionModel().getSelectedItem().getID());
+            updateProduct.fldName.setText(productList.getSelectionModel().getSelectedItem().getName());
+            updateProduct.fldPrice.setText(String.valueOf(productList.getSelectionModel().getSelectedItem().getPrice()));
+            updateProduct.fldQuantity.setText(String.valueOf(productList.getSelectionModel().getSelectedItem().getQuantity()));
+            updateProduct.choicePurpose.setValue(productList.getSelectionModel().getSelectedItem().getPurpose());
+            updateProduct.fldNotes.setText(productList.getSelectionModel().getSelectedItem().getNotes());
+            updateProduct.choiceAdMethod.setValue(productList.getSelectionModel().getSelectedItem().getAdministrationMethod());
+            updateProduct.fldManufacturer.setText(productList.getSelectionModel().getSelectedItem().getManufacturer());
+            updateProduct.fldDescription.setText(productList.getSelectionModel().getSelectedItem().getDescription());
+            updateProduct.fldIngredients.setText(productList.getSelectionModel().getSelectedItem().getIngredients());
+            updateProduct.choiceType.setValue(productList.getSelectionModel().getSelectedItem().getMedicationType());
+
+            myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            myStage.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    productList.getSelectionModel().clearSelection();
+                    productList.setItems(dao.getProducts());
+                    filtriraj();
+                }
+            });
+            myStage.setResizable(false);
+            myStage.show();
+            searchBar.setText("");
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+
+            if(l.getLang().equals("bs")) {
+                alert.setTitle("Upozorenje");
+                alert.setHeaderText("Niste odabrali proizvod!");
+                alert.setContentText("Molimo odaberite proizvod iz tabele koji želite ažurirati.");
+            }
+            else if(l.getLang().equals(("en"))){
+                alert.setTitle("Warning");
+                alert.setHeaderText("Product not selected!");
+                alert.setContentText("Please select a product you wish to update from the table.");
+            }
+            alert.showAndWait();
+        }
     }
 
     public void addToCartBtnClick(ActionEvent actionEvent) throws IOException {
@@ -160,7 +226,7 @@ public class ControllerPregled {
                 productInfo.idFld.setText(productList.getSelectionModel().getSelectedItem().getID());
                 productInfo.typeFld.setText(productList.getSelectionModel().getSelectedItem().getPurpose());
                 productInfo.quantityFld.setText("1");
-                productInfo.totalFld.setText (productList.getSelectionModel().getSelectedItem().getPrice() + " KM");
+                productInfo.totalFld.setText((String.format("%.2f",productList.getSelectionModel().getSelectedItem().getPrice())) + " KM");
 
                 productInfo.manufacturerFld.setText(productList.getSelectionModel().getSelectedItem().getManufacturer());
                 productInfo.purposeFld.setText(productList.getSelectionModel().getSelectedItem().getPurpose());
@@ -227,12 +293,35 @@ public class ControllerPregled {
         myStage.show();
     }
 
-    public void cancelSartCLick(ActionEvent actionEvent) {
+    public void cancelCartCLick(ActionEvent actionEvent) {
         //isprazni korpu i vrati kolicine na staro stanje
     }
 
     public void finalizeBtnClick(ActionEvent actionEvent) {
         //smanji kolicine trajno
         //kreiraj instancu klase sold object za svaki prodani proizvod
+    }
+
+    public void removeBtnClick(ActionEvent actionEvent) {
+        if(productList.getSelectionModel().getSelectedItem()!=null) {
+            dao.removeProduct(productList.getSelectionModel().getSelectedItem());
+            productList.getSelectionModel().clearSelection();
+            productList.setItems(dao.getProducts());
+            searchBar.setText("");
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            if(l.getLang().equals("bs")) {
+                alert.setTitle("Upozorenje");
+                alert.setHeaderText("Niste odabrali proizvod!");
+                alert.setContentText("Za brisanje proizvoda odaberite proizvod iz liste");
+            }
+            if(l.getLang().equals("en")) {
+                alert.setTitle("Warning");
+                alert.setHeaderText("No product is selected!");
+                alert.setContentText("Select a product you wish to remove from the list");
+            }
+            alert.showAndWait();
+        }
     }
 }

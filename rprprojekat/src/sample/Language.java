@@ -1,8 +1,7 @@
 package sample;
 
 public class Language {
-    private static Language single_instance = null;
-
+    private static Language instance = null;
     public String lang;
 
     public String getLang() {
@@ -20,9 +19,9 @@ public class Language {
 
     public static Language getInstance()
     {
-        if (single_instance == null)
-            single_instance = new Language();
+        if (instance == null)
+            instance = new Language();
 
-        return single_instance;
+        return instance;
     }
 }

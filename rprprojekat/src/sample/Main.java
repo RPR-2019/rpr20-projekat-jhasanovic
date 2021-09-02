@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import java.sql.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -29,27 +30,14 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) throws ClassNotFoundException {
-        Class.forName("org.sqlite.JDBC");
-        //String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/.mojapp/apoteka.db";
-        String url = "jdbc:sqlite:apoteka.db";
-        try {
-            Connection conn = DriverManager.getConnection(url);
-           /* Statement stmt = conn.createStatement();
-           */
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM proizvod WHERE name=?");
-            ps.setString(1,"Paracetamol");
-            ps.executeQuery();
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                System.out.println(rs.getString("id"));
-            }
+    public static void main(String[] args) throws SQLException {
+       /* ProductDAO dao=ProductDAO.getInstance();
+        System.out.println("Unesite id proizvoda: ");
+        Scanner ulaz=new Scanner(System.in);
+        String sifra=ulaz.nextLine();
 
-            conn.close();
-        } catch (SQLException e) {
-            System.out.println("Greška u radu sa bazom podataka");
-            System.out.println(e.getMessage());
-        }
+        for(Product p:dao.pretraga(sifra))
+            System.out.println("ID: "+p.getID()+" naziv: "+p.getName());*/
         launch(args);
     }
 }

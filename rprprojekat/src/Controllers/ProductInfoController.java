@@ -47,14 +47,14 @@ public class ProductInfoController implements Initializable {
 
 
     private Integer maxQt;
-    private Integer price;
+    private Double price;
 
 
     public void maxQuantity(int max){
         maxQt = max;
     }
 
-    public void getPrice(int p){
+    public void getPrice(Double p){
         price=p;
     }
     @Override
@@ -65,8 +65,10 @@ public class ProductInfoController implements Initializable {
                 if (!newValue.equals("") && Integer.parseInt(newValue) > maxQt)
                     quantityFld.setText(Integer.toString(maxQt));
                 else if (!newValue.equals("") && Integer.parseInt(newValue) < 1) quantityFld.setText("1");
-                else if (!newValue.equals(""))
-                    totalFld.setText(Integer.parseInt(quantityFld.getText()) * price + " KM");
+                else if (!newValue.equals("")){
+                    totalFld.setText((String.format("%.2f",Integer.parseInt(quantityFld.getText()) * price)) + " KM");
+                }
+
                 else totalFld.setText("0 KM");
             }
             catch(NumberFormatException e){ //nije dopusten unos bilo cega sto nije broj u textfield za kolicinu

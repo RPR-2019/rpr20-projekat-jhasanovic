@@ -33,17 +33,17 @@ public class PharmacyModel {
     }
 
     public void napuni(){
-        products.add(new Product("Paracetamol","1","Tablete bijele do gotovo bijele boje, okruglog oblika, " +
-                "sa diobenom crtom na jednoj strani.",2,1,"Analgetik i antipiretik","",
+        products.add(new Product("Paracetamol","1",2.,1,"Analgetik i antipiretik","",
                 "PARACETAMOL tablete su namjenjene za oralnu primjenu.","BOSNALIJEK d.d.",
                 "PARACETAMOL BOSNALIJEK je blagi analgetik i antipiretik i preporučuje se za liječenje većine bolnih i " +
                         "febrilnih stanja, naprimjer: glavobolje uključujući i migrenu i tenzione glavobolje, zubobolje, bola u leđima," +
                         " reumatskog bola i bola u mišićima, dismenoreje, grlobolje, te za olakšanje povišene tjelesne temperature i " +
                         "bolova uzrokovanih s prehladom i gripom. Također, preporučuje se za simptomatsko olakšanje bola kod blažeg " +
                         "oblika artritisa.","Jedna PARACETAMOL tableta sadrži: Paracetamola 500,00 mg. PARACETAMOL tablete" +
-                " sadrže sljedeće pomoćne supstance: povidon K 30, natrij škrobni glikolat i stearinsku kiselinu."));
-        products.add(new Product("Flonidan","2","Tablete",2,11,"","","","","",""));
-        products.add(new Product("Analgin","3","Tablete",2,15,"","","","","",""));
+                " sadrže sljedeće pomoćne supstance: povidon K 30, natrij škrobni glikolat i stearinsku kiselinu.","Tablete bijele do gotovo bijele boje, okruglog oblika, " +
+                "sa diobenom crtom na jednoj strani."));
+        products.add(new Product("Flonidan","2",2.,11,"","","","","","","Tablete"));
+        products.add(new Product("Analgin","3",2.,15,"","","","","","","Tablete"));
     }
 
     /*public String getMedicationType(String id){

@@ -3,30 +3,97 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="354.0" prefWidth="293.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerAddProduct">
+<GridPane vgap="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerAddProduct">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" />
+    <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints />
+    <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TextField fx:id="fieldName" GridPane.columnIndex="1" />
-      <Label text="%ime" />
+      <TextField fx:id="fldID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label text="%ime" GridPane.rowIndex="2" />
       <Label text="%sifra" GridPane.rowIndex="1" />
-      <TextField fx:id="fieldID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label layoutX="10.0" layoutY="31.0" text="%kategorija" GridPane.rowIndex="2" />
-      <Label text="%cijena" GridPane.rowIndex="3" />
-      <TextField fx:id="fieldPrice" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Button fx:id="btnAdd" defaultButton="true" mnemonicParsing="false" onAction="#btnAddClick" text="%dodaj" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-      <Button fx:id="btnCancel" cancelButton="true" mnemonicParsing="false" onAction="#btnCancelClick" text="%odustani" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-      <ChoiceBox fx:id="choiceCategory" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="fldName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label layoutX="10.0" layoutY="31.0" text="%proizvodjac" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <padding>
+            <Insets left="15.0" right="5.0" />
+         </padding></Label>
+      <TextField fx:id="fldManufacturer" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <Label text="%sastav" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="TOP">
+         <padding>
+            <Insets left="15.0" right="5.0" />
+         </padding>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin></Label>
+      <Label text="%napomene" GridPane.columnIndex="2" GridPane.rowIndex="9">
+         <padding>
+            <Insets left="15.0" right="5.0" />
+         </padding></Label>
+      <ButtonBar nodeOrientation="LEFT_TO_RIGHT" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.rowIndex="10" GridPane.rowSpan="2147483647">
+        <buttons>
+            <Button fx:id="btnAdd" defaultButton="true" mnemonicParsing="false" onAction="#btnAddClick" text="%dodaj" />
+            <Button fx:id="btnCancel" cancelButton="true" mnemonicParsing="false" onAction="#btnCancelClick" text="%odustani" />
+        </buttons>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </ButtonBar>
+      <Label text="%namjena" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+      <Separator GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
+      <TextArea fx:id="fldNotes" prefHeight="75.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+      <Label text="Osnovne informacije o lijeku">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="fldIngredients" prefHeight="75.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <Label text="%opis" GridPane.columnIndex="2" GridPane.rowIndex="6" GridPane.valignment="TOP">
+         <padding>
+            <Insets left="15.0" right="5.0" />
+         </padding></Label>
+      <TextArea fx:id="fldDescription" prefHeight="75.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+      <Label text="%farmaceutskiOblik" GridPane.rowIndex="6" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin></Label>
+      <ComboBox fx:id="choicePurpose" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+      <Label text="%nacinUpotrebe" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+      <ComboBox fx:id="choiceType" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+      <ComboBox fx:id="choiceAdMethod" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+      <Label text="Detaljne informacije o lijeku" GridPane.rowIndex="4">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
+      <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
+
+      <Label text="%kolicina" GridPane.rowIndex="10" />
+      <Label text="%cijena" GridPane.rowIndex="9" />
+      <TextField fx:id="fldQuantity" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <TextField fx:id="fldPrice" GridPane.columnIndex="1" GridPane.rowIndex="9" />
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

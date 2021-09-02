@@ -3,7 +3,7 @@ package sample;
 public class Product {
     private String name; //ime lijeka
     private String ID;//kod lijeka
-    private Integer price;//cijena lijeka
+    private Double price;//cijena lijeka
     private Integer quantity;//kolicina lijeka
     private String purpose;//namjena lijeka
     private String notes;//dodatne napomene
@@ -78,7 +78,7 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Product(String name, String ID, String medicationType, Integer price, Integer quantity, String purpose, String notes, String administrationMethod, String manufacturer, String description, String ingredients) {
+    public Product(String name, String ID, Double price, Integer quantity, String purpose, String notes, String administrationMethod, String manufacturer, String description, String ingredients, String medicationType) {
         this.name = name;
         this.ID = ID;
         this.price = price;
@@ -108,11 +108,9 @@ public class Product {
         this.ID = ID;
     }
 
-    public Integer getPrice() {
-        return price;
-    }
+    public Double getPrice() { return price; }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
