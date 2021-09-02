@@ -65,7 +65,7 @@
                                                 <accelerator>
                                                     <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                                 </accelerator></MenuItem>
-                                            <MenuItem fx:id="mniExit" text="E_xit">
+                                            <MenuItem fx:id="mniExit" onAction="#exitMenuClick" text="E_xit">
                                                 <accelerator>
                                                     <KeyCodeCombination alt="DOWN" code="X" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                                 </accelerator></MenuItem>
@@ -91,7 +91,7 @@
                                     </Menu>
                                     <Menu fx:id="mniHelp" text="%help">
                                         <items>
-                                            <MenuItem fx:id="mniHelp2" text="%help">
+                                            <MenuItem fx:id="mniHelp2" onAction="#helpMenuClick" text="%help">
                                                 <accelerator>
                                                     <KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                                 </accelerator></MenuItem>

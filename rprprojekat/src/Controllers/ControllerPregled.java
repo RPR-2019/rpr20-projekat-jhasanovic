@@ -54,6 +54,12 @@ public class ControllerPregled {
     @FXML
     public MenuItem mniEN;
     @FXML
+    public MenuItem mniExit;
+    @FXML
+    public MenuItem mniHelp2;
+    @FXML
+    public MenuItem mniAbout;
+    @FXML
     public MenuBar menu;
     @FXML
     public Button btnCancelCart;
@@ -323,5 +329,19 @@ public class ControllerPregled {
             }
             alert.showAndWait();
         }
+    }
+
+    public void helpMenuClick(ActionEvent actionEvent) throws IOException {
+        Stage myStage = new Stage();
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/help.fxml"),bundle);
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        //myStage.setResizable(false);
+        myStage.show();
+    }
+
+    public void exitMenuClick(ActionEvent actionEvent) {
+        //zatvoriti sve prozore
+        System.exit(0);
     }
 }

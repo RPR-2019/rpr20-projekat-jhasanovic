@@ -1,18 +1,14 @@
 package sample;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SoldProductDAO {
     private static SoldProductDAO instance=null;
     private Connection conn;
-    private PreparedStatement sviProdaniProizvodiUpit;
+    private PreparedStatement sviProdaniProizvodiUpit,prodaniNaDatumUpit,dodajProdaniUpit;
 
     private SoldProductDAO() throws SQLException {
         //String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/.apotekaapp/apoteka.db";
@@ -25,7 +21,8 @@ public class SoldProductDAO {
             kreirajBazu();
             sviProdaniProizvodiUpit = conn.prepareStatement("SELECT * FROM prodani");
         }
-
+        prodaniNaDatumUpit = conn.prepareStatement("SELECT * FROM prodani WHERE date=?");
+        dodajProdaniUpit = conn.prepareStatement("INSERT INTO prodani VALUES(?,?,?,?)");
     }
 
     private void kreirajBazu() {
@@ -56,85 +53,55 @@ public class SoldProductDAO {
         return instance;
     }
 
-    /*public ArrayList<Product> pretraga(String s) {
-        ArrayList<Product> rezultat = new ArrayList<>();
-        try {
-            pretragaUpit.setString(1,s);
-            ResultSet rs = pretragaUpit.executeQuery();
-            while(rs.next()){
-                String name = rs.getString(1);
-                String id = rs.getString(2);
-                int price=rs.getInt(3);
-                int quantity=rs.getInt(4);
-                String purpose=rs.getString(5);
-                String notes=rs.getString(6);
-                String administrationMethod=rs.getString(7);
-                String manufacturer= rs.getString(8);
-                String description=rs.getString(9);
-                String ingredients=rs.getString(10);
-                String medicationType=rs.getString(11);
-                Product p = new Product(name,id,price,quantity,purpose,notes,administrationMethod,manufacturer,description,ingredients,medicationType);
-                rezultat.add(p);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return rezultat;
-    }
-
-    public ObservableList<Product> getProducts(){
+    /*public ObservableList<SoldProduct> getSoldProducts(){
         ObservableList<Product> rezultat = FXCollections.observableArrayList();
         try {
-            ResultSet rs = sviProizvodiUpit.executeQuery();
+            ResultSet rs = sviProdaniProizvodiUpit.executeQuery();
             while(rs.next()){
-                String name = rs.getString(1);
-                String id = rs.getString(2);
-                int price=rs.getInt(3);
-                int quantity=rs.getInt(4);
-                String purpose=rs.getString(5);
-                String notes=rs.getString(6);
-                String administrationMethod=rs.getString(7);
-                String manufacturer= rs.getString(8);
-                String description=rs.getString(9);
-                String ingredients=rs.getString(10);
-                String medicationType=rs.getString(11);
-                Product p = new Product(name,id,price,quantity,purpose,notes,administrationMethod,manufacturer,description,ingredients,medicationType);
+                String id = rs.getString(1);
+                String name = rs.getString(2);
+                String seller=rs.getString(3);
+                String date=rs.getString(4);
+
+                SoldProduct p = new SoldProduct(id,name,seller,date);
                 rezultat.add(p);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return rezultat;
-    }
+    }*/
 
-    public void addProduct(Product p){
+   /* public ObservableList<Product> getSoldProductsByDate(LocalDateTime d){//format 2021-mjesec-danTsat:minuta:sekunda
+        ObservableList<Product> rezultat = FXCollections.observableArrayList();
         try {
-            dodajProizvodUpit.setString(1, p.getName());
-            dodajProizvodUpit.setString(2, p.getID());
-            dodajProizvodUpit.setInt(3, p.getPrice());
-            dodajProizvodUpit.setInt(4, p.getQuantity());
-            dodajProizvodUpit.setString(5, p.getPurpose());
-            dodajProizvodUpit.setString(6, p.getNotes());
-            dodajProizvodUpit.setString(7, p.getAdministrationMethod());
-            dodajProizvodUpit.setString(8, p.getManufacturer());
-            dodajProizvodUpit.setString(9, p.getDescription());
-            dodajProizvodUpit.setString(10, p.getIngredients());
-            dodajProizvodUpit.setString(11, p.getMedicationType());
+            ResultSet rs = prodaniNaDatumUpit.executeQuery();
+            while(rs.next()){
+                String id = rs.getString(1);
+                String name = rs.getString(2);
+                String seller=rs.getString(3);
+                String date=rs.getString(4);
 
-            dodajProizvodUpit.executeUpdate();
-
-        } catch (SQLException sqlException) {
-            System.out.println("Greška prilikom dodavanja proizvoda\nIzuzetak: " + sqlException.getMessage());
+                SoldProduct p = new SoldProduct(id,name,seller,date);
+                rezultat.add(p);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-    }
+        return rezultat;
+    }*/
 
-    public void removeProduct(Product p) {
+   /* public void updateProdani(SoldProduct p){
         try {
-            ukloniProizvodUpit.setString(1, p.getID());
-            ukloniProizvodUpit.executeUpdate();
+            dodajProdaniUpit.setString(1, p.getID());
+            dodajProdaniUpit.setString(2, p.getName());
+            dodajProdaniUpit.setString(3, p.getSellerName());
+            dodajProdaniUpit.setString(4, p.getDate());
+
+            dodajProdaniUpit.executeUpdate();
 
         } catch (SQLException sqlException) {
-            System.out.println("Greška prilikom brisanja proizvoda\nIzuzetak: " + sqlException.getMessage());
+            System.out.println("Greška prilikom dodavanja prodanog proizvoda\nIzuzetak: " + sqlException.getMessage());
         }
     }*/
 }

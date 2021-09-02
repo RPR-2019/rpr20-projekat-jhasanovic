@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class ProductDAO {
     private static ProductDAO instance=null;
     private Connection conn;
-    private PreparedStatement sviProizvodiUpit,pretragaUpit,dodajProizvodUpit,ukloniProizvodUpit,azurirajProizvodUpit;
+    private PreparedStatement sviProizvodiUpit,pretragaUpit,dodajProizvodUpit,ukloniProizvodUpit,azurirajProizvodUpit,promjenaKolicineUpit;
 
     private ProductDAO() throws SQLException {
         //String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/.apotekaapp/apoteka.db";
@@ -31,6 +31,7 @@ public class ProductDAO {
         dodajProizvodUpit = conn.prepareStatement("INSERT INTO proizvod VALUES(?,?,?,?,?,?,?,?,?,?,?)");
         azurirajProizvodUpit = conn.prepareStatement("UPDATE proizvod SET name=?,id=?,price=?,quantity=?," +
                 "purpose=?,notes=?,administrationMethod=?,manufacturer=?,description=?,ingredients=?,type=? WHERE id=?");
+        promjenaKolicineUpit = conn.prepareStatement("UPDATE proizvod SET quantity=? WHERE id=?");
     }
 
     private void kreirajBazu() {
@@ -159,6 +160,17 @@ public class ProductDAO {
 
         } catch (SQLException sqlException) {
             System.out.println("Greška prilikom brisanja proizvoda\nIzuzetak: " + sqlException.getMessage());
+        }
+    }
+
+    public void reduceQuantity(Product p,int kolicina){
+        try {
+            promjenaKolicineUpit.setInt(1, kolicina);
+            promjenaKolicineUpit.setString(2,p.getID());
+            promjenaKolicineUpit.executeUpdate();
+
+        } catch (SQLException sqlException) {
+            System.out.println("Greška prilikom ažuriranja količine proizvoda\nIzuzetak: " + sqlException.getMessage());
         }
     }
 }

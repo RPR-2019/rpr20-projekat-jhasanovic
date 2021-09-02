@@ -1,15 +1,36 @@
 package sample;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
-public class SoldProduct extends Product {
+public class SoldProduct{
+    private String ID;
+    private String name;
     private String sellerName;
-    private Date datum;
+    private LocalDateTime datum;
 
-    public SoldProduct(String name, String ID, Double price, Integer quantity, String purpose, String notes, String administrationMethod, String manufacturer, String description, String ingredients, String medicationType, String sellerName, Date datum) {
-        super(name, ID, price, quantity, purpose, notes, administrationMethod, manufacturer, description, ingredients, medicationType);
+    public SoldProduct(String id, String name, String sellerName, LocalDateTime datum) {
+        this.ID = id;
+        this.name = name;
         this.sellerName = sellerName;
         this.datum = datum;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String id) {
+        this.ID = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSellerName() {
@@ -20,11 +41,11 @@ public class SoldProduct extends Product {
         this.sellerName = sellerName;
     }
 
-    public Date getDatum() {
+    public LocalDateTime getDatum() {
         return datum;
     }
 
-    public void setDatum(Date datum) {
+    public void setDatum(LocalDateTime datum) {
         this.datum = datum;
     }
 }

@@ -23,7 +23,7 @@ public class Main extends Application {
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/language.fxml"),bundle);
         Parent root = loader.load();
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         primaryStage.show();
 

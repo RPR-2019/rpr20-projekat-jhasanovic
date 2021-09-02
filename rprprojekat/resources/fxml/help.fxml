@@ -3,9 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerHelp">
+   <left>
+      <TreeView fx:id="treeViewHelp" BorderPane.alignment="CENTER" />
+   </left>
    <center>
-      <TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <BorderPane minWidth="350.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
