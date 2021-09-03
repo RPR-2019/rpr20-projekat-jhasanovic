@@ -1,0 +1,12 @@
+#mniHelp2 > .label{
+    -fx-graphic: url("/img/help_outline.png");
+}
+#mniHelp2 .accelerator-text{
+    -fx-graphic: none;
+}
+#mniReport> .label{
+    -fx-graphic: url("/img/receipt.png");
+}
+#mniReport .accelerator-text{
+    -fx-graphic: none;
+}

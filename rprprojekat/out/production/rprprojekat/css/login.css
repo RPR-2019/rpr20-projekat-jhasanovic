@@ -1,0 +1,6 @@
+.emptyField{
+    -fx-background-color: lightpink;
+}
+.nonEmptyField{
+    -fx-background-color: yellowgreen;
+}

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ProductInfoController">
+    <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0">
+        <children>
+            <ImageView fitHeight="200.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                <image>
+                    <Image url="@../png/meds.png" />
+                </image></ImageView>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <children>
+                    <Label text="%ime" />
+                    <Label fx:id="nameFld" maxWidth="400.0" text="Label" wrapText="true" />
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <children>
+                    <Label text="%sifra" />
+                    <Label fx:id="idFld" maxWidth="400.0" text="Label" wrapText="true" />
+                </children>
+            </HBox>
+            <HBox spacing="10.0">
+                <children>
+                    <Label text="%proizvodjac" />
+                    <Label fx:id="manufacturerFld" maxWidth="400.0" text="Label" wrapText="true" />
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <children>
+                    <Label text="%farmaceutskiOblik" />
+                    <Label fx:id="typeFld" maxHeight="-Infinity" maxWidth="400.0" text="Label" wrapText="true" />
+                </children>
+            </HBox>
+            <HBox spacing="10.0">
+                <children>
+                    <Label text="%nacinUpotrebe" />
+                    <Label fx:id="administrationFld" maxWidth="400.0" text="Label" wrapText="true" />
+                </children></HBox>
+            <HBox spacing="10.0">
+                <children>
+                    <Label text="%opis" />
+                    <Label fx:id="descriptionFld" maxWidth="400.0" text="Label" wrapText="true" />
+                </children></HBox>
+            <HBox layoutX="30.0" layoutY="380.0" spacing="10.0">
+                <children>
+                    <Label text="%sastav" />
+                    <Label fx:id="ingredientsFld" maxWidth="400.0" text="Label" wrapText="true" />
+                </children>
+            </HBox>
+            <HBox spacing="10.0">
+                <children>
+                    <Label text="%napomene" />
+                    <Label fx:id="notesFld" maxWidth="400.0" text="Label" wrapText="true" />
+                </children>
+            </HBox>
+            <HBox spacing="10.0">
+                <children>
+                    <Label text="%namjena" />
+                    <Label fx:id="purposeFld" maxWidth="400.0" text="Label" wrapText="true" />
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <children>
+                    <Label text="%kolicina" />
+                    <Button fx:id="minusBtn" mnemonicParsing="false" onAction="#minusBtnClick" prefHeight="26.0" prefWidth="26.0" text="-" />
+                    <TextField fx:id="quantityFld" alignment="CENTER" />
+                    <Button fx:id="plusBtn" mnemonicParsing="false" onAction="#plusBtnClick" prefHeight="26.0" prefWidth="26.0" text="+" />
+                </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" spacing="10.0">
+                <children>
+                    <Label text="%total">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </Label>
+                    <Label fx:id="totalFld" text="Label">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                    </Label>
+                </children>
+                <VBox.margin>
+                    <Insets top="30.0" />
+                </VBox.margin>
+            </HBox>
+            <ButtonBar>
+                <buttons>
+                    <Button fx:id="cancelBtn" cancelButton="true" mnemonicParsing="false" onAction="#cancelBtnClick" text="%odustani" />
+                    <Button fx:id="addToCartBtn" defaultButton="true" mnemonicParsing="false" onAction="#addToCartBtnClick" text="%cartAdd" />
+                </buttons>
+            </ButtonBar>
+        </children>
+        <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        </padding>
+    </VBox>
+</ScrollPane>
