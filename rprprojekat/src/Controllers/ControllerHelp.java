@@ -39,7 +39,7 @@ public class ControllerHelp {
     private List<String> en = new ArrayList<>();
 
     @FXML
-    public void initialize(){
+    public void initialize() throws IOException {
         bs.addAll(Arrays.asList("Početna","Kreiranje izvještaja","Dodavanje novog proizvoda",
                 "Ažuriranje proizvoda","Brisanje proizvoda","Dodavanje proizvoda u korpu","Naplata"));
         en.addAll(Arrays.asList("Get started","Creating reports","Adding new products",
@@ -47,6 +47,10 @@ public class ControllerHelp {
 
         if(l.getLang().equals("bs")) values(bs);
         else if(l.getLang().equals("en"))values(en);
+
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpMenuHome.fxml"), bundle);
+        borderPane.setCenter(connectionPage);
 
         treeViewHelp.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             try {

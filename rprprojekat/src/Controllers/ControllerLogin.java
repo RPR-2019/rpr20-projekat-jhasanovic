@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.Language;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class ControllerLogin {
+    private Language l = Language.getInstance();
     @FXML
     public Button loginBtn;
     @FXML
@@ -58,6 +60,8 @@ public class ControllerLogin {
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        if(l.getLang().equals("bs")) myStage.setTitle("Apoteka");
+        else if(l.getLang().equals("en")) myStage.setTitle("Pharmacy");
         myStage.show();
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();

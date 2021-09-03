@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import sample.Language;
 
@@ -27,7 +28,7 @@ public class ControllerLanguage implements Initializable {
     @FXML
     public Button startBtn;
     @FXML
-    public ChoiceBox<String> languageChoice = new ChoiceBox<>(options);
+    public ComboBox<String> languageChoice = new ComboBox<>(options);
 
     Language l = Language.getInstance();
 
@@ -49,6 +50,8 @@ public class ControllerLanguage implements Initializable {
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"), bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        if(l.getLang().equals("bs")) myStage.setTitle("Prijava");
+        else if(l.getLang().equals("en")) myStage.setTitle("Login");
         myStage.show();
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();

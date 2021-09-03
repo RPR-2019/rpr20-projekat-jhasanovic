@@ -70,6 +70,12 @@ public class ControllerPregled {
 
     ObservableList<String> opcije = FXCollections.observableArrayList("Po nazivu","Po šifri");
     ObservableList<String> options = FXCollections.observableArrayList("By category","By ID");
+    ObservableList<String> administrationBS = FXCollections.observableArrayList("Lokalno","Peroralno","Sublingvalno","Rektalno","Intrakutano","Supkutano","Intramuskularno","Intraartikularno","Intravenski");
+    ObservableList<String> administrationEN = FXCollections.observableArrayList("Local","Peroral","Sublingual","Rectal","Intracutaneous","Subcutaneous","Intramuscular","Intraarticular","Intravenous");
+    ObservableList<String> typeBS = FXCollections.observableArrayList("Injekcija","Kapsule","Krema","Mast","Otopina","Sirup","Tablete");
+    ObservableList<String> typeEN = FXCollections.observableArrayList("Injection","Capsules","Cream","Ointment","Solution","Syrup","Pills");
+    ObservableList<String> purposeBS = FXCollections.observableArrayList("Antipiretik","Analgetik","Antibiotik","Antidepresant","Antikoagulant","Antiseptik","Sedativ");
+    ObservableList<String> purposeEN = FXCollections.observableArrayList("Antipyretic","Analgesic","Antibiotic","Antidepressant","Anticoagulant","Antiseptic","Sedative");
 
 
     @FXML
@@ -94,7 +100,7 @@ public class ControllerPregled {
                 if(choiceSearch.getValue().equals("Po nazivu") &&
                         p.getName().toLowerCase().contains(lowerCaseFilter)) return true;
                 if(choiceSearch.getValue().equals("Po šifri") &&
-                        p.getID().toLowerCase().contains(lowerCaseFilter)) return true;
+                        p.getID().toString().contains(lowerCaseFilter)) return true;
                 else return false;
             });
         });
@@ -134,6 +140,21 @@ public class ControllerPregled {
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/dodajProizvod.fxml"),bundle);
         Parent root = loader.load();
+        ControllerAddProduct addProduct = loader.getController();
+
+        if(l.getLang().equals("bs")){
+            myStage.setTitle("Dodavanje novog proizvoda");
+            addProduct.choiceAdMethod.setItems(administrationBS.sorted());
+            addProduct.choiceType.setItems(typeBS.sorted());
+            addProduct.choicePurpose.setItems(purposeBS.sorted());
+        }
+
+        else if(l.getLang().equals("en")){
+            myStage.setTitle("Adding a new product");
+            addProduct.choiceAdMethod.setItems(administrationEN.sorted());
+            addProduct.choiceType.setItems(typeEN.sorted());
+            addProduct.choicePurpose.setItems(purposeEN.sorted());
+        }
 
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -157,7 +178,7 @@ public class ControllerPregled {
             ControllerUpdateProduct updateProduct = loader.getController();
 
             updateProduct.setIndex(productList.getSelectionModel().getSelectedItem().getID());
-            updateProduct.fldID.setText(productList.getSelectionModel().getSelectedItem().getID());
+            updateProduct.fldID.setText(String.valueOf(productList.getSelectionModel().getSelectedItem().getID()));
             updateProduct.fldName.setText(productList.getSelectionModel().getSelectedItem().getName());
             updateProduct.fldPrice.setText(String.valueOf(productList.getSelectionModel().getSelectedItem().getPrice()));
             updateProduct.fldQuantity.setText(String.valueOf(productList.getSelectionModel().getSelectedItem().getQuantity()));
@@ -169,6 +190,30 @@ public class ControllerPregled {
             updateProduct.fldIngredients.setText(productList.getSelectionModel().getSelectedItem().getIngredients());
             updateProduct.choiceType.setValue(productList.getSelectionModel().getSelectedItem().getMedicationType());
 
+
+            if(l.getLang().equals("bs")){
+                myStage.setTitle("Ažuriranje proizvoda");
+                updateProduct.choiceAdMethod.setItems(administrationBS.sorted());
+                updateProduct.choiceAdMethod.getSelectionModel().select(productList.getSelectionModel().getSelectedItem().getAdministrationMethod());
+
+                updateProduct.choiceType.setItems(typeBS.sorted());
+                updateProduct.choiceType.getSelectionModel().select(productList.getSelectionModel().getSelectedItem().getMedicationType());
+
+                updateProduct.choicePurpose.setItems(purposeBS.sorted());
+                updateProduct.choicePurpose.getSelectionModel().select(productList.getSelectionModel().getSelectedItem().getPurpose());
+            }
+
+            else if(l.getLang().equals("en")){
+                myStage.setTitle("Updating a product");
+                updateProduct.choiceAdMethod.setItems(administrationEN.sorted());
+                updateProduct.choiceAdMethod.getSelectionModel().select(productList.getSelectionModel().getSelectedItem().getAdministrationMethod());
+
+                updateProduct.choiceType.setItems(typeEN.sorted());
+                updateProduct.choiceType.getSelectionModel().select(productList.getSelectionModel().getSelectedItem().getMedicationType());
+
+                updateProduct.choicePurpose.setItems(purposeEN.sorted());
+                updateProduct.choicePurpose.getSelectionModel().select(productList.getSelectionModel().getSelectedItem().getPurpose());
+            }
             myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             myStage.setOnHidden(new EventHandler<WindowEvent>() {
                 @Override
@@ -229,7 +274,7 @@ public class ControllerPregled {
                 productInfo.getPrice(productList.getSelectionModel().getSelectedItem().getPrice());
 
                 productInfo.nameFld.setText(productList.getSelectionModel().getSelectedItem().getName());
-                productInfo.idFld.setText(productList.getSelectionModel().getSelectedItem().getID());
+                productInfo.idFld.setText(String.valueOf(productList.getSelectionModel().getSelectedItem().getID()));
                 productInfo.typeFld.setText(productList.getSelectionModel().getSelectedItem().getPurpose());
                 productInfo.quantityFld.setText("1");
                 productInfo.totalFld.setText((String.format("%.2f",productList.getSelectionModel().getSelectedItem().getPrice())) + " KM");
@@ -241,6 +286,8 @@ public class ControllerPregled {
                 productInfo.descriptionFld.setText(productList.getSelectionModel().getSelectedItem().getDescription());
                 productInfo.ingredientsFld.setText(productList.getSelectionModel().getSelectedItem().getIngredients());
 
+                if(l.getLang().equals("bs")) myStage.setTitle("Podaci o proizvodu");
+                else if(l.getLang().equals("en")) myStage.setTitle("Product info");
                 myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
                 myStage.setResizable(false);
                 myStage.show();
@@ -272,6 +319,7 @@ public class ControllerPregled {
         Stage myStage = new Stage();
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"),bundle);
+        myStage.setTitle("Apoteka");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.show();
     }
@@ -285,6 +333,7 @@ public class ControllerPregled {
         Stage myStage = new Stage();
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"),bundle);
+        myStage.setTitle("Pharmacy");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.show();
 
@@ -294,6 +343,8 @@ public class ControllerPregled {
         Stage myStage = new Stage();
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/about.fxml"),bundle);
+        if(l.getLang().equals("bs")) myStage.setTitle("O aplikaciji");
+        else if(l.getLang().equals("en")) myStage.setTitle("About app");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setResizable(false);
         myStage.show();
@@ -337,6 +388,8 @@ public class ControllerPregled {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/help.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         //myStage.setResizable(false);
+        if(l.getLang().equals("bs")) myStage.setTitle("Pomoć");
+        else if(l.getLang().equals("en")) myStage.setTitle("Help");
         myStage.show();
     }
 

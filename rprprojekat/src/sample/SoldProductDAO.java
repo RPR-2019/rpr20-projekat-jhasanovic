@@ -58,7 +58,7 @@ public class SoldProductDAO {
         try {
             ResultSet rs = sviProdaniProizvodiUpit.executeQuery();
             while(rs.next()){
-                String id = rs.getString(1);
+                Integer id = rs.getInt(1);
                 String name = rs.getString(2);
                 String seller=rs.getString(3);
                 String date=rs.getString(4);
@@ -77,7 +77,7 @@ public class SoldProductDAO {
         try {
             ResultSet rs = prodaniNaDatumUpit.executeQuery();
             while(rs.next()){
-                String id = rs.getString(1);
+                Integer id = rs.getInt(1);
                 String name = rs.getString(2);
                 String seller=rs.getString(3);
                 String date=rs.getString(4);
@@ -93,7 +93,7 @@ public class SoldProductDAO {
 
    /* public void updateProdani(SoldProduct p){
         try {
-            dodajProdaniUpit.setString(1, p.getID());
+            dodajProdaniUpit.setInt(1, p.getID());
             dodajProdaniUpit.setString(2, p.getName());
             dodajProdaniUpit.setString(3, p.getSellerName());
             dodajProdaniUpit.setString(4, p.getDate());

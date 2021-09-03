@@ -21,7 +21,7 @@
         <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
         <Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
         <Label text="v 1.0 2021" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" />
-        <Hyperlink text="https://github.com/RPR-2019/rpr20-zadaca4-jhasanovic" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BASELINE" />
+        <Hyperlink text="https://github.com/RPR-2019/rpr20-projekat-jhasanovic" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BASELINE" />
         <Label text="Jasmina Hasanović" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
             <padding>
                 <Insets right="10.0" />

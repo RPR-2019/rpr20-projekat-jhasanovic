@@ -2,12 +2,12 @@ package sample;
 
 public class Product {
     private String name; //ime lijeka
-    private String ID;//kod lijeka
+    private Integer ID;//kod lijeka
     private Double price;//cijena lijeka
     private Integer quantity;//kolicina lijeka
     private String purpose;//namjena lijeka
     private String notes;//dodatne napomene
-    private String administrationMethod;//nacin upotrebe (enum??)
+    private String administrationMethod;//nacin upotrebe
     private String manufacturer;//proizvodjac
     private String description;//opis lijeka
     private String ingredients;//sastav lijeka
@@ -78,7 +78,7 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Product(String name, String ID, Double price, Integer quantity, String purpose, String notes, String administrationMethod, String manufacturer, String description, String ingredients, String medicationType) {
+    public Product(String name, Integer ID, Double price, Integer quantity, String purpose, String notes, String administrationMethod, String manufacturer, String description, String ingredients, String medicationType) {
         this.name = name;
         this.ID = ID;
         this.price = price;
@@ -100,11 +100,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 

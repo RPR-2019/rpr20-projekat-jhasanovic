@@ -5,23 +5,23 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class SoldProduct{
-    private String ID;
+    private Integer ID;
     private String name;
     private String sellerName;
     private LocalDateTime datum;
 
-    public SoldProduct(String id, String name, String sellerName, LocalDateTime datum) {
+    public SoldProduct(Integer id, String name, String sellerName, LocalDateTime datum) {
         this.ID = id;
         this.name = name;
         this.sellerName = sellerName;
         this.datum = datum;
     }
 
-    public String getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public void setID(String id) {
+    public void setID(Integer id) {
         this.ID = id;
     }
 

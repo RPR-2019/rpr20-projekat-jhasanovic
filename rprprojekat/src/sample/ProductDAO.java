@@ -69,7 +69,7 @@ public class ProductDAO {
             ResultSet rs = pretragaUpit.executeQuery();
             while(rs.next()){
                 String name = rs.getString(1);
-                String id = rs.getString(2);
+                Integer id = rs.getInt(2);
                 Double price=rs.getDouble(3);
                 int quantity=rs.getInt(4);
                 String purpose=rs.getString(5);
@@ -94,7 +94,7 @@ public class ProductDAO {
             ResultSet rs = sviProizvodiUpit.executeQuery();
             while(rs.next()){
                 String name = rs.getString(1);
-                String id = rs.getString(2);
+                Integer id = rs.getInt(2);
                 Double price=rs.getDouble(3);
                 int quantity=rs.getInt(4);
                 String purpose=rs.getString(5);
@@ -116,7 +116,7 @@ public class ProductDAO {
     public void addProduct(Product p){
         try {
             dodajProizvodUpit.setString(1, p.getName());
-            dodajProizvodUpit.setString(2, p.getID());
+            dodajProizvodUpit.setInt(2, p.getID());
             dodajProizvodUpit.setDouble(3, p.getPrice());
             dodajProizvodUpit.setInt(4, p.getQuantity());
             dodajProizvodUpit.setString(5, p.getPurpose());
@@ -133,10 +133,10 @@ public class ProductDAO {
             System.out.println("Greška prilikom dodavanja proizvoda\nIzuzetak: " + sqlException.getMessage());
         }
     }
-    public void updateProduct(Product p,String index){
+    public void updateProduct(Product p,Integer index){
         try {
             azurirajProizvodUpit.setString(1, p.getName());
-            azurirajProizvodUpit.setString(2, p.getID());
+            azurirajProizvodUpit.setInt(2, p.getID());
             azurirajProizvodUpit.setDouble(3, p.getPrice());
             azurirajProizvodUpit.setInt(4, p.getQuantity());
             azurirajProizvodUpit.setString(5, p.getPurpose());
@@ -146,7 +146,7 @@ public class ProductDAO {
             azurirajProizvodUpit.setString(9, p.getDescription());
             azurirajProizvodUpit.setString(10, p.getIngredients());
             azurirajProizvodUpit.setString(11, p.getMedicationType());
-            azurirajProizvodUpit.setString(12,index);
+            azurirajProizvodUpit.setInt(12,index);
             azurirajProizvodUpit.executeUpdate();
 
         } catch (SQLException sqlException) {
@@ -155,7 +155,7 @@ public class ProductDAO {
     }
     public void removeProduct(Product p) {
         try {
-            ukloniProizvodUpit.setString(1, p.getID());
+            ukloniProizvodUpit.setInt(1, p.getID());
             ukloniProizvodUpit.executeUpdate();
 
         } catch (SQLException sqlException) {
@@ -166,7 +166,7 @@ public class ProductDAO {
     public void reduceQuantity(Product p,int kolicina){
         try {
             promjenaKolicineUpit.setInt(1, kolicina);
-            promjenaKolicineUpit.setString(2,p.getID());
+            promjenaKolicineUpit.setInt(2,p.getID());
             promjenaKolicineUpit.executeUpdate();
 
         } catch (SQLException sqlException) {
