@@ -13,7 +13,7 @@ public class SoldProductDAO {
     private SoldProductDAO() throws SQLException {
         //String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/.apotekaapp/apoteka.db";
         String url = "jdbc:sqlite:apoteka.db";
-        conn = DriverManager.getConnection(url);
+        conn = SqliteHelper.getConn();
         try {
             sviProdaniProizvodiUpit = conn.prepareStatement("SELECT * FROM prodani");
         }
@@ -91,7 +91,7 @@ public class SoldProductDAO {
         return rezultat;
     }*/
 
-   /* public void updateProdani(SoldProduct p){
+    public void dodajProdani(SoldProduct p){
         try {
             dodajProdaniUpit.setInt(1, p.getID());
             dodajProdaniUpit.setString(2, p.getName());
@@ -103,5 +103,5 @@ public class SoldProductDAO {
         } catch (SQLException sqlException) {
             System.out.println("Greška prilikom dodavanja prodanog proizvoda\nIzuzetak: " + sqlException.getMessage());
         }
-    }*/
+    }
 }

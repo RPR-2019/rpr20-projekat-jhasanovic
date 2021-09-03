@@ -1,20 +1,16 @@
 package sample;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 public class SoldProduct{
     private Integer ID;
     private String name;
     private String sellerName;
-    private LocalDateTime datum;
+    private String date;
 
-    public SoldProduct(Integer id, String name, String sellerName, LocalDateTime datum) {
+    public SoldProduct(Integer id, String name, String sellerName, String date) {
         this.ID = id;
         this.name = name;
         this.sellerName = sellerName;
-        this.datum = datum;
+        this.date = date;
     }
 
     public Integer getID() {
@@ -41,11 +37,11 @@ public class SoldProduct{
         this.sellerName = sellerName;
     }
 
-    public LocalDateTime getDatum() {
-        return datum;
+    public String getDate() {
+        return date;
     }
 
-    public void setDatum(LocalDateTime datum) {
-        this.datum = datum;
+    public void setDate(String date) {
+        this.date = date;
     }
 }

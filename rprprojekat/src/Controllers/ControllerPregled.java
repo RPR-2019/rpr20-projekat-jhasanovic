@@ -1,10 +1,12 @@
 package Controllers;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +19,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import sample.Language;
-import sample.Product;
-import sample.ProductDAO;
+import sample.*;
+
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
@@ -69,6 +74,18 @@ public class ControllerPregled {
     public Button btnFinalize;
     @FXML
     public Button btnRemoveProduct;
+    @FXML
+    public TableColumn<CartProduct,String> columnIDCart;
+    @FXML
+    public TableColumn<CartProduct,String> columnNameCart;
+    @FXML
+    public TableColumn<CartProduct,String> columnQuantityCart;
+    @FXML
+    public TableColumn<CartProduct,String> columnPriceCart;
+    @FXML
+    public TableView<CartProduct> tableCart;
+    @FXML
+    public Tab tabHomepage;
 
     ObservableList<String> opcije = FXCollections.observableArrayList("Po nazivu","Po šifri");
     ObservableList<String> options = FXCollections.observableArrayList("By category","By ID");
@@ -82,8 +99,9 @@ public class ControllerPregled {
 
     @FXML
     public ChoiceBox<String> choiceSearch=new ChoiceBox<>(opcije);
-
     private ProductDAO dao;
+    private CartDAO daoCart;
+    private SoldProductDAO daoSold;
     private Language l;
 
 
@@ -113,8 +131,19 @@ public class ControllerPregled {
     }
     @FXML
     public void initialize() throws SQLException {
+        tabHomepage.isSelected();
+        dao=ProductDAO.getInstance();
+        daoCart=CartDAO.getInstance();
+        daoSold=SoldProductDAO.getInstance();
 
+        ArrayList<CartProduct> cart = new ArrayList<>(daoCart.getProducts());
+        cart.forEach((c)->dao.changeQuantity(c.getID(),dao.getQuantity(c.getID())+c.getQuantity()));
+
+        daoCart.isprazni();//korpa se prazni nakon svakog zatvaranja programa
+        tableCart.getSelectionModel().clearSelection();
+        tableCart.setItems(daoCart.getProducts());
         l=Language.getInstance();
+
         if(l.getLang().equals("bs")) choiceSearch.setItems(opcije);
         else if(l.getLang().equals("en")) choiceSearch.setItems(options);
 
@@ -126,13 +155,18 @@ public class ControllerPregled {
             columnPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
             columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-            dao=ProductDAO.getInstance();
-
         productList.setItems(dao.getProducts());
         filtriraj();
         choiceSearch.setOnAction((event) -> {
             searchBar.setText("");
         });
+
+        columnNameCart.setCellValueFactory(new PropertyValueFactory<>("name")); //s mora biti isto kao naziv atributa u modelu Product
+        columnIDCart.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        columnPriceCart.setCellValueFactory(new PropertyValueFactory<>("price"));
+        columnQuantityCart.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+        tableCart.setItems(daoCart.getProducts());
 
         }
 
@@ -315,6 +349,14 @@ public class ControllerPregled {
             }
             alert.showAndWait();
         }
+        myStage.setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                productList.getSelectionModel().clearSelection();
+                productList.setItems(dao.getProducts());
+                filtriraj();
+            }
+        });
     }
 
     public void bsMenuClick(ActionEvent actionEvent) throws IOException {
@@ -359,12 +401,29 @@ public class ControllerPregled {
     }
 
     public void cancelCartCLick(ActionEvent actionEvent) {
-        //isprazni korpu i vrati kolicine na staro stanje
+        //vratiti kolicine na staro stanje:
+        //preuzeti sve lijekove iz korpe
+        ArrayList<CartProduct> cart = new ArrayList<>(daoCart.getProducts());
+        //za svaki od njih preuzeti kolicinu
+        //tu kolicinu dodati nazad u proizvod tabelu
+        cart.forEach((c)->dao.changeQuantity(c.getID(),dao.getQuantity(c.getID())+c.getQuantity()));
+        //isprazniti korpu
+        //obrisati podatke iz tabele korpa
+        daoCart.isprazni();
+        tableCart.getSelectionModel().clearSelection();
+        tableCart.setItems(daoCart.getProducts());
     }
 
     public void finalizeBtnClick(ActionEvent actionEvent) {
-        //smanji kolicine trajno
-        //kreiraj instancu klase sold object za svaki prodani proizvod
+        //kreiraj instancu klase sold object za svaki proizvod u korpi
+        //za svaki proizvod iz tabele korpa kreirati red u tabeli prodani sa trenutnim datumom i usernameom
+        ArrayList<CartProduct> cart = daoCart.getProductsArrayList();
+        cart.forEach((c)->daoSold.dodajProdani(new SoldProduct(c.getID(),c.getName(), LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),"Jasmina")));
+        //otvoriti kreirani racun
+
+        daoCart.isprazni();
+        tableCart.getSelectionModel().clearSelection();
+        tableCart.setItems(daoCart.getProducts());
     }
 
     public void removeBtnClick(ActionEvent actionEvent) {
@@ -402,7 +461,40 @@ public class ControllerPregled {
     }
 
     public void exitMenuClick(ActionEvent actionEvent) {
-        //zatvoriti sve prozore
+        //isprazniti korpu i vratiti kolicine
         System.exit(0);
+    }
+
+    public void tabCartUnselected(Event event) {
+        tableCart.getSelectionModel().clearSelection();
+        tableCart.setItems(daoCart.getProducts());
+        productList.getSelectionModel().clearSelection();
+        productList.setItems(dao.getProducts());
+    }
+
+    public void removeCartBtnClick(ActionEvent actionEvent) {
+        if(tableCart.getSelectionModel().getSelectedItem()!=null) {
+            int q = tableCart.getSelectionModel().getSelectedItem().getQuantity();
+            int id = tableCart.getSelectionModel().getSelectedItem().getID();
+            daoCart.removeProduct(tableCart.getSelectionModel().getSelectedItem());
+            tableCart.getSelectionModel().clearSelection();
+            tableCart.setItems(daoCart.getProducts());
+            //vratiti stanje na staro
+            dao.changeQuantity(id,q+dao.getQuantity(id));
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            if(l.getLang().equals("bs")) {
+                alert.setTitle("Upozorenje");
+                alert.setHeaderText("Niste odabrali proizvod!");
+                alert.setContentText("Za brisanje proizvoda odaberite proizvod iz liste");
+            }
+            if(l.getLang().equals("en")) {
+                alert.setTitle("Warning");
+                alert.setHeaderText("No product is selected!");
+                alert.setContentText("Select a product you wish to remove from the list");
+            }
+            alert.showAndWait();
+        }
     }
 }

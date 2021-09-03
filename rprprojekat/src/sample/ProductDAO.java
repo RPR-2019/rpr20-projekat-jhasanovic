@@ -13,12 +13,13 @@ import java.util.Scanner;
 public class ProductDAO {
     private static ProductDAO instance=null;
     private Connection conn;
-    private PreparedStatement sviProizvodiUpit,pretragaUpit,dodajProizvodUpit,ukloniProizvodUpit,azurirajProizvodUpit,promjenaKolicineUpit;
+    private PreparedStatement sviProizvodiUpit,pretragaUpit,dodajProizvodUpit,ukloniProizvodUpit,
+            azurirajProizvodUpit,promjenaKolicineUpit,dajKolicinuUpit;
 
     private ProductDAO() throws SQLException {
         //String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/.apotekaapp/apoteka.db";
         String url = "jdbc:sqlite:apoteka.db";
-        conn = DriverManager.getConnection(url);
+        conn = SqliteHelper.getConn();
         try {
             sviProizvodiUpit = conn.prepareStatement("SELECT * FROM proizvod ORDER BY name");
         }
@@ -32,6 +33,7 @@ public class ProductDAO {
         azurirajProizvodUpit = conn.prepareStatement("UPDATE proizvod SET name=?,id=?,price=?,quantity=?," +
                 "purpose=?,notes=?,administrationMethod=?,manufacturer=?,description=?,ingredients=?,type=? WHERE id=?");
         promjenaKolicineUpit = conn.prepareStatement("UPDATE proizvod SET quantity=? WHERE id=?");
+        dajKolicinuUpit = conn.prepareStatement("SELECT quantity FROM proizvod WHERE id=?");
     }
 
     private void kreirajBazu() {
@@ -62,10 +64,10 @@ public class ProductDAO {
         return instance;
     }
 
-    public ArrayList<Product> pretraga(String s) {
+    public ArrayList<Product> pretraga(Integer sifra) {
         ArrayList<Product> rezultat = new ArrayList<>();
         try {
-            pretragaUpit.setString(1,s);
+            pretragaUpit.setInt(1,sifra);
             ResultSet rs = pretragaUpit.executeQuery();
             while(rs.next()){
                 String name = rs.getString(1);
@@ -163,14 +165,28 @@ public class ProductDAO {
         }
     }
 
-    public void reduceQuantity(Product p,int kolicina){
+    public void changeQuantity(Integer id,int kolicina){
         try {
             promjenaKolicineUpit.setInt(1, kolicina);
-            promjenaKolicineUpit.setInt(2,p.getID());
+            promjenaKolicineUpit.setInt(2,id);
             promjenaKolicineUpit.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println("Greška prilikom ažuriranja količine proizvoda\nIzuzetak: " + sqlException.getMessage());
         }
+    }
+
+    public int getQuantity(Integer id){//vraca kolicinu proizvoda
+        int quantity=0;
+        try {
+            dajKolicinuUpit.setInt(1, id);
+
+            ResultSet rs = dajKolicinuUpit.executeQuery();
+            quantity = rs.getInt(1);
+
+        } catch (SQLException sqlException) {
+            System.out.println("Greška prilikom dohvaćanja količine\nIzuzetak: " + sqlException.getMessage());
+        }
+        return quantity;
     }
 }
