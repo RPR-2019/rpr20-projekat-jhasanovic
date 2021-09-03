@@ -8,11 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import sample.Language;
@@ -165,6 +167,8 @@ public class ControllerPregled {
                 filtriraj();
             }
         });
+        myStage.initModality(Modality.WINDOW_MODAL);
+        myStage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
         myStage.setResizable(false);
         myStage.show();
     }
@@ -223,6 +227,8 @@ public class ControllerPregled {
                     filtriraj();
                 }
             });
+            myStage.initModality(Modality.WINDOW_MODAL);
+            myStage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
             myStage.setResizable(false);
             myStage.show();
             searchBar.setText("");
@@ -289,6 +295,8 @@ public class ControllerPregled {
                 if(l.getLang().equals("bs")) myStage.setTitle("Podaci o proizvodu");
                 else if(l.getLang().equals("en")) myStage.setTitle("Product info");
                 myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+                myStage.initModality(Modality.WINDOW_MODAL);
+                myStage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
                 myStage.setResizable(false);
                 myStage.show();
             }
