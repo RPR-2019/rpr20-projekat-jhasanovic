@@ -1,5 +1,6 @@
 package Controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -15,15 +16,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 import sample.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -69,7 +73,7 @@ public class ControllerPregled {
     @FXML
     public MenuBar menu;
     @FXML
-    public Button btnCancelCart;
+    public Button btnDiscardCart;
     @FXML
     public Button btnFinalize;
     @FXML
@@ -83,12 +87,14 @@ public class ControllerPregled {
     @FXML
     public TableColumn<CartProduct,String> columnPriceCart;
     @FXML
+    TableColumn<CartProduct, Void> colBtn;
+    @FXML
     public TableView<CartProduct> tableCart;
     @FXML
     public Tab tabHomepage;
 
-    ObservableList<String> opcije = FXCollections.observableArrayList("Po nazivu","Po šifri");
-    ObservableList<String> options = FXCollections.observableArrayList("By category","By ID");
+    ObservableList<String> opcije = FXCollections.observableArrayList("Po nazivu","Po šifri","Po namjeni");
+    ObservableList<String> options = FXCollections.observableArrayList("By category","By ID","By purpose");
     ObservableList<String> administrationBS = FXCollections.observableArrayList("Lokalno","Peroralno","Sublingvalno","Rektalno","Intrakutano","Supkutano","Intramuskularno","Intraartikularno","Intravenski");
     ObservableList<String> administrationEN = FXCollections.observableArrayList("Local","Peroral","Sublingual","Rectal","Intracutaneous","Subcutaneous","Intramuscular","Intraarticular","Intravenous");
     ObservableList<String> typeBS = FXCollections.observableArrayList("Injekcija","Kapsule","Krema","Mast","Otopina","Sirup","Tablete");
@@ -121,6 +127,8 @@ public class ControllerPregled {
                         p.getName().toLowerCase().contains(lowerCaseFilter)) return true;
                 if(choiceSearch.getValue().equals("Po šifri") &&
                         p.getID().toString().contains(lowerCaseFilter)) return true;
+                if(choiceSearch.getValue().equals("Po namjeni") && p.getPurpose()!=null &&
+                        p.getPurpose().toLowerCase().contains(lowerCaseFilter)) return true;
                 else return false;
             });
         });
@@ -141,7 +149,17 @@ public class ControllerPregled {
 
         daoCart.isprazni();//korpa se prazni nakon svakog zatvaranja programa
         tableCart.getSelectionModel().clearSelection();
-        tableCart.setItems(daoCart.getProducts());
+        new Thread(() -> {
+            try {
+                while (true) {
+                        Platform.runLater(() -> tableCart.setItems(daoCart.getProducts()));
+                    Thread.sleep(1000);
+                }
+            } catch (InterruptedException e) {
+
+            }
+        }).start();
+
         l=Language.getInstance();
 
         if(l.getLang().equals("bs")) choiceSearch.setItems(opcije);
@@ -156,6 +174,7 @@ public class ControllerPregled {
             columnQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
         productList.setItems(dao.getProducts());
+
         filtriraj();
         choiceSearch.setOnAction((event) -> {
             searchBar.setText("");
@@ -166,9 +185,41 @@ public class ControllerPregled {
         columnPriceCart.setCellValueFactory(new PropertyValueFactory<>("price"));
         columnQuantityCart.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
+        addButtonToTable();
         tableCart.setItems(daoCart.getProducts());
 
         }
+
+    private void addButtonToTable() {
+
+        Callback<TableColumn<CartProduct, Void>, TableCell<CartProduct, Void>> cellFactory = new Callback<TableColumn<CartProduct, Void>, TableCell<CartProduct, Void>>() {
+            @Override
+            public TableCell<CartProduct, Void> call(final TableColumn<CartProduct, Void> param) {
+                final TableCell<CartProduct, Void> cell = new TableCell<CartProduct, Void>() {
+
+                    private final Button btn = new Button("");
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            removeCartBtnClick(getTableView().getItems().get(getIndex()));
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                            btn.setGraphic(new ImageView("img/trash.png"));
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+        colBtn.setCellFactory(cellFactory);
+    }
 
 
     public void addBtnClick(ActionEvent actionEvent) throws Exception{
@@ -400,7 +451,7 @@ public class ControllerPregled {
         myStage.show();
     }
 
-    public void cancelCartCLick(ActionEvent actionEvent) {
+    public void discardCartClick(ActionEvent actionEvent) {
         //vratiti kolicine na staro stanje:
         //preuzeti sve lijekove iz korpe
         ArrayList<CartProduct> cart = new ArrayList<>(daoCart.getProducts());
@@ -418,7 +469,12 @@ public class ControllerPregled {
         //kreiraj instancu klase sold object za svaki proizvod u korpi
         //za svaki proizvod iz tabele korpa kreirati red u tabeli prodani sa trenutnim datumom i usernameom
         ArrayList<CartProduct> cart = daoCart.getProductsArrayList();
-        cart.forEach((c)->daoSold.dodajProdani(new SoldProduct(c.getID(),c.getName(), LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")),"Jasmina")));
+        //ako je datum isti i seller name isti, updateati
+        cart.forEach((c)-> {
+            int max = daoSold.getMaxID();
+            daoSold.dodajProdani(new SoldProduct(max + 1, c.getID(), c.getName(), c.getQuantity(), "Jasmina", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))));
+        });
+
         //otvoriti kreirani racun
 
         daoCart.isprazni();
@@ -454,6 +510,8 @@ public class ControllerPregled {
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/help.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.setMinWidth(600);
+        myStage.setMinHeight(400);
         //myStage.setResizable(false);
         if(l.getLang().equals("bs")) myStage.setTitle("Pomoć");
         else if(l.getLang().equals("en")) myStage.setTitle("Help");
@@ -465,36 +523,12 @@ public class ControllerPregled {
         System.exit(0);
     }
 
-    public void tabCartUnselected(Event event) {
-        tableCart.getSelectionModel().clearSelection();
-        tableCart.setItems(daoCart.getProducts());
-        productList.getSelectionModel().clearSelection();
-        productList.setItems(dao.getProducts());
-    }
-
-    public void removeCartBtnClick(ActionEvent actionEvent) {
-        if(tableCart.getSelectionModel().getSelectedItem()!=null) {
-            int q = tableCart.getSelectionModel().getSelectedItem().getQuantity();
-            int id = tableCart.getSelectionModel().getSelectedItem().getID();
-            daoCart.removeProduct(tableCart.getSelectionModel().getSelectedItem());
+    public void removeCartBtnClick(CartProduct p) {
+            daoCart.removeProduct(p);
             tableCart.getSelectionModel().clearSelection();
             tableCart.setItems(daoCart.getProducts());
             //vratiti stanje na staro
-            dao.changeQuantity(id,q+dao.getQuantity(id));
-        }
-        else{
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            if(l.getLang().equals("bs")) {
-                alert.setTitle("Upozorenje");
-                alert.setHeaderText("Niste odabrali proizvod!");
-                alert.setContentText("Za brisanje proizvoda odaberite proizvod iz liste");
-            }
-            if(l.getLang().equals("en")) {
-                alert.setTitle("Warning");
-                alert.setHeaderText("No product is selected!");
-                alert.setContentText("Select a product you wish to remove from the list");
-            }
-            alert.showAndWait();
-        }
+            dao.changeQuantity(p.getID(),p.getQuantity()+dao.getQuantity(p.getID()));
     }
+
 }

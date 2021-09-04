@@ -96,10 +96,16 @@ public class ProductInfoController implements Initializable {
 
     public void addToCartBtnClick(ActionEvent actionEvent) {
         String price = totalFld.getText().replace(",",".").substring(0,5);
-        CartProduct p = new CartProduct(Integer.parseInt(idFld.getText()),nameFld.getText(),Integer.parseInt(quantityFld.getText()),Double.parseDouble(price));
-        daoCart.addProductToCart(p);
+        if(daoCart.getProductCount(Integer.parseInt(idFld.getText()))>0){
+            //azurirati postojeci proizvod u korpi
+            daoCart.updateCart(Integer.parseInt(idFld.getText()),Integer.parseInt(quantityFld.getText())+daoCart.getQuantity(Integer.parseInt(idFld.getText())),daoCart.getPrice(Integer.parseInt(idFld.getText()))+Double.parseDouble(price));
+        }
+        else {
+            CartProduct p = new CartProduct(Integer.parseInt(idFld.getText()), nameFld.getText(), Integer.parseInt(quantityFld.getText()), Double.parseDouble(price));
+            daoCart.addProductToCart(p);
+        }
         //smanjiti dostupne kolicine
-        dao.changeQuantity(p.getID(),dao.getQuantity(p.getID())-p.getQuantity());
+        dao.changeQuantity(Integer.parseInt(idFld.getText()),dao.getQuantity(Integer.parseInt(idFld.getText()))-Integer.parseInt(quantityFld.getText()));
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();

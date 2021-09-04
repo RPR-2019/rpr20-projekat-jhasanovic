@@ -60,6 +60,8 @@ public class ControllerLogin {
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.setMinWidth(640);
+        myStage.setMinHeight(480);
         if(l.getLang().equals("bs")) myStage.setTitle("Apoteka");
         else if(l.getLang().equals("en")) myStage.setTitle("Pharmacy");
         myStage.show();

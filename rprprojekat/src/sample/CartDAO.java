@@ -13,7 +13,7 @@ public class CartDAO {
     private static CartDAO instance=null;
     private Connection conn;
     private PreparedStatement sviProizvodiUpit,ukloniProizvodUpit,dodajUKorpuUpit,azurirajKorpuUpit,dajKolicinuUpit,
-            isprazniKorpuUpit,dajTotalUpit;
+            isprazniKorpuUpit,dajTotalUpit,istiProizvodUKorpiUpit,pretragaCijenaUpit;
 
     private CartDAO() throws SQLException {
         //String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/.apotekaapp/apoteka.db";
@@ -28,10 +28,12 @@ public class CartDAO {
         }
         ukloniProizvodUpit = conn.prepareStatement("DELETE FROM korpa WHERE id=?");
         dodajUKorpuUpit = conn.prepareStatement("INSERT INTO korpa VALUES(?,?,?,?)");
-        azurirajKorpuUpit = conn.prepareStatement("UPDATE korpa SET quantity=? WHERE id=?");
+        azurirajKorpuUpit = conn.prepareStatement("UPDATE korpa SET quantity=?,price=? WHERE id=?");
         dajKolicinuUpit = conn.prepareStatement("SELECT quantity FROM korpa WHERE id=?");
         isprazniKorpuUpit = conn.prepareStatement("DELETE FROM korpa");
         dajTotalUpit = conn.prepareStatement("SELECT SUM(price) FROM korpa");
+        istiProizvodUKorpiUpit = conn.prepareStatement("SELECT COUNT(*) FROM korpa WHERE id=?");
+        pretragaCijenaUpit = conn.prepareStatement("SELECT price FROM korpa WHERE id=?");
     }
 
     private void kreirajBazu() {
@@ -113,10 +115,11 @@ public class CartDAO {
         }
     }
 
-    public void updateCart(CartProduct p,Integer quantity){
+    public void updateCart(Integer id,Integer quantity,Double price){
         try {
             azurirajKorpuUpit.setInt(1, quantity);
-            azurirajKorpuUpit.setInt(2, p.getID());
+            azurirajKorpuUpit.setDouble(2, price);
+            azurirajKorpuUpit.setInt(3, id);
 
             azurirajKorpuUpit.executeUpdate();
 
@@ -125,10 +128,10 @@ public class CartDAO {
         }
     }
 
-    public int getQuantity(CartProduct p){//vraca kolicinu proizvoda u korpi
+    public int getQuantity(Integer id){//vraca kolicinu proizvoda u korpi
         int quantity=0;
         try {
-            dajKolicinuUpit.setInt(1, p.getID());
+            dajKolicinuUpit.setInt(1, id);
 
            ResultSet rs = dajKolicinuUpit.executeQuery();
            quantity = rs.getInt(1);
@@ -168,5 +171,30 @@ public class CartDAO {
         } catch (SQLException sqlException) {
             System.out.println("Greška prilikom brisanja proizvoda\nIzuzetak: " + sqlException.getMessage());
         }
+    }
+
+    public int getProductCount(Integer id){
+        int count=0;
+        try {
+            istiProizvodUKorpiUpit.setInt(1,id);
+            ResultSet rs = istiProizvodUKorpiUpit.executeQuery();
+            count = rs.getInt(1);
+        } catch (SQLException sqlException) {
+            System.out.println("Greška u count upitu\nIzuzetak: " + sqlException.getMessage());
+        }
+        return count;
+    }
+
+
+    public double getPrice(Integer id) {
+        double count=0;
+        try {
+            pretragaCijenaUpit.setInt(1,id);
+            ResultSet rs = pretragaCijenaUpit.executeQuery();
+            count = rs.getDouble(1);
+        } catch (SQLException sqlException) {
+            System.out.println("Greška u getPrice upitu\nIzuzetak: " + sqlException.getMessage());
+        }
+        return count;
     }
 }
