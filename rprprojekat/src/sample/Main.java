@@ -28,13 +28,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws SQLException {
-       /* ProductDAO dao=ProductDAO.getInstance();
-        System.out.println("Unesite id proizvoda: ");
-        Scanner ulaz=new Scanner(System.in);
-        String sifra=ulaz.nextLine();
-
-        for(Product p:dao.pretraga(sifra))
-            System.out.println("ID: "+p.getID()+" naziv: "+p.getName());*/
         System.err.close();
         System.setErr(System.out);
         launch(args);
