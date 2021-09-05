@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import sample.IncorrectDataException;
 import sample.Language;
 import sample.Product;
 import sample.ProductDAO;
@@ -113,45 +114,28 @@ public class ControllerAddProduct implements Initializable {
     }
 
     @FXML
-    public void btnAddClick(ActionEvent actionEvent) throws SQLException {
-        String a1=fldName.getText();
-
+    public void btnAddClick(ActionEvent actionEvent) throws IncorrectDataException {
         try {
-            Integer a2 = Integer.parseInt(fldID.getText());
-            Double a3=Double.parseDouble(fldPrice.getText());
-            Integer a4=Integer.parseInt(fldQuantity.getText());
-            String a5=choicePurpose.getValue();
-            String a6=fldNotes.getText();
-            String a7=choiceAdMethod.getValue();
-            String a8=fldManufacturer.getText();
-            String a9=fldDescription.getText();
-            String a10=fldIngredients.getText();
-            String a11=choiceType.getValue();
-            Product p = new Product(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11);
+            validateRequiredFields(fldID.getText(),fldQuantity.getText(),fldPrice.getText());
+            Product p = new Product(fldName.getText(),Integer.parseInt(fldID.getText()),Double.parseDouble(fldPrice.getText()),
+                    Integer.parseInt(fldQuantity.getText()),choicePurpose.getValue(),fldNotes.getText(),choiceAdMethod.getValue(),
+                    fldManufacturer.getText(),fldDescription.getText(),fldIngredients.getText(),choiceType.getValue());
             dao.addProduct(p);
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
         }
-        catch(NumberFormatException e){
+        catch(IncorrectDataException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             if(l.getLang().equals("bs")) {
                 alert.setTitle("Greška");
                 alert.setHeaderText("Neispravni podaci!");
-                String greska="Mogući uzroci greške: \n";
-                    greska = greska + "Kod proizvoda mora biti cijeli broj!\n";
-                    greska = greska + "Molimo unesite cijenu proizvoda u formatu sa tačkom!\n";
-                    greska = greska + "Količina proizvoda mora biti cijeli broj!\n";
-                alert.setContentText(greska);
+                alert.setContentText(e.getMessage());
             }
             else if(l.getLang().equals("en")){
                     alert.setTitle("Error");
                     alert.setHeaderText("Incorrect data input!");
-                    String greska="Possible error causes: \n";
-                        greska = greska + "Product ID has to be an integer!\n";
-                        greska = greska + "Please enter the price with dot instead of a comma!\n";
-                        greska = greska + "Product quantity has to be an integer!\n";
-                    alert.setContentText(greska);
+                    alert.setContentText(e.getMessage());
             }
             alert.showAndWait();
         }
@@ -169,5 +153,43 @@ public class ControllerAddProduct implements Initializable {
         fldPrice.getText().trim().isEmpty())
             btnAdd.setDisable(true);
         else btnAdd.setDisable(false);
+    }
+
+    public void validateRequiredFields(Object id,Object quantity,Object price) throws IncorrectDataException {
+        try {
+            Integer x = Integer.parseInt(id.toString());
+        }
+        catch(NumberFormatException e){
+            String message="";
+            if(l.getLang().equals("bs"))
+                message="Kod lijeka mora biti cijeli broj!";
+            else if(l.getLang().equals("en"))
+                message="Product ID has to be an integer!";
+            throw new IncorrectDataException(message);
+        }
+        try {
+            Double z = Double.parseDouble(price.toString());
+        }
+        catch(NumberFormatException e){
+            String message="";
+            if(l.getLang().equals("bs"))
+                message="Cijena lijeka mora biti realni broj!";
+            else if(l.getLang().equals("en"))
+                message="Product price has to be a real number!";
+            throw new IncorrectDataException(message);
+        }
+        try {
+            Integer y = Integer.parseInt(quantity.toString());
+        }
+        catch(NumberFormatException e){
+            String message="";
+            if(l.getLang().equals("bs"))
+                message="Količina lijeka mora biti cijeli broj!";
+            else if(l.getLang().equals("en"))
+                message="Product quantity has to be an integer!";
+            throw new IncorrectDataException(message);
+        }
+
+
     }
 }

@@ -13,6 +13,21 @@ public class Product {
     private String ingredients;//sastav lijeka
     private String medicationType;//farmaceutski oblik lijeka
 
+    public Product(String name, Integer ID, Double price, Integer quantity, String purpose, String notes, String administrationMethod, String manufacturer, String description, String ingredients, String medicationType){
+        this.ID = ID;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.purpose = purpose;
+        this.notes = notes;
+        this.administrationMethod = administrationMethod;
+        this.manufacturer = manufacturer;
+        this.description = description;
+        this.ingredients = ingredients;
+        this.medicationType = medicationType;
+    }
+
+
     public String getPurpose() {
         return purpose;
     }
@@ -76,20 +91,6 @@ public class Product {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Product(String name, Integer ID, Double price, Integer quantity, String purpose, String notes, String administrationMethod, String manufacturer, String description, String ingredients, String medicationType) {
-        this.name = name;
-        this.ID = ID;
-        this.price = price;
-        this.quantity = quantity;
-        this.purpose = purpose;
-        this.notes = notes;
-        this.administrationMethod = administrationMethod;
-        this.manufacturer = manufacturer;
-        this.description = description;
-        this.ingredients = ingredients;
-        this.medicationType = medicationType;
     }
 
     public String getName() {

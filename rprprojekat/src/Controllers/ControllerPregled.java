@@ -2,12 +2,10 @@ package Controllers;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,12 +24,10 @@ import sample.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
@@ -87,6 +83,10 @@ public class ControllerPregled {
     @FXML
     public TableColumn<CartProduct,String> columnPriceCart;
     @FXML
+    public MenuItem mniCreateAcc;
+    @FXML
+    public MenuItem mniLogoutBtn;
+    @FXML
     TableColumn<CartProduct, Void> colBtn;
     @FXML
     public TableView<CartProduct> tableCart;
@@ -109,13 +109,13 @@ public class ControllerPregled {
     private CartDAO daoCart;
     private SoldProductDAO daoSold;
     private Language l;
-
+    private CurrentUser user;
 
     public ControllerPregled(){
     }
 
 
-    public void filtriraj(){
+    public void filtriraj() throws IncorrectDataException {
         FilteredList<Product> filteredProducts=new FilteredList<>(dao.getProducts(),b->true);
         searchBar.textProperty().addListener((observable,oldValue,newValue )-> {
             filteredProducts.setPredicate(p->{
@@ -138,7 +138,8 @@ public class ControllerPregled {
         productList.setItems(sortedData);
     }
     @FXML
-    public void initialize() throws SQLException {
+    public void initialize() throws SQLException, IncorrectDataException {
+        user=CurrentUser.getInstance();
         tabHomepage.isSelected();
         dao=ProductDAO.getInstance();
         daoCart=CartDAO.getInstance();
@@ -153,7 +154,23 @@ public class ControllerPregled {
             try {
                 while (true) {
                         Platform.runLater(() -> tableCart.setItems(daoCart.getProducts()));
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+
+            }
+        }).start();
+
+        new Thread(() -> {
+            try {
+                while (true) {
+                    Platform.runLater(() -> {
+                        if(user.getUsername().equals("root"))
+                            mniCreateAcc.setVisible(true);
+                        else
+                            mniCreateAcc.setVisible(false);
+                    });
+                    Thread.sleep(500);
                 }
             } catch (InterruptedException e) {
 
@@ -248,8 +265,16 @@ public class ControllerPregled {
             @Override
             public void handle(WindowEvent windowEvent) {
                 productList.getSelectionModel().clearSelection();
-                productList.setItems(dao.getProducts());
-                filtriraj();
+                try {
+                    productList.setItems(dao.getProducts());
+                } catch (IncorrectDataException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    filtriraj();
+                } catch (IncorrectDataException e) {
+                    e.printStackTrace();
+                }
             }
         });
         myStage.initModality(Modality.WINDOW_MODAL);
@@ -308,8 +333,16 @@ public class ControllerPregled {
                 @Override
                 public void handle(WindowEvent windowEvent) {
                     productList.getSelectionModel().clearSelection();
-                    productList.setItems(dao.getProducts());
-                    filtriraj();
+                    try {
+                        productList.setItems(dao.getProducts());
+                    } catch (IncorrectDataException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        filtriraj();
+                    } catch (IncorrectDataException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             myStage.initModality(Modality.WINDOW_MODAL);
@@ -404,8 +437,16 @@ public class ControllerPregled {
             @Override
             public void handle(WindowEvent windowEvent) {
                 productList.getSelectionModel().clearSelection();
-                productList.setItems(dao.getProducts());
-                filtriraj();
+                try {
+                    productList.setItems(dao.getProducts());
+                } catch (IncorrectDataException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    filtriraj();
+                } catch (IncorrectDataException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -482,7 +523,7 @@ public class ControllerPregled {
         tableCart.setItems(daoCart.getProducts());
     }
 
-    public void removeBtnClick(ActionEvent actionEvent) {
+    public void removeBtnClick(ActionEvent actionEvent) throws IncorrectDataException {
         if(productList.getSelectionModel().getSelectedItem()!=null) {
             dao.removeProduct(productList.getSelectionModel().getSelectedItem());
             productList.getSelectionModel().clearSelection();
@@ -512,7 +553,6 @@ public class ControllerPregled {
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         myStage.setMinWidth(600);
         myStage.setMinHeight(400);
-        //myStage.setResizable(false);
         if(l.getLang().equals("bs")) myStage.setTitle("Pomoć");
         else if(l.getLang().equals("en")) myStage.setTitle("Help");
         myStage.show();
@@ -531,4 +571,29 @@ public class ControllerPregled {
             dao.changeQuantity(p.getID(),p.getQuantity()+dao.getQuantity(p.getID()));
     }
 
+    public void mniCreateAccountClick(ActionEvent actionEvent) throws IOException {
+        Stage myStage = new Stage();
+        myStage.setResizable(false);
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/createAcc.fxml"), bundle);
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        if(l.getLang().equals("bs")) myStage.setTitle("Kreiraj novi korisnički račun");
+        else if(l.getLang().equals("en")) myStage.setTitle("Create new user account");
+        myStage.show();
+    }
+
+    public void mniLogoutClick(ActionEvent actionEvent) throws IOException {
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
+
+        Stage myStage = new Stage();
+        myStage.setResizable(false);
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"), bundle);
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        if(l.getLang().equals("bs")) myStage.setTitle("Prijava");
+        else if(l.getLang().equals("en")) myStage.setTitle("Login");
+        myStage.show();
+    }
 }

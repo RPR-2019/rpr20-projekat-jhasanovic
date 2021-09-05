@@ -66,7 +66,7 @@
                                                 <accelerator>
                                                     <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                                 </accelerator></MenuItem>
-                                            <MenuItem fx:id="mniExit" onAction="#exitMenuClick" text="E_xit">
+                                            <MenuItem fx:id="mniExit" onAction="#exitMenuClick" text="%e_xit">
                                                 <accelerator>
                                                     <KeyCodeCombination alt="DOWN" code="X" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                                 </accelerator></MenuItem>
@@ -105,6 +105,15 @@
                                             <KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                         </accelerator>
                                     </Menu>
+                           <Menu fx:id="mniProfile" text="%_profil">
+                             <items>
+                                 <MenuItem fx:id="mniCreateAcc" mnemonicParsing="false" onAction="#mniCreateAccountClick" text="Kreiraj novi račun" />
+                               <MenuItem fx:id="mniLogoutBtn" mnemonicParsing="false" onAction="#mniLogoutClick" text="Log out" />
+                             </items>
+                              <accelerator>
+                                 <KeyCodeCombination alt="DOWN" code="P" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                              </accelerator>
+                           </Menu>
                                 </menus>
                                 <GridPane.margin>
                                     <Insets />
@@ -130,7 +139,7 @@
 
         </Tab>
 
-        <Tab fx:id="barTabPage" closable="false" onSelectionChanged="#tabCartUnselected" text="%cart">
+        <Tab fx:id="barTabPage" closable="false" text="%cart">
             <content>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <center>

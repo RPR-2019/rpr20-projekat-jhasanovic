@@ -64,7 +64,7 @@ public class ProductDAO {
         return instance;
     }
 
-    public ArrayList<Product> pretraga(Integer sifra) {
+    public ArrayList<Product> pretraga(Integer sifra) throws IncorrectDataException {
         ArrayList<Product> rezultat = new ArrayList<>();
         try {
             pretragaUpit.setInt(1,sifra);
@@ -90,7 +90,7 @@ public class ProductDAO {
         return rezultat;
     }
 
-    public ObservableList<Product> getProducts(){
+    public ObservableList<Product> getProducts() throws IncorrectDataException {
         ObservableList<Product> rezultat = FXCollections.observableArrayList();
         try {
             ResultSet rs = sviProizvodiUpit.executeQuery();
