@@ -13,4 +13,6 @@ public class SqliteHelper {//osiguravamo da ce biti otvorena samo jedna konekcij
         }
         return conn;
     }
+
+
 }

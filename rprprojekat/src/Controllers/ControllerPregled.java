@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,11 +21,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+
 import sample.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -218,6 +220,7 @@ public class ControllerPregled {
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             removeCartBtnClick(getTableView().getItems().get(getIndex()));
+
                         });
                     }
 
@@ -453,32 +456,36 @@ public class ControllerPregled {
 
     public void bsMenuClick(ActionEvent actionEvent) throws IOException {
         //otvoriti prozor opet
-        Stage stage = (Stage) menu.getScene().getWindow();
-        stage.close();
+        if(!l.getLang().equals("bs")) {
+            Stage stage = (Stage) menu.getScene().getWindow();
+            stage.close();
 
-        l.setLang("bs");
-        Locale.setDefault(new Locale("bs", "BA"));
-        Stage myStage = new Stage();
-        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"),bundle);
-        myStage.setTitle("Apoteka");
-        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-        myStage.show();
+            l.setLang("bs");
+            Locale.setDefault(new Locale("bs", "BA"));
+            Stage myStage = new Stage();
+            ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"), bundle);
+            myStage.setTitle("Apoteka");
+            myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            myStage.show();
+        }
+
     }
 
     public void enMenuClick(ActionEvent actionEvent) throws IOException {
-        Stage stage = (Stage) menu.getScene().getWindow();
-        stage.close();
+        if(!l.getLang().equals("en")) {
+            Stage stage = (Stage) menu.getScene().getWindow();
+            stage.close();
 
-        l.setLang("en");
-        Locale.setDefault(new Locale("en", "US"));
-        Stage myStage = new Stage();
-        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"),bundle);
-        myStage.setTitle("Pharmacy");
-        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-        myStage.show();
-
+            l.setLang("en");
+            Locale.setDefault(new Locale("en", "UK"));
+            Stage myStage = new Stage();
+            ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"), bundle);
+            myStage.setTitle("Pharmacy");
+            myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            myStage.show();
+        }
     }
 
     public void aboutMenuClick(ActionEvent actionEvent) throws IOException {
@@ -510,10 +517,11 @@ public class ControllerPregled {
         //kreiraj instancu klase sold object za svaki proizvod u korpi
         //za svaki proizvod iz tabele korpa kreirati red u tabeli prodani sa trenutnim datumom i usernameom
         ArrayList<CartProduct> cart = daoCart.getProductsArrayList();
+        CurrentUser user=CurrentUser.getInstance();
         //ako je datum isti i seller name isti, updateati
         cart.forEach((c)-> {
             int max = daoSold.getMaxID();
-            daoSold.dodajProdani(new SoldProduct(max + 1, c.getID(), c.getName(), c.getQuantity(), "Jasmina", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))));
+            daoSold.dodajProdani(new SoldProduct(max + 1, c.getID(), c.getName(), c.getQuantity(), user.getUsername(), LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
         });
 
         //otvoriti kreirani racun
@@ -565,8 +573,6 @@ public class ControllerPregled {
 
     public void removeCartBtnClick(CartProduct p) {
             daoCart.removeProduct(p);
-            tableCart.getSelectionModel().clearSelection();
-            tableCart.setItems(daoCart.getProducts());
             //vratiti stanje na staro
             dao.changeQuantity(p.getID(),p.getQuantity()+dao.getQuantity(p.getID()));
     }
@@ -595,5 +601,21 @@ public class ControllerPregled {
         if(l.getLang().equals("bs")) myStage.setTitle("Prijava");
         else if(l.getLang().equals("en")) myStage.setTitle("Login");
         myStage.show();
+    }
+
+    public void mniReportClick(ActionEvent actionEvent) throws IOException {
+        Stage myStage = new Stage();
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/reportChoice.fxml"),bundle);
+        if(l.getLang().equals("bs")) myStage.setTitle("Odabir tipa izvještaja");
+        else if(l.getLang().equals("en")) myStage.setTitle("Report type choice");
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.setResizable(false);
+        myStage.show();
+    }
+
+    public void onCartUnselected(Event event) throws IncorrectDataException {
+        productList.getSelectionModel().clearSelection();
+        productList.setItems(dao.getProducts());
     }
 }

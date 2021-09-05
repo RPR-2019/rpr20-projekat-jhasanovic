@@ -35,6 +35,8 @@ public class Main extends Application {
 
         for(Product p:dao.pretraga(sifra))
             System.out.println("ID: "+p.getID()+" naziv: "+p.getName());*/
+        System.err.close();
+        System.setErr(System.out);
         launch(args);
     }
 }

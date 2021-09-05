@@ -62,7 +62,7 @@
                                 <menus>
                                     <Menu fx:id="mniFile" text="_File">
                                         <items>
-                                            <MenuItem fx:id="mniReport" text="%createReport">
+                                            <MenuItem fx:id="mniReport" onAction="#mniReportClick" text="%createReport">
                                                 <accelerator>
                                                     <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                                 </accelerator></MenuItem>
@@ -139,7 +139,7 @@
 
         </Tab>
 
-        <Tab fx:id="barTabPage" closable="false" text="%cart">
+        <Tab fx:id="barTabPage" closable="false" onSelectionChanged="#onCartUnselected" text="%cart">
             <content>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <center>
