@@ -1,3 +1,4 @@
+/*
 package Controllers;
 
 import javafx.beans.property.SimpleObjectProperty;
@@ -46,7 +47,8 @@ public class PharmacyModel {
         products.add(new Product("Analgin",3,2.,15,"","","","","","","Tablete"));
     }
 
-    /*public String getMedicationType(String id){
+    */
+/*public String getMedicationType(String id){
     List<Product> trazeni = products.stream().filter(p->p.getID().equals(id)).collect(Collectors.toList());
     //trebao bi biti samo jedan proizvod u listi, jer ne moze biti vise od jednog proizvoda sa istom sifrom
         return trazeni.get(0).getMedicationType();
@@ -80,5 +82,7 @@ public class PharmacyModel {
     public String getIngredients(String id){
         List<Product> trazeni = products.stream().filter(p->p.getID().equals(id)).collect(Collectors.toList());
         return trazeni.get(0).getIngredients();
-    }*/
+    }*//*
+
 }
+*/

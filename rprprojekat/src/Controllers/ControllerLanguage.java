@@ -43,7 +43,7 @@ public class ControllerLanguage implements Initializable {
             l.setLang("bs");
         }
         else if (languageChoice.getSelectionModel().getSelectedItem().equals("English")) {
-            Locale.setDefault(new Locale("en", "US"));
+            Locale.setDefault(new Locale("en", "UK"));
             l.setLang("en");
         }
 

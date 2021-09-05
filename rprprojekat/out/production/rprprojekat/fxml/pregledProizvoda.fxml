@@ -10,13 +10,14 @@
 
     <stylesheets>
         <URL value="@/css/ikonice.css" />
+        <URL value="@/css/tabela.css" />
     </stylesheets>
 
     <tabs>
         <Tab fx:id="tabHomepage" closable="false" text="%homepage">
             <BorderPane fx:id="mainWindow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
                 <bottom>
-                    <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <ButtonBar BorderPane.alignment="CENTER">
                         <buttons>
                             <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#addBtnClick" text="%dodaj" />
                             <Button fx:id="btnUpdateProduct" mnemonicParsing="false" onAction="#updateBtnClick" text="%azurirajProizvod" />
@@ -35,7 +36,7 @@
                             <TableColumn fx:id="columnName" prefWidth="75.0" text="%kolona2" />
                             <TableColumn fx:id="columnCategory" prefWidth="75.0" text="%kolona3" />
                             <TableColumn fx:id="columnPrice" prefWidth="75.0" text="%kolona4" />
-                            <TableColumn fx:id="columnQuantity" prefWidth="75.0" text="%kolona5" />
+                            <TableColumn fx:id="columnQuantity" text="%kolona5" />
                         </columns>
                         <columnResizePolicy>
                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -61,11 +62,11 @@
                                 <menus>
                                     <Menu fx:id="mniFile" text="_File">
                                         <items>
-                                            <MenuItem fx:id="mniReport" text="%createReport">
+                                            <MenuItem fx:id="mniReport" onAction="#mniReportClick" text="%createReport">
                                                 <accelerator>
                                                     <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                                 </accelerator></MenuItem>
-                                            <MenuItem fx:id="mniExit" onAction="#exitMenuClick" text="E_xit">
+                                            <MenuItem fx:id="mniExit" onAction="#exitMenuClick" text="%e_xit">
                                                 <accelerator>
                                                     <KeyCodeCombination alt="DOWN" code="X" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                                 </accelerator></MenuItem>
@@ -104,6 +105,15 @@
                                             <KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                         </accelerator>
                                     </Menu>
+                           <Menu fx:id="mniProfile" text="%_profil">
+                             <items>
+                                 <MenuItem fx:id="mniCreateAcc" mnemonicParsing="false" onAction="#mniCreateAccountClick" text="Kreiraj novi račun" />
+                               <MenuItem fx:id="mniLogoutBtn" mnemonicParsing="false" onAction="#mniLogoutClick" text="Log out" />
+                             </items>
+                              <accelerator>
+                                 <KeyCodeCombination alt="DOWN" code="P" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                              </accelerator>
+                           </Menu>
                                 </menus>
                                 <GridPane.margin>
                                     <Insets />
@@ -129,16 +139,17 @@
 
         </Tab>
 
-        <Tab fx:id="barTabPage" closable="false" text="%cart">
+        <Tab fx:id="barTabPage" closable="false" onSelectionChanged="#onCartUnselected" text="%cart">
             <content>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <center>
-                        <TableView BorderPane.alignment="CENTER">
+                        <TableView fx:id="tableCart" BorderPane.alignment="CENTER">
                             <columns>
-                                <TableColumn prefWidth="75.0" text="%kolona1" />
-                                <TableColumn prefWidth="75.0" text="%kolona2" />
-                        <TableColumn prefWidth="75.0" text="%kolona4" />
-                        <TableColumn prefWidth="75.0" text="%kolona5" />
+                                <TableColumn fx:id="columnIDCart" prefWidth="75.0" text="%kolona1" />
+                                <TableColumn fx:id="columnNameCart" prefWidth="75.0" text="%kolona2" />
+                        <TableColumn fx:id="columnQuantityCart" prefWidth="75.0" text="%kolona5" />
+                        <TableColumn fx:id="columnPriceCart" prefWidth="75.0" text="%kolona4" />
+                        <TableColumn fx:id="colBtn" prefWidth="75.0" />
                             </columns>
                      <BorderPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -148,17 +159,17 @@
                      </columnResizePolicy>
                         </TableView>
                     </center>
-                    <bottom>
-                        <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                            <buttons>
-                                <Button fx:id="btnCancelCart" mnemonicParsing="false" onAction="#cancelCartCLick" text="%odbaci" />
-                                <Button fx:id="btnFinalize" mnemonicParsing="false" onAction="#finalizeBtnClick" text="%finish" />
-                            </buttons>
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
-                        </ButtonBar>
-                    </bottom>
+               <bottom>
+                     <ButtonBar BorderPane.alignment="CENTER">
+                         <buttons>
+                             <Button fx:id="btnDiscardCart" mnemonicParsing="false" onAction="#discardCartClick" text="%odbaci" />
+                             <Button fx:id="btnFinalize" mnemonicParsing="false" onAction="#finalizeBtnClick" text="%finish" />
+                         </buttons>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     </ButtonBar>
+               </bottom>
                 </BorderPane>
             </content></Tab>
     </tabs>

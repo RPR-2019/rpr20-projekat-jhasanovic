@@ -23,5 +23,11 @@
     <orderEntry type="library" name="javafx" level="project" />
     <orderEntry type="library" name="javafx" level="project" />
     <orderEntry type="library" name="javafx" level="project" />
+    <orderEntry type="library" name="javafx" level="project" />
+    <orderEntry type="library" name="javafx" level="project" />
+    <orderEntry type="library" name="javafx" level="project" />
+    <orderEntry type="library" name="javafx" level="project" />
+    <orderEntry type="library" name="net.sf.jasperreports:jasperreports:6.12.0" level="project" />
+    <orderEntry type="library" name="javafx" level="project" />
   </component>
 </module>

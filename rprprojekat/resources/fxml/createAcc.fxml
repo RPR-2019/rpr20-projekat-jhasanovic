@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="487.0" prefWidth="349.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerAddAcc">
+    <stylesheets>
+        <URL value="@../css/login.css" />
+    </stylesheets>
+    <children>
+        <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+                <Insets left="100.0" right="75.0" top="40.0" />
+            </VBox.margin>
+            <image>
+                <Image url="@../png/user.png" />
+            </image>
+        </ImageView>
+        <TextField fx:id="usernameTextField" promptText="%username">
+            <VBox.margin>
+                <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+            </VBox.margin>
+        </TextField>
+        <PasswordField fx:id="passwordTextField" promptText="%lozinka">
+            <VBox.margin>
+                <Insets bottom="50.0" left="50.0" right="50.0" />
+            </VBox.margin>
+        </PasswordField>
+        <Button fx:id="loginBtn" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#loginClick" text="%kreirajRacun">
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+        </Button>
+    </children>
+    <opaqueInsets>
+        <Insets bottom="200.0" left="200.0" right="200.0" top="200.0" />
+    </opaqueInsets>
+</VBox>

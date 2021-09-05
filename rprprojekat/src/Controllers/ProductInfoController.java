@@ -1,6 +1,7 @@
 package Controllers;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -8,8 +9,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import sample.CartDAO;
+import sample.CartProduct;
+import sample.ProductDAO;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ProductInfoController implements Initializable {
@@ -48,7 +54,8 @@ public class ProductInfoController implements Initializable {
 
     private Integer maxQt;
     private Double price;
-
+    private CartDAO daoCart;
+    private ProductDAO dao;
 
     public void maxQuantity(int max){
         maxQt = max;
@@ -57,6 +64,8 @@ public class ProductInfoController implements Initializable {
     public void getPrice(Double p){
         price=p;
     }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
 
@@ -76,9 +85,30 @@ public class ProductInfoController implements Initializable {
             }
 
         });
+
+        try {
+            daoCart = CartDAO.getInstance();
+            dao = ProductDAO.getInstance();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void addToCartBtnClick(ActionEvent actionEvent) {
+        String price = totalFld.getText().replace(",",".").substring(0,5);
+        if(daoCart.getProductCount(Integer.parseInt(idFld.getText()))>0){
+            //azurirati postojeci proizvod u korpi
+            daoCart.updateCart(Integer.parseInt(idFld.getText()),Integer.parseInt(quantityFld.getText())+daoCart.getQuantity(Integer.parseInt(idFld.getText())),daoCart.getPrice(Integer.parseInt(idFld.getText()))+Double.parseDouble(price));
+        }
+        else {
+            CartProduct p = new CartProduct(Integer.parseInt(idFld.getText()), nameFld.getText(), Integer.parseInt(quantityFld.getText()), Double.parseDouble(price));
+            daoCart.addProductToCart(p);
+        }
+        //smanjiti dostupne kolicine
+        dao.changeQuantity(Integer.parseInt(idFld.getText()),dao.getQuantity(Integer.parseInt(idFld.getText()))-Integer.parseInt(quantityFld.getText()));
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
 
     }
 
