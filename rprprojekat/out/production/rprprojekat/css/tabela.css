@@ -1,0 +1,6 @@
+#productList .table-column {
+    -fx-alignment: CENTER;
+}
+#tableCart .table-column {
+    -fx-alignment: CENTER;
+}
