@@ -585,14 +585,14 @@ public class ControllerPregled {
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         if(l.getLang().equals("bs")) myStage.setTitle("Kreiraj novi korisnički račun");
         else if(l.getLang().equals("en")) myStage.setTitle("Create new user account");
+        myStage.initModality(Modality.APPLICATION_MODAL);
         myStage.show();
     }
 
     public void mniLogoutClick(ActionEvent actionEvent) throws IOException {
-        Node n = (Node) actionEvent.getSource();
-        Stage stage = (Stage) n.getScene().getWindow();
-        stage.close();
-
+        Stage owner = (Stage)mniLogoutBtn.getParentPopup().getOwnerWindow();
+        Scene scene = owner.getScene();
+        owner.close();
         Stage myStage = new Stage();
         myStage.setResizable(false);
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
@@ -604,12 +604,14 @@ public class ControllerPregled {
     }
 
     public void mniReportClick(ActionEvent actionEvent) throws IOException {
+
         Stage myStage = new Stage();
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/reportChoice.fxml"),bundle);
         if(l.getLang().equals("bs")) myStage.setTitle("Odabir tipa izvještaja");
         else if(l.getLang().equals("en")) myStage.setTitle("Report type choice");
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        myStage.initModality(Modality.APPLICATION_MODAL);
         myStage.setResizable(false);
         myStage.show();
     }

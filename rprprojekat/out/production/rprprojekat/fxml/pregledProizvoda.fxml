@@ -107,8 +107,14 @@
                                     </Menu>
                            <Menu fx:id="mniProfile" text="%_profil">
                              <items>
-                                 <MenuItem fx:id="mniCreateAcc" mnemonicParsing="false" onAction="#mniCreateAccountClick" text="Kreiraj novi račun" />
-                               <MenuItem fx:id="mniLogoutBtn" mnemonicParsing="false" onAction="#mniLogoutClick" text="Log out" />
+                                 <MenuItem fx:id="mniCreateAcc" onAction="#mniCreateAccountClick" text="Kreiraj novi račun">
+                                    <accelerator>
+                                       <KeyCodeCombination alt="DOWN" code="N" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator></MenuItem>
+                               <MenuItem fx:id="mniLogoutBtn" onAction="#mniLogoutClick" text="Log out">
+                                    <accelerator>
+                                       <KeyCodeCombination alt="DOWN" code="O" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator></MenuItem>
                              </items>
                               <accelerator>
                                  <KeyCodeCombination alt="DOWN" code="P" control="UP" meta="UP" shift="UP" shortcut="UP" />
@@ -128,6 +134,9 @@
                                 <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                                 </GridPane.margin>
+                        <opaqueInsets>
+                           <Insets />
+                        </opaqueInsets>
                             </TextField>
                         </children>
                         <BorderPane.margin>
