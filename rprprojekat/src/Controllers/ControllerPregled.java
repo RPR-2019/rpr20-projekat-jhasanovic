@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
@@ -30,6 +31,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
@@ -94,6 +96,8 @@ public class ControllerPregled {
     public TableView<CartProduct> tableCart;
     @FXML
     public Tab tabHomepage;
+    @FXML
+    TabPane tabPane;
 
     ObservableList<String> opcije = FXCollections.observableArrayList("Po nazivu","Po šifri","Po namjeni");
     ObservableList<String> options = FXCollections.observableArrayList("By category","By ID","By purpose");
@@ -589,22 +593,41 @@ public class ControllerPregled {
         myStage.show();
     }
 
-    public void mniLogoutClick(ActionEvent actionEvent) throws IOException {
-        Stage owner = (Stage)mniLogoutBtn.getParentPopup().getOwnerWindow();
-        Scene scene = owner.getScene();
-        owner.close();
-        Stage myStage = new Stage();
-        myStage.setResizable(false);
-        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"), bundle);
-        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-        if(l.getLang().equals("bs")) myStage.setTitle("Prijava");
-        else if(l.getLang().equals("en")) myStage.setTitle("Login");
-        myStage.show();
+    public void mniLogoutClick(ActionEvent actionEvent) throws IOException, SQLException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        if(l.getLang().equals("bs")){
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Odjavi se");
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Odustani");
+            alert.setTitle("Logout");
+            alert.setHeaderText("Potvrdite odjavu");
+            alert.setContentText("Da li ste sigurni da se želite odjaviti?");
+        }
+        else if(l.getLang().equals("en")){
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Log out");
+            ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Cancel");
+            alert.setTitle("Logout");
+            alert.setHeaderText("Logout confirmation");
+            alert.setContentText("Are you sure you want to log out?");
+        }
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            Stage stage = new Stage();
+            Window window = ((MenuItem)actionEvent.getTarget()).getParentPopup().getOwnerWindow();
+            Stage thisStage = (Stage) window.getScene().getWindow();
+            thisStage.close();
+
+            Stage myStage = new Stage();
+            myStage.setResizable(false);
+            ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"), bundle);
+            myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            if(l.getLang().equals("bs")) myStage.setTitle("Prijava");
+            else if(l.getLang().equals("en")) myStage.setTitle("Login");
+            myStage.show();
+        }
     }
 
     public void mniReportClick(ActionEvent actionEvent) throws IOException {
-
         Stage myStage = new Stage();
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/reportChoice.fxml"),bundle);

@@ -6,7 +6,7 @@
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 
-<TabPane tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerPregled">
+<TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerPregled">
 
     <stylesheets>
         <URL value="@/css/ikonice.css" />
@@ -111,10 +111,7 @@
                                     <accelerator>
                                        <KeyCodeCombination alt="DOWN" code="N" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator></MenuItem>
-                               <MenuItem fx:id="mniLogoutBtn" onAction="#mniLogoutClick" text="Log out">
-                                    <accelerator>
-                                       <KeyCodeCombination alt="DOWN" code="O" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                                    </accelerator></MenuItem>
+                               <MenuItem fx:id="mniLogoutBtn" mnemonicParsing="false" onAction="#mniLogoutClick" text="Log out" />
                              </items>
                               <accelerator>
                                  <KeyCodeCombination alt="DOWN" code="P" control="UP" meta="UP" shift="UP" shortcut="UP" />
