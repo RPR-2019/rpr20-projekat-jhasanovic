@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,6 +32,7 @@ public class ControllerReportChoice {
 
     @FXML
     public void initialize(){
+        datePicker.setVisible(false);
         l=Language.getInstance();
         ObservableList<String> optionsBS = FXCollections.observableArrayList("Generalni izvještaj", "Dnevni izvještaj");
         ObservableList<String> optionsEN = FXCollections.observableArrayList("General report", "Daily report");
@@ -37,6 +40,15 @@ public class ControllerReportChoice {
         else if(l.getLang().equals("en")) reportTypeCombo.setItems(optionsEN);
         reportTypeCombo.getSelectionModel().select(0);
         datePicker.setValue(LocalDate.parse(LocalDate.now().toString()));
+
+        reportTypeCombo.valueProperty().addListener(new ChangeListener<String>() {
+            @Override public void changed(ObservableValue ov, String t, String t1) {
+                if(t1.equals("Dnevni izvještaj") || t1.equals("Daily report"))
+                    datePicker.setVisible(true);
+                else
+                    datePicker.setVisible(false);
+            }
+        });
     }
 
     public void btnOpenReportClick(ActionEvent actionEvent) {

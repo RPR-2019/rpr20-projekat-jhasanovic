@@ -10,7 +10,8 @@ public enum PurposeBS {
     ANTIDEPRESSANT("Antidepresant"),
     ANTICOAGULANT("Antikoagulant"),
     ANTISEPTIC("Antiseptik"),
-    SEDATIVE("Sedativ");
+    SEDATIVE("Sedativ"),
+    ANTIHISTAMINE("Antihistaminik");
 
 
     public final String label;

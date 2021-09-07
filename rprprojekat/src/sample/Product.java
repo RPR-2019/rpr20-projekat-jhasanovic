@@ -109,7 +109,8 @@ public class Product {
         this.ID = ID;
     }
 
-    public Double getPrice() { return price; }
+    public Double getPrice() {
+        return price; }
 
     public void setPrice(Double price) {
         this.price = price;

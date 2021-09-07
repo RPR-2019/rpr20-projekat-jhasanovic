@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -9,9 +10,17 @@
     <children>
       <Label alignment="TOP_LEFT" text="%brisanjeNaslov">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="30.0" />
+         </VBox.margin></Label>
+        <Label fx:id="label1" wrapText="true">
+         <font>
+            <Font size="14.0" />
          </font></Label>
-        <Label fx:id="label" text="%brisanjeProizvodaText" wrapText="true" />
+      <ImageView fx:id="image1" fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image2" fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
     </children>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

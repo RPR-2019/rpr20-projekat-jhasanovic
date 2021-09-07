@@ -2,17 +2,38 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerHelpAdd">
+<VBox fx:id="vBoxContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerHelpAdd">
    <children>
-      <Label alignment="TOP_LEFT" text="%dodavanjeNaslov">
+      <Label fx:id="help1Title" alignment="TOP_LEFT" text="%dodavanjeNaslov">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
+         </font>
+         <padding>
+            <Insets bottom="30.0" />
+         </padding></Label>
+      <Label fx:id="label1" wrapText="true">
+         <font>
+            <Font size="14.0" />
          </font></Label>
-      <Label fx:id="label" text="%dodavanjeProizvodaText" wrapText="true" />
-      <Label text="%napomeneHelp" wrapText="true" />
+      <ImageView fx:id="image1" fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS" />
+      <Label fx:id="label2" text="Label" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="label3" text="Label" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ImageView fx:id="image2" fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="label4" text="Label" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ImageView fx:id="image3" fitHeight="300.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

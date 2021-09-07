@@ -8,6 +8,6 @@
       <TreeView fx:id="treeViewHelp" BorderPane.alignment="CENTER" />
    </left>
    <center>
-      <BorderPane BorderPane.alignment="CENTER" />
+      <ScrollPane fx:id="scrollPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

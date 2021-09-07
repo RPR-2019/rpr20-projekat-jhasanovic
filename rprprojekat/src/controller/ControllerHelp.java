@@ -2,11 +2,13 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import sample.Language;
 import java.io.IOException;
@@ -20,7 +22,9 @@ public class ControllerHelp {
     @FXML
     public TreeView<String> treeViewHelp;
     @FXML
-    private BorderPane borderPane;
+    public ScrollPane scrollPane;
+    @FXML
+    public BorderPane borderPane;
     @FXML
     private VBox connectionPage;
 
@@ -30,10 +34,9 @@ public class ControllerHelp {
     TreeItem<String> nodeB;
     TreeItem<String> nodeC;
     TreeItem<String> nodeA2;
-    TreeItem<String> nodeB2;
     TreeItem<String> nodeC2;
 
-    private Language l= Language.getInstance();
+    private Language l = Language.getInstance();
 
     Image icon=new Image(getClass().getResourceAsStream("/img/folder.png"));
     private List<String> bs = new ArrayList<>();
@@ -51,8 +54,7 @@ public class ControllerHelp {
 
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpHome.fxml"), bundle);
-        borderPane.setCenter(connectionPage);
-
+        scrollPane.setContent(connectionPage);
         treeViewHelp.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 handle(newValue);
@@ -70,10 +72,9 @@ public class ControllerHelp {
         nodeB=new TreeItem<>(v.get(3),new ImageView(icon));
         nodeC=new TreeItem<>(v.get(4),new ImageView(icon));
         nodeA2=new TreeItem<>(v.get(5),new ImageView(icon));
-        nodeB2=new TreeItem<>(v.get(6),new ImageView(icon));
         nodeC2=new TreeItem<>(v.get(1),new ImageView(icon));
 
-        root.getChildren().addAll(nodeA,nodeB,nodeC,nodeA2,nodeB2,nodeC2);
+        root.getChildren().addAll(nodeA,nodeB,nodeC,nodeA2,nodeC2);
         root.setExpanded(true);
 
         treeViewHelp.setRoot(root);
@@ -94,13 +95,11 @@ public class ControllerHelp {
             connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpDeleteProduct.fxml"),bundle);
         else if(newValue.getValue().equals(nodeA2.getValue()))
             connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpCart.fxml"),bundle);
-        else if(newValue.getValue().equals(nodeB2.getValue()))
-            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpCheckout.fxml"),bundle);
         else if(newValue.getValue().equals(nodeC2.getValue()))
             connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpReports.fxml"),bundle);
 
-        borderPane.setCenter(connectionPage);
-
+        scrollPane.setContent(connectionPage);
+        borderPane.setCenter(scrollPane);
     }
 
 }

@@ -10,7 +10,8 @@ public enum PurposeEN {
     ANTIDEPRESSANT("Antidepressant"),
     ANTICOAGULANT("Anticoagulant"),
     ANTISEPTIC("Antiseptic"),
-    SEDATIVE("Sedative");
+    SEDATIVE("Sedative"),
+    ANTIHISTAMINE("Antihistamine");
 
     public final String label;
 

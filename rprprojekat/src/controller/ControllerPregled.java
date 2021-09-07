@@ -597,8 +597,8 @@ else{
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/help.fxml"),bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
-        myStage.setMinWidth(600);
-        myStage.setMinHeight(400);
+        myStage.setMinWidth(740);
+        myStage.setMinHeight(480);
         if(l.getLang().equals("bs")) myStage.setTitle("Pomoć");
         else if(l.getLang().equals("en")) myStage.setTitle("Help");
         myStage.show();
