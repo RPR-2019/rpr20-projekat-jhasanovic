@@ -9,8 +9,8 @@
 <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerPregled">
 
     <stylesheets>
-        <URL value="@/css/ikonice.css" />
-        <URL value="@/css/tabela.css" />
+        <URL value="@/css/menuIcons.css" />
+        <URL value="@/css/table.css" />
     </stylesheets>
 
     <tabs>

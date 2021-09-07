@@ -4,13 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public enum MedicationTypeBS {
-    INJEKCIJA("Injekcija"),
-    KAPSULE("Kapsule"),
-    KREMA("Krema"),
-    MAST("Mast"),
-    OTOPINA("Otopina"),
-    SIRUP("Sirup"),
-    TABLETE("Tablete");
+    INJECTION("Injekcija"),
+    CAPSULES("Kapsule"),
+    CREAM("Krema"),
+    OINTMENT("Mast"),
+    SOLUTION("Otopina"),
+    SYRUP("Sirup"),
+    PILLS("Tablete");
 
     public final String label;
 
@@ -18,10 +18,10 @@ public enum MedicationTypeBS {
         this.label = label;
     }
     public static ObservableList<String> getValues(){
-        ObservableList<String> lista = FXCollections.observableArrayList();
+        ObservableList<String> list = FXCollections.observableArrayList();
         for (MedicationTypeBS a : MedicationTypeBS.values())
-            lista.add(a.toString());
-        return lista.sorted();
+            list.add(a.toString());
+        return list.sorted();
     }
     @Override
     public String toString() {

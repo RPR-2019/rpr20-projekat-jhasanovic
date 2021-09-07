@@ -8,7 +8,7 @@
 
 <GridPane vgap="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerUpdateProduct">
     <stylesheets>
-        <URL value="@../css/login.css" />
+        <URL value="@../css/inputValidation.css" />
     </stylesheets>
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />

@@ -34,6 +34,7 @@ public class ControllerLogin {
     public TextField usernameTextField;
     @FXML
     public PasswordField passwordTextField;
+
     @FXML
     public void initialize() throws SQLException {
         user=CurrentUser.getInstance();
@@ -70,7 +71,7 @@ public class ControllerLogin {
         if(daoUsers.credentialsValidation(new User(usernameTextField.getText(),passwordTextField.getText()))>0){
             Stage myStage = new Stage();
             ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pregledProizvoda.fxml"),bundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/mainWindow.fxml"),bundle);
             Parent root = loader.load();
 
             myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));

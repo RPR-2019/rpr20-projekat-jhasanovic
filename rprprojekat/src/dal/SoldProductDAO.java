@@ -11,26 +11,21 @@ import java.util.Scanner;
 public class SoldProductDAO {
     private static SoldProductDAO instance=null;
     private Connection conn;
-    private PreparedStatement sviProdaniProizvodiUpit,prodaniNaDatumUpit,dodajProdaniUpit,getMaxIDUpit,istiDatumISellerUpit,
-    updateSoldProductUpit,dajKolicinuUpit;
+    private PreparedStatement allSoldProductsQuery, addSoldQuery, getMaxIDQuery;
 
     private SoldProductDAO() throws SQLException {
         //String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/.apotekaapp/apoteka.db";
         String url = "jdbc:sqlite:apoteka.db";
         conn = SqliteHelper.getConn();
         try {
-            sviProdaniProizvodiUpit = conn.prepareStatement("SELECT * FROM prodani");
+            allSoldProductsQuery = conn.prepareStatement("SELECT * FROM prodani");
         }
         catch(SQLException e){
             kreirajBazu();
-            sviProdaniProizvodiUpit = conn.prepareStatement("SELECT * FROM prodani");
+            allSoldProductsQuery = conn.prepareStatement("SELECT * FROM prodani");
         }
-        prodaniNaDatumUpit = conn.prepareStatement("SELECT * FROM prodani WHERE date=?");
-        dodajProdaniUpit = conn.prepareStatement("INSERT INTO prodani VALUES(?,?,?,?,?,?)");
-        getMaxIDUpit = conn.prepareStatement("SELECT IFNULL(MAX(idSold),0) FROM prodani");
-        istiDatumISellerUpit = conn.prepareStatement("SELECT COUNT(*) from prodani WHERE seller=? AND date=?");
-        updateSoldProductUpit = conn.prepareStatement("UPDATE prodani SET quantity=? WHERE id=?");
-        dajKolicinuUpit = conn.prepareStatement("SELECT quantity FROM prodani WHERE id=?");
+        addSoldQuery = conn.prepareStatement("INSERT INTO prodani VALUES(?,?,?,?,?,?)");
+        getMaxIDQuery = conn.prepareStatement("SELECT IFNULL(MAX(idSold),0) FROM prodani");
     }
 
     private void kreirajBazu() {
@@ -61,54 +56,16 @@ public class SoldProductDAO {
         return instance;
     }
 
-    /*public ObservableList<SoldProduct> getSoldProducts(){
-        ObservableList<Product> rezultat = FXCollections.observableArrayList();
-        try {
-            ResultSet rs = sviProdaniProizvodiUpit.executeQuery();
-            while(rs.next()){
-                Integer id = rs.getInt(1);
-                String name = rs.getString(2);
-                String seller=rs.getString(3);
-                String date=rs.getString(4);
-
-                SoldProduct p = new SoldProduct(id,name,seller,date);
-                rezultat.add(p);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return rezultat;
-    }*/
-
-   /* public ObservableList<Product> getSoldProductsByDate(LocalDateTime d){//format 2021-mjesec-danTsat:minuta:sekunda
-        ObservableList<Product> rezultat = FXCollections.observableArrayList();
-        try {
-            ResultSet rs = prodaniNaDatumUpit.executeQuery();
-            while(rs.next()){
-                Integer id = rs.getInt(1);
-                String name = rs.getString(2);
-                String seller=rs.getString(3);
-                String date=rs.getString(4);
-
-                SoldProduct p = new SoldProduct(id,name,seller,date);
-                rezultat.add(p);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return rezultat;
-    }*/
-
     public void dodajProdani(SoldProduct p){
         try {
-            dodajProdaniUpit.setInt(1, p.getIdSold());
-            dodajProdaniUpit.setInt(2, p.getID());
-            dodajProdaniUpit.setString(3, p.getName());
-            dodajProdaniUpit.setInt(4,p.getQuantity());
-            dodajProdaniUpit.setString(5, p.getSellerName());
-            dodajProdaniUpit.setString(6, p.getDate());
+            addSoldQuery.setInt(1, p.getIdSold());
+            addSoldQuery.setInt(2, p.getID());
+            addSoldQuery.setString(3, p.getName());
+            addSoldQuery.setInt(4,p.getQuantity());
+            addSoldQuery.setString(5, p.getSellerName());
+            addSoldQuery.setString(6, p.getDate());
 
-            dodajProdaniUpit.executeUpdate();
+            addSoldQuery.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println("Greška prilikom dodavanja prodanog proizvoda\nIzuzetak: " + sqlException.getMessage());
@@ -117,52 +74,12 @@ public class SoldProductDAO {
     public int getMaxID(){
         int max = 0;
         try {
-            ResultSet rs = getMaxIDUpit.executeQuery();
+            ResultSet rs = getMaxIDQuery.executeQuery();
             max = rs.getInt(1);
         } catch (SQLException sqlException) {
             System.out.println("Greška u max upitu\nIzuzetak: " + sqlException.getMessage());
         }
         return max;
-    }
-
-    public int getIstiDatumISellerCount(String seller,String date){
-        int count = 0;
-        try {
-            istiDatumISellerUpit.setString(1,seller);
-            istiDatumISellerUpit.setString(2,date);
-            ResultSet rs = istiDatumISellerUpit.executeQuery();
-            count = rs.getInt(1);
-        } catch (SQLException sqlException) {
-            System.out.println("Greška u count upitu\nIzuzetak: " + sqlException.getMessage());
-        }
-        return count;
-    }
-
-    public void updateSoldProduct(Integer quantity,Integer id){
-        try {
-            updateSoldProductUpit.setInt(1, quantity);
-            updateSoldProductUpit.setInt(2, id);
-            updateSoldProductUpit.executeUpdate();
-
-        } catch (SQLException sqlException) {
-            System.out.println("Greška prilikom ažuriranja proizvoda\nIzuzetak: " + sqlException.getMessage());
-        }
-    }
-
-    public int getQuantity(Integer id){//vraca kolicinu proizvoda
-        int quantity=0;
-        try {
-            dajKolicinuUpit.setInt(1, id);
-
-            ResultSet rs = dajKolicinuUpit.executeQuery();
-            quantity = rs.getInt(1);
-            System.out.println(quantity);
-
-        } catch (SQLException sqlException) {
-            System.out.println("Greška prilikom dohvaćanja količine\nIzuzetak: " + sqlException.getMessage());
-        }
-
-        return quantity;
     }
 
 }

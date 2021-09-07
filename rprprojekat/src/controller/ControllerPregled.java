@@ -131,7 +131,7 @@ public class ControllerPregled {
         ArrayList<CartProduct> cart = new ArrayList<>(daoCart.getProducts());
         cart.forEach((c)->dao.changeQuantity(c.getID(),dao.getQuantity(c.getID())+c.getQuantity()));
 
-        daoCart.isprazni();//korpa se prazni nakon svakog zatvaranja programa
+        daoCart.emptyOut();//korpa se prazni nakon svakog zatvaranja programa
         tableCart.getSelectionModel().clearSelection();
         new Thread(() -> {
             try {
@@ -175,7 +175,7 @@ public class ControllerPregled {
 
         productList.setItems(dao.getProducts());
 
-        filtriraj();
+        filter();
         choiceSearch.setOnAction((event) -> {
             searchBar.setText("");
         });
@@ -190,7 +190,7 @@ public class ControllerPregled {
 
         }
 
-    public void filtriraj() throws IncorrectDataException {
+    public void filter() throws IncorrectDataException {
         FilteredList<Product> filteredProducts=new FilteredList<>(dao.getProducts(),b->true);
         searchBar.textProperty().addListener((observable,oldValue,newValue )-> {
             filteredProducts.setPredicate(p->{
@@ -249,7 +249,7 @@ public class ControllerPregled {
     public void addBtnClick(ActionEvent actionEvent) throws Exception{
         Stage myStage = new Stage();
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/dodajProizvod.fxml"),bundle);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/addProduct.fxml"),bundle);
         Parent root = loader.load();
         ControllerAddProduct addProduct = loader.getController();
 
@@ -278,7 +278,7 @@ public class ControllerPregled {
                     e.printStackTrace();
                 }
                 try {
-                    filtriraj();
+                    filter();
                 } catch (IncorrectDataException e) {
                     e.printStackTrace();
                 }
@@ -294,7 +294,7 @@ public class ControllerPregled {
         if(productList.getSelectionModel().getSelectedItem()!=null) {
             Stage myStage = new Stage();
             ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/azurirajProizvod.fxml"),bundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateProduct.fxml"),bundle);
             Parent root = loader.load();
             ControllerUpdateProduct updateProduct = loader.getController();
 
@@ -346,7 +346,7 @@ public class ControllerPregled {
                         e.printStackTrace();
                     }
                     try {
-                        filtriraj();
+                        filter();
                     } catch (IncorrectDataException e) {
                         e.printStackTrace();
                     }
@@ -440,6 +440,7 @@ public class ControllerPregled {
             }
             alert.showAndWait();
         }
+
         myStage.setOnHidden(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent windowEvent) {
@@ -450,7 +451,7 @@ public class ControllerPregled {
                     e.printStackTrace();
                 }
                 try {
-                    filtriraj();
+                    filter();
                 } catch (IncorrectDataException e) {
                     e.printStackTrace();
                 }
@@ -468,7 +469,7 @@ public class ControllerPregled {
             Locale.setDefault(new Locale("bs", "BA"));
             Stage myStage = new Stage();
             ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"), bundle);
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainWindow.fxml"), bundle);
             myStage.setTitle("Apoteka");
             myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             myStage.show();
@@ -485,7 +486,7 @@ public class ControllerPregled {
             Locale.setDefault(new Locale("en", "UK"));
             Stage myStage = new Stage();
             ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/pregledProizvoda.fxml"), bundle);
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainWindow.fxml"), bundle);
             myStage.setTitle("Pharmacy");
             myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             myStage.show();
@@ -504,25 +505,18 @@ public class ControllerPregled {
     }
 
     public void discardCartClick(ActionEvent actionEvent) {
-        //vratiti kolicine na staro stanje:
-        //preuzeti sve lijekove iz korpe
+        //vratiti kolicine proizvoda na staro stanje:
         ArrayList<CartProduct> cart = new ArrayList<>(daoCart.getProducts());
-        //za svaki od njih preuzeti kolicinu
-        //tu kolicinu dodati nazad u proizvod tabelu
         cart.forEach((c)->dao.changeQuantity(c.getID(),dao.getQuantity(c.getID())+c.getQuantity()));
         //isprazniti korpu
-        //obrisati podatke iz tabele korpa
-        daoCart.isprazni();
+        daoCart.emptyOut();
         tableCart.getSelectionModel().clearSelection();
         tableCart.setItems(daoCart.getProducts());
     }
 
     public void finalizeBtnClick(ActionEvent actionEvent) {
-        //kreiraj instancu klase sold object za svaki proizvod u korpi
-        //za svaki proizvod iz tabele korpa kreirati red u tabeli prodani sa trenutnim datumom i usernameom
         ArrayList<CartProduct> cart = daoCart.getProductsArrayList();
         CurrentUser user=CurrentUser.getInstance();
-        //ako je datum isti i seller name isti, updateati
         cart.forEach((c)-> {
             int max = daoSold.getMaxID();
             daoSold.dodajProdani(new SoldProduct(max + 1, c.getID(), c.getName(), c.getQuantity(), user.getUsername(), LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
@@ -530,7 +524,7 @@ public class ControllerPregled {
 
         //otvoriti kreirani racun
 
-        daoCart.isprazni();
+        daoCart.emptyOut();
         tableCart.getSelectionModel().clearSelection();
         tableCart.setItems(daoCart.getProducts());
     }
@@ -571,7 +565,6 @@ public class ControllerPregled {
     }
 
     public void exitMenuClick(ActionEvent actionEvent) {
-        //isprazniti korpu i vratiti kolicine
         System.exit(0);
     }
 
@@ -585,7 +578,7 @@ public class ControllerPregled {
         Stage myStage = new Stage();
         myStage.setResizable(false);
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/createAcc.fxml"), bundle);
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/createAccount.fxml"), bundle);
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         if(l.getLang().equals("bs")) myStage.setTitle("Kreiraj novi korisnički račun");
         else if(l.getLang().equals("en")) myStage.setTitle("Create new user account");

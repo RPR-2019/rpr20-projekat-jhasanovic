@@ -23,6 +23,7 @@ public class ControllerHelp {
     private BorderPane borderPane;
     @FXML
     private VBox connectionPage;
+
     TreeItem<String> root;
 
     TreeItem<String> nodeA;
@@ -49,7 +50,7 @@ public class ControllerHelp {
         else if(l.getLang().equals("en"))values(en);
 
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-        connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpMenuHome.fxml"), bundle);
+        connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpHome.fxml"), bundle);
         borderPane.setCenter(connectionPage);
 
         treeViewHelp.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -84,19 +85,19 @@ public class ControllerHelp {
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
 
         if(newValue.getValue().equals(root.getValue()))
-            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpMenuHome.fxml"), bundle);
+            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpHome.fxml"), bundle);
         else if(newValue.getValue().equals(nodeA.getValue()))
-            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpMenuDodaj.fxml"), bundle);
+            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpAddProduct.fxml"), bundle);
         else if(newValue.getValue().equals(nodeB.getValue()))
-            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpMenuAzuriraj.fxml"),bundle);
+            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpUpdate.fxml"),bundle);
         else if(newValue.getValue().equals(nodeC.getValue()))
-            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpMenuObrisi.fxml"),bundle);
+            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpDeleteProduct.fxml"),bundle);
         else if(newValue.getValue().equals(nodeA2.getValue()))
-            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpMenuKorpa.fxml"),bundle);
+            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpCart.fxml"),bundle);
         else if(newValue.getValue().equals(nodeB2.getValue()))
-            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpMenuNaplata.fxml"),bundle);
+            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpCheckout.fxml"),bundle);
         else if(newValue.getValue().equals(nodeC2.getValue()))
-            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpMenuIzvjestaj.fxml"),bundle);
+            connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpReports.fxml"),bundle);
 
         borderPane.setCenter(connectionPage);
 

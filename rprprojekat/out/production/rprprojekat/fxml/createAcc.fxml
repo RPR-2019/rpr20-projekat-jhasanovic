@@ -8,7 +8,7 @@
 
 <VBox alignment="CENTER" prefHeight="487.0" prefWidth="349.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerAddAcc">
     <stylesheets>
-        <URL value="@../css/login.css" />
+        <URL value="@../css/inputValidation.css" />
     </stylesheets>
     <children>
         <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">

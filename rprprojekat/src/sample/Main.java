@@ -18,7 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Locale.setDefault(new Locale("bs", "BA"));
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pregledProizvoda.fxml"),bundle);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/language.fxml"),bundle);
         Parent root = loader.load();
         primaryStage.setResizable(false);
         primaryStage.setTitle("App");

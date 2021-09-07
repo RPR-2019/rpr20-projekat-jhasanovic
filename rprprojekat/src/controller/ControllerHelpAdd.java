@@ -3,7 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class ControllerHelpDodaj {
+public class ControllerHelpAdd {
     @FXML
     Label label;
     @FXML

@@ -4,13 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public enum PurposeBS {
-    ANTIPIRETIK("Antipiretik"),
-    ANALGETIK("Analgetik"),
-    ANTIBIOTIK("Antibiotik"),
-    ANTIDEPRESANT("Antidepresant"),
-    ANTIKOAGULANT("Antikoagulant"),
-    ANTISEPTIK("Antiseptik"),
-    SEDATIV("Sedativ");
+    ANTIPYRETIK("Antipiretik"),
+    ANALGESIC("Analgetik"),
+    ANTIBIOTIC("Antibiotik"),
+    ANTIDEPRESSANT("Antidepresant"),
+    ANTICOAGULANT("Antikoagulant"),
+    ANTISEPTIC("Antiseptik"),
+    SEDATIVE("Sedativ");
 
 
     public final String label;
@@ -18,12 +18,14 @@ public enum PurposeBS {
     private PurposeBS(String label) {
         this.label = label;
     }
+
     public static ObservableList<String> getValues(){
-        ObservableList<String> lista = FXCollections.observableArrayList();
+        ObservableList<String> list = FXCollections.observableArrayList();
         for (PurposeBS a : PurposeBS.values())
-            lista.add(a.toString());
-        return lista.sorted();
+            list.add(a.toString());
+        return list.sorted();
     }
+
     @Override
     public String toString() {
         return this.label;

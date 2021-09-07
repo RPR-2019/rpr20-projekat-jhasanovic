@@ -15,12 +15,14 @@ public enum SearchCriteriaBS {
     private SearchCriteriaBS(String label) {
         this.label = label;
     }
+
     public static ObservableList<String> getValues(){
-        ObservableList<String> lista = FXCollections.observableArrayList();
+        ObservableList<String> list = FXCollections.observableArrayList();
         for (SearchCriteriaBS a : SearchCriteriaBS.values())
-            lista.add(a.toString());
-        return lista.sorted();
+            list.add(a.toString());
+        return list.sorted();
     }
+
     @Override
     public String toString() {
         return this.label;

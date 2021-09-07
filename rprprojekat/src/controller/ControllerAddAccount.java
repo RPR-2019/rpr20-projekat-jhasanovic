@@ -14,7 +14,7 @@ import dal.UserDAO;
 
 import java.sql.SQLException;
 
-public class ControllerAddAcc {
+public class ControllerAddAccount {
     @FXML
     public TextField usernameTextField;
     @FXML
