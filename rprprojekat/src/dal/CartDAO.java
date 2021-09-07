@@ -15,7 +15,7 @@ public class CartDAO {
     private static CartDAO instance=null;
     private Connection conn;
     private PreparedStatement allProductsQuery, removeProductQuery, addToCartQuery, updateCartQuery, getQuantityQuery,
-            discardCartQuery, getTotalQuery, sameProductInCart, getPriceQuery;
+            discardCartQuery, getTotalQuery, sameProductInCart, getPriceQuery,getCartSizeQuery;
 
     private CartDAO() throws SQLException {
         String url = "jdbc:sqlite:apoteka.db";
@@ -35,6 +35,7 @@ public class CartDAO {
         getTotalQuery = conn.prepareStatement("SELECT SUM(price) FROM korpa");
         sameProductInCart = conn.prepareStatement("SELECT COUNT(*) FROM korpa WHERE id=?");
         getPriceQuery = conn.prepareStatement("SELECT price FROM korpa WHERE id=?");
+        getCartSizeQuery = conn.prepareStatement("SELECT COUNT(*) FROM korpa");
     }
 
     private void createDatabase() {
@@ -143,14 +144,14 @@ public class CartDAO {
         return quantity;
     }
 
-    public int dajTotal(){//vraca ukupnu cijenu korpe
-        int total=0;
+    public double getTotal(){//vraca ukupnu cijenu korpe
+        double total=0;
         try {
             ResultSet rs = getTotalQuery.executeQuery();
             total = rs.getInt(1);
 
         } catch (SQLException sqlException) {
-            System.out.println("Greška prilikom dohvaćanja količine\nIzuzetak: " + sqlException.getMessage());
+            System.out.println("Greška prilikom dohvaćanja totala\nIzuzetak: " + sqlException.getMessage());
         }
         return total;
     }
@@ -195,6 +196,17 @@ public class CartDAO {
             count = rs.getDouble(1);
         } catch (SQLException sqlException) {
             System.out.println("Greška u getPrice upitu\nIzuzetak: " + sqlException.getMessage());
+        }
+        return count;
+    }
+
+    public int getCartSize() {
+        int count=0;
+        try {
+            ResultSet rs = getCartSizeQuery.executeQuery();
+            count = rs.getInt(1);
+        } catch (SQLException sqlException) {
+            System.out.println("Greška u getRowCount upitu\nIzuzetak: " + sqlException.getMessage());
         }
         return count;
     }

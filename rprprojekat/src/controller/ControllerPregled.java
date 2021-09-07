@@ -26,16 +26,15 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
+import net.sf.jasperreports.engine.JRException;
 import sample.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
+
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class ControllerPregled {
@@ -522,8 +521,49 @@ public class ControllerPregled {
             daoSold.dodajProdani(new SoldProduct(max + 1, c.getID(), c.getName(), c.getQuantity(), user.getUsername(), LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
         });
 
-        //otvoriti kreirani racun
-
+if(daoCart.getCartSize()>0) {
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    if (l.getLang().equals("bs")) {
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Da");
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Ne");
+        alert.setTitle("Račun");
+        alert.setHeaderText("");
+        alert.setContentText("Da li želite prikazati račun?");
+    } else if (l.getLang().equals("en")) {
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+        alert.setTitle("Receipt");
+        alert.setHeaderText("");
+        alert.setContentText("Do you want to show the receipt?");
+    }
+    Optional<ButtonType> result = alert.showAndWait();
+    if (result.get() == ButtonType.OK) {
+        try {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("total", daoCart.getTotal());
+            if (l.getLang().equals("bs"))
+                new PrintReport().showReport(SqliteHelper.getConn(), "Receipt_bs", map);
+            else if (l.getLang().equals("en"))
+                new PrintReport().showReport(SqliteHelper.getConn(), "Receipt_en", map);
+        } catch (JRException | SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
+}
+else{
+    Alert alert = new Alert(Alert.AlertType.WARNING);
+    if(l.getLang().equals("en")) {
+        alert.setTitle("Warning");
+        alert.setHeaderText("Cart empty!");
+        alert.setContentText("You have not added any products to the cart.");
+    }
+    else if(l.getLang().equals("bs")){
+        alert.setTitle("Upozorenje");
+        alert.setHeaderText("Korpa prazna!");
+        alert.setContentText("Niste dodali nijedan proizvod u korpu.");
+    }
+    alert.showAndWait();
+}
         daoCart.emptyOut();
         tableCart.getSelectionModel().clearSelection();
         tableCart.setItems(daoCart.getProducts());

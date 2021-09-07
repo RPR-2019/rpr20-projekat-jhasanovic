@@ -20,6 +20,13 @@ public class PrintReport extends JFrame {
             reportSrcFile = getClass().getResource("/reports/Report1_en.jrxml").getFile();
         else if(reportType.equals("Daily report"))
             reportSrcFile = getClass().getResource("/reports/Report2_en.jrxml").getFile();
+        else if(reportType.equals("Receipt_bs")){
+            reportSrcFile = getClass().getResource("/reports/Receipt_bs.jrxml").getFile();
+        }
+        else if(reportType.equals("Receipt_en")){
+            reportSrcFile = getClass().getResource("/reports/Receipt_en.jrxml").getFile();
+        }
+
 
         String reportsDir = getClass().getResource("/reports/").getFile();
 
