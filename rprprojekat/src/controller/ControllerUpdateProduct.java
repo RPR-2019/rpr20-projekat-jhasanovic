@@ -1,5 +1,6 @@
 package controller;
 
+import dal.CartDAO;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import sample.IncorrectDataException;
 import sample.Language;
 import sample.Product;
 import dal.ProductDAO;
+import sample.UniqueIdException;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -49,6 +51,7 @@ public class ControllerUpdateProduct implements Initializable {
 
 
     private ProductDAO dao;
+    private CartDAO daoCart;
     private Language l = Language.getInstance();
 
     private Integer index;
@@ -62,6 +65,12 @@ public class ControllerUpdateProduct implements Initializable {
 
         try {
             dao=ProductDAO.getInstance();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        try {
+            daoCart = CartDAO.getInstance();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -122,30 +131,41 @@ public class ControllerUpdateProduct implements Initializable {
 
     @FXML
     public void btnUpdateClick(ActionEvent actionEvent) throws IncorrectDataException {
-        try {
-            validateRequiredFields(fldID.getText(),fldQuantity.getText(),fldPrice.getText());
-            Product p = new Product(fldName.getText(),Integer.parseInt(fldID.getText()),Double.parseDouble(fldPrice.getText()),
-                    Integer.parseInt(fldQuantity.getText()),choicePurpose.getValue(),fldNotes.getText(),choiceAdMethod.getValue(),
-                    fldManufacturer.getText(),fldDescription.getText(),fldIngredients.getText(),choiceType.getValue());
-            dao.updateProduct(p, index);
-
-            Node n = (Node) actionEvent.getSource();
-            Stage stage = (Stage) n.getScene().getWindow();
-            stage.close();
-        }
-        catch(IncorrectDataException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            if(l.getLang().equals("bs")) {
-                alert.setTitle("Greška");
-                alert.setHeaderText("Neispravni podaci!");
-                alert.setContentText(e.getMessage());
-            }
-            else if(l.getLang().equals("en")){
-                alert.setTitle("Error");
-                alert.setHeaderText("Incorrect data input!");
-                alert.setContentText(e.getMessage());
-            }
-            alert.showAndWait();
+            try {
+                validateRequiredFields(fldID.getText(), fldQuantity.getText(), fldPrice.getText());
+                Product p = new Product(fldName.getText(), Integer.parseInt(fldID.getText()), Double.parseDouble(fldPrice.getText()),
+                        Integer.parseInt(fldQuantity.getText()), choicePurpose.getValue(), fldNotes.getText(), choiceAdMethod.getValue(),
+                        fldManufacturer.getText(), fldDescription.getText(), fldIngredients.getText(), choiceType.getValue());
+                try {
+                    dao.updateProduct(p, index);
+                    Node n = (Node) actionEvent.getSource();
+                    Stage stage = (Stage) n.getScene().getWindow();
+                    stage.close();
+                } catch (UniqueIdException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    if (l.getLang().equals("bs")) {
+                        alert.setTitle("Greška");
+                        alert.setHeaderText("Neuspjelo ažuriranje proizvoda!");
+                        alert.setContentText(e.getMessage());
+                    } else if (l.getLang().equals("en")) {
+                        alert.setTitle("Error");
+                        alert.setHeaderText("Product update failed!");
+                        alert.setContentText(e.getMessage());
+                    }
+                    alert.showAndWait();
+                }
+            } catch (IncorrectDataException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                if (l.getLang().equals("bs")) {
+                    alert.setTitle("Greška");
+                    alert.setHeaderText("Neispravni podaci!");
+                    alert.setContentText(e.getMessage());
+                } else if (l.getLang().equals("en")) {
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Incorrect data input!");
+                    alert.setContentText(e.getMessage());
+                }
+                alert.showAndWait();
         }
     }
 

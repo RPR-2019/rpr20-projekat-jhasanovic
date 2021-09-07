@@ -20,7 +20,7 @@ public enum SearchCriteriaBS {
         ObservableList<String> list = FXCollections.observableArrayList();
         for (SearchCriteriaBS a : SearchCriteriaBS.values())
             list.add(a.toString());
-        return list.sorted();
+        return list;
     }
 
     @Override

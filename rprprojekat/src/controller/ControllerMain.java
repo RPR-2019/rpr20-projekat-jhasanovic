@@ -37,7 +37,7 @@ import java.util.*;
 
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
-public class ControllerPregled {
+public class ControllerMain {
 
     @FXML
     public TableView<Product> productList;
@@ -290,7 +290,7 @@ public class ControllerPregled {
     }
 
     public void updateBtnClick(ActionEvent actionEvent) throws IOException {
-        if(productList.getSelectionModel().getSelectedItem()!=null) {
+        if(productList.getSelectionModel().getSelectedItem()!=null && daoCart.getProductCount(productList.getSelectionModel().getSelectedItem().getID())==0) {
             Stage myStage = new Stage();
             ResourceBundle bundle = ResourceBundle.getBundle("Translation");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/updateProduct.fxml"),bundle);
@@ -356,6 +356,21 @@ public class ControllerPregled {
             myStage.setResizable(false);
             myStage.show();
             searchBar.setText("");
+        }
+        else if(productList.getSelectionModel().getSelectedItem()!=null){
+            //proizvod koji je već u korpi nije moguće ažurirati da se izbjegnu nekonzistentni podaci
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                if(l.getLang().equals("bs")) {
+                    alert.setTitle("Upozorenje");
+                    alert.setHeaderText("Ažuriranje proizvoda koji je dodan u korpu nije moguće!");
+                    alert.setContentText("Molimo obrišite proizvod iz korpe prije ažuriranja.");
+                }
+                if(l.getLang().equals("en")) {
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("Updating a product already added to cart is not allowed!");
+                    alert.setContentText("Please remove the product you want to update from the cart.");
+                }
+                alert.showAndWait();
         }
         else{
             Alert alert = new Alert(Alert.AlertType.WARNING);

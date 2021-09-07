@@ -2,9 +2,7 @@ package dal;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sample.IncorrectDataException;
-import sample.Product;
-import sample.SqliteHelper;
+import sample.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,12 +13,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ProductDAO {
+    Language l;
     private static ProductDAO instance=null;
     private Connection conn;
     private PreparedStatement allProductsQuery, searchByIDQuery, addProductQuery, deleteProductQuery,
             updateProductQuery, updateQuantityQuery, getQuantityQuery;
 
     private ProductDAO() throws SQLException {
+        l =Language.getInstance();
         String url = "jdbc:sqlite:apoteka.db";
         conn = SqliteHelper.getConn();
         try {
@@ -118,7 +118,7 @@ public class ProductDAO {
         return result;
     }
 
-    public void addProduct(Product p){
+    public void addProduct(Product p) throws UniqueIdException {
         try {
             addProductQuery.setString(1, p.getName());
             addProductQuery.setInt(2, p.getID());
@@ -136,9 +136,11 @@ public class ProductDAO {
 
         } catch (SQLException sqlException) {
             System.out.println("Greška prilikom dodavanja proizvoda\nIzuzetak: " + sqlException.getMessage());
+            if(l.getLang().equals("bs")) throw new UniqueIdException("Nije moguće dodati proizvod sa već postojećim ID-em!");
+            else if(l.getLang().equals("en")) throw new UniqueIdException("Product with ID already exists!");
         }
     }
-    public void updateProduct(Product p,Integer index){
+    public void updateProduct(Product p,Integer index) throws UniqueIdException {
         try {
             updateProductQuery.setString(1, p.getName());
             updateProductQuery.setInt(2, p.getID());
@@ -156,6 +158,8 @@ public class ProductDAO {
 
         } catch (SQLException sqlException) {
             System.out.println("Greška prilikom ažuriranja proizvoda\nIzuzetak: " + sqlException.getMessage());
+            if(l.getLang().equals("bs")) throw new UniqueIdException("Proizvod nije moguće ažurirati jer ID već postoji!");
+            else if(l.getLang().equals("en")) throw new UniqueIdException("Product with ID already exists!");
         }
     }
     public void removeProduct(Product p) {

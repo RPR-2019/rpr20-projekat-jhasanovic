@@ -130,6 +130,7 @@ public class CartDAO {
         }
     }
 
+
     public int getQuantity(Integer id){//vraca kolicinu proizvoda u korpi
         int quantity=0;
         try {

@@ -13,6 +13,7 @@ import sample.IncorrectDataException;
 import sample.Language;
 import sample.Product;
 import dal.ProductDAO;
+import sample.UniqueIdException;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -120,10 +121,26 @@ public class ControllerAddProduct implements Initializable {
             Product p = new Product(fldName.getText(),Integer.parseInt(fldID.getText()),Double.parseDouble(fldPrice.getText()),
                     Integer.parseInt(fldQuantity.getText()),choicePurpose.getValue(),fldNotes.getText(),choiceAdMethod.getValue(),
                     fldManufacturer.getText(),fldDescription.getText(),fldIngredients.getText(),choiceType.getValue());
-            dao.addProduct(p);
-            Node n = (Node) actionEvent.getSource();
-            Stage stage = (Stage) n.getScene().getWindow();
-            stage.close();
+            try {
+                dao.addProduct(p);
+                Node n = (Node) actionEvent.getSource();
+                Stage stage = (Stage) n.getScene().getWindow();
+                stage.close();
+            } catch (UniqueIdException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                if(l.getLang().equals("bs")) {
+                    alert.setTitle("Greška");
+                    alert.setHeaderText("Neuspjelo dodavanje proizvoda!");
+                    alert.setContentText(e.getMessage());
+                }
+                else if(l.getLang().equals("en")){
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Adding a new product failed!");
+                    alert.setContentText(e.getMessage());
+                }
+                alert.showAndWait();
+            }
+
         }
         catch(IncorrectDataException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -189,7 +206,5 @@ public class ControllerAddProduct implements Initializable {
                 message="Product quantity has to be an integer!";
             throw new IncorrectDataException(message);
         }
-
-
     }
 }
