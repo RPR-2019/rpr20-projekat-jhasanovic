@@ -12,18 +12,25 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CartDAO {
-    private static CartDAO instance=null;
-    private Connection conn;
-    private PreparedStatement allProductsQuery, removeProductQuery, addToCartQuery, updateCartQuery, getQuantityQuery,
-            discardCartQuery, getTotalQuery, sameProductInCart, getPriceQuery,getCartSizeQuery;
+    private static CartDAO instance = null;
+    private final Connection conn;
+    private PreparedStatement allProductsQuery;
+    private final PreparedStatement removeProductQuery;
+    private final PreparedStatement addToCartQuery;
+    private final PreparedStatement updateCartQuery;
+    private final PreparedStatement getQuantityQuery;
+    private final PreparedStatement discardCartQuery;
+    private final PreparedStatement getTotalQuery;
+    private final PreparedStatement sameProductInCart;
+    private final PreparedStatement getPriceQuery;
+    private final PreparedStatement getCartSizeQuery;
 
     private CartDAO() throws SQLException {
         String url = "jdbc:sqlite:apoteka.db";
         conn = SqliteHelper.getConn();
         try {
             allProductsQuery = conn.prepareStatement("SELECT * FROM korpa");
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             createDatabase();
             allProductsQuery = conn.prepareStatement("SELECT * FROM korpa");
         }
@@ -105,7 +112,7 @@ public class CartDAO {
     public void addProductToCart(CartProduct p){
         try {
 
-            addToCartQuery.setInt(1, p.getID());
+            addToCartQuery.setInt(1, p.getId());
             addToCartQuery.setString(2, p.getName());
             addToCartQuery.setInt(3, p.getQuantity());
             addToCartQuery.setDouble(4, p.getPrice());
@@ -168,7 +175,7 @@ public class CartDAO {
 
     public void removeProduct(CartProduct p) {
         try {
-            removeProductQuery.setInt(1, p.getID());
+            removeProductQuery.setInt(1, p.getId());
             removeProductQuery.executeUpdate();
 
         } catch (SQLException sqlException) {

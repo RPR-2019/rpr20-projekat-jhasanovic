@@ -2,7 +2,7 @@ package sample;
 
 public class Product {
     private String name; //ime lijeka
-    private Integer ID;//kod lijeka
+    private Integer id;//kod lijeka
     private Double price;//cijena lijeka
     private Integer quantity;//kolicina lijeka
     private String purpose;//namjena lijeka
@@ -13,8 +13,8 @@ public class Product {
     private String ingredients;//sastav lijeka
     private String medicationType;//farmaceutski oblik lijeka
 
-    public Product(String name, Integer ID, Double price, Integer quantity, String purpose, String notes, String administrationMethod, String manufacturer, String description, String ingredients, String medicationType){
-        this.ID = ID;
+    public Product(String name, Integer id, Double price, Integer quantity, String purpose, String notes, String administrationMethod, String manufacturer, String description, String ingredients, String medicationType) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -101,16 +101,17 @@ public class Product {
         this.name = name;
     }
 
-    public Integer getID() {
-        return ID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setID(Integer ID) {
-        this.ID = ID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Double getPrice() {
-        return price; }
+        return price;
+    }
 
     public void setPrice(Double price) {
         this.price = price;
@@ -119,7 +120,7 @@ public class Product {
     @Override
     public String toString() {
         return "name='" + name + '\'' +
-                ", ID='" + ID + '\'' +
+                ", ID='" + id + '\'' +
                 ", price='" + price + '\'' +
                 ", quantity='" + quantity + '\'';
     }

@@ -9,18 +9,18 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class SoldProductDAO {
-    private static SoldProductDAO instance=null;
-    private Connection conn;
-    private PreparedStatement allSoldProductsQuery, addSoldQuery, getMaxIDQuery;
+    private static SoldProductDAO instance = null;
+    private final Connection conn;
+    private PreparedStatement allSoldProductsQuery;
+    private final PreparedStatement addSoldQuery;
+    private final PreparedStatement getMaxIDQuery;
 
     private SoldProductDAO() throws SQLException {
-        //String url = "jdbc:sqlite:" + System.getProperty("user.home") + "/.apotekaapp/apoteka.db";
         String url = "jdbc:sqlite:apoteka.db";
         conn = SqliteHelper.getConn();
         try {
             allSoldProductsQuery = conn.prepareStatement("SELECT * FROM prodani");
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             kreirajBazu();
             allSoldProductsQuery = conn.prepareStatement("SELECT * FROM prodani");
         }
@@ -59,7 +59,7 @@ public class SoldProductDAO {
     public void dodajProdani(SoldProduct p){
         try {
             addSoldQuery.setInt(1, p.getIdSold());
-            addSoldQuery.setInt(2, p.getID());
+            addSoldQuery.setInt(2, p.getId());
             addSoldQuery.setString(3, p.getName());
             addSoldQuery.setInt(4,p.getQuantity());
             addSoldQuery.setString(5, p.getSellerName());

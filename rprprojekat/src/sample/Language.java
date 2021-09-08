@@ -2,7 +2,7 @@ package sample;
 
 public class Language {
     private static Language instance = null;
-    public String lang;
+    private String lang;
 
     public String getLang() {
         return lang;

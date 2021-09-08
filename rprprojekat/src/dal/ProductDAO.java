@@ -7,26 +7,28 @@ import sample.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ProductDAO {
     Language l;
-    private static ProductDAO instance=null;
-    private Connection conn;
-    private PreparedStatement allProductsQuery, searchByIDQuery, addProductQuery, deleteProductQuery,
-            updateProductQuery, updateQuantityQuery, getQuantityQuery;
+    private static ProductDAO instance = null;
+    private final Connection conn;
+    private PreparedStatement allProductsQuery;
+    private final PreparedStatement searchByIDQuery;
+    private final PreparedStatement addProductQuery;
+    private final PreparedStatement deleteProductQuery;
+    private final PreparedStatement updateProductQuery;
+    private final PreparedStatement updateQuantityQuery;
+    private final PreparedStatement getQuantityQuery;
 
     private ProductDAO() throws SQLException {
-        l =Language.getInstance();
+        l = Language.getInstance();
         String url = "jdbc:sqlite:apoteka.db";
         conn = SqliteHelper.getConn();
         try {
             allProductsQuery = conn.prepareStatement("SELECT * FROM proizvod ORDER BY name");
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             createDatabase();
             allProductsQuery = conn.prepareStatement("SELECT * FROM proizvod ORDER BY name");
         }
@@ -67,17 +69,17 @@ public class ProductDAO {
         return instance;
     }
 
-    public ArrayList<Product> pretraga(Integer sifra) throws IncorrectDataException {
+    public ArrayList<Product> pretraga(Integer sifra) {
         ArrayList<Product> result = new ArrayList<>();
         try {
-            searchByIDQuery.setInt(1,sifra);
+            searchByIDQuery.setInt(1, sifra);
             ResultSet rs = searchByIDQuery.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String name = rs.getString(1);
                 Integer id = rs.getInt(2);
-                Double price=rs.getDouble(3);
-                int quantity=rs.getInt(4);
-                String purpose=rs.getString(5);
+                Double price = rs.getDouble(3);
+                int quantity = rs.getInt(4);
+                String purpose = rs.getString(5);
                 String notes=rs.getString(6);
                 String administrationMethod=rs.getString(7);
                 String manufacturer= rs.getString(8);
@@ -93,17 +95,17 @@ public class ProductDAO {
         return result;
     }
 
-    public ObservableList<Product> getProducts() throws IncorrectDataException {
+    public ObservableList<Product> getProducts() {
         ObservableList<Product> result = FXCollections.observableArrayList();
         try {
             ResultSet rs = allProductsQuery.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String name = rs.getString(1);
                 Integer id = rs.getInt(2);
-                Double price=rs.getDouble(3);
-                int quantity=rs.getInt(4);
-                String purpose=rs.getString(5);
-                String notes=rs.getString(6);
+                Double price = rs.getDouble(3);
+                int quantity = rs.getInt(4);
+                String purpose = rs.getString(5);
+                String notes = rs.getString(6);
                 String administrationMethod=rs.getString(7);
                 String manufacturer= rs.getString(8);
                 String description=rs.getString(9);
@@ -121,7 +123,7 @@ public class ProductDAO {
     public void addProduct(Product p) throws UniqueIdException {
         try {
             addProductQuery.setString(1, p.getName());
-            addProductQuery.setInt(2, p.getID());
+            addProductQuery.setInt(2, p.getId());
             addProductQuery.setDouble(3, p.getPrice());
             addProductQuery.setInt(4, p.getQuantity());
             addProductQuery.setString(5, p.getPurpose());
@@ -143,7 +145,7 @@ public class ProductDAO {
     public void updateProduct(Product p,Integer index) throws UniqueIdException {
         try {
             updateProductQuery.setString(1, p.getName());
-            updateProductQuery.setInt(2, p.getID());
+            updateProductQuery.setInt(2, p.getId());
             updateProductQuery.setDouble(3, p.getPrice());
             updateProductQuery.setInt(4, p.getQuantity());
             updateProductQuery.setString(5, p.getPurpose());
@@ -164,7 +166,7 @@ public class ProductDAO {
     }
     public void removeProduct(Product p) {
         try {
-            deleteProductQuery.setInt(1, p.getID());
+            deleteProductQuery.setInt(1, p.getId());
             deleteProductQuery.executeUpdate();
 
         } catch (SQLException sqlException) {

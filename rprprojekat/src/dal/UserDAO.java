@@ -1,6 +1,5 @@
 package dal;
 
-import sample.Language;
 import sample.SqliteHelper;
 import sample.User;
 
@@ -10,25 +9,25 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class UserDAO {
-    private static UserDAO instance=null;
-    private Connection conn;
-    private PreparedStatement addUserQuery, updatePasswordQuery, userAlreadyExistsQuery,existingUsernameUpit;
-    private Language l;
+    private static UserDAO instance = null;
+    private final Connection conn;
+    private PreparedStatement addUserQuery;
+    private final PreparedStatement updatePasswordQuery;
+    private final PreparedStatement userAlreadyExistsQuery;
+    private final PreparedStatement existingUsernameQuery;
 
     private UserDAO() throws SQLException {
-        l=Language.getInstance();
         String url = "jdbc:sqlite:apoteka.db";
         conn = SqliteHelper.getConn();
         try {
             addUserQuery = conn.prepareStatement("INSERT INTO korisnici VALUES(?,?)");
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             createDatabase();
             addUserQuery = conn.prepareStatement("INSERT INTO korisnici VALUES(?,?)");
         }
         updatePasswordQuery = conn.prepareStatement("UPDATE korisnici SET password=? WHERE username=?");
         userAlreadyExistsQuery = conn.prepareStatement("SELECT COUNT(*) FROM korisnici WHERE username=? AND password=?");
-        existingUsernameUpit = conn.prepareStatement("SELECT COUNT(*) FROM korisnici WHERE username=?");
+        existingUsernameQuery = conn.prepareStatement("SELECT COUNT(*) FROM korisnici WHERE username=?");
     }
 
     private void createDatabase() {
@@ -98,17 +97,15 @@ public class UserDAO {
         return count;
     }
 
-    public int existingUsername(User u) {
-        int count=0;
+    public int existingUser(User u) {
+        int count = 0;
         try {
-            userAlreadyExistsQuery.setString(1,u.getUsername());
-            ResultSet rs = userAlreadyExistsQuery.executeQuery();
+            existingUsernameQuery.setString(1, u.getUsername());
+            ResultSet rs = existingUsernameQuery.executeQuery();
             count = rs.getInt(1);
         } catch (SQLException sqlException) {
             System.out.println("Greška u existing username upitu\nIzuzetak: " + sqlException.getMessage());
         }
         return count;
     }
-
-
 }

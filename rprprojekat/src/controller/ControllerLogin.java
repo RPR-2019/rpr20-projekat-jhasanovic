@@ -1,7 +1,5 @@
 package controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,32 +35,26 @@ public class ControllerLogin {
 
     @FXML
     public void initialize() throws SQLException {
-        user=CurrentUser.getInstance();
+        user = CurrentUser.getInstance();
         daoUsers = UserDAO.getInstance();
         usernameTextField.getStyleClass().add("emptyField");
-        usernameTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (usernameTextField.getText().trim().isEmpty()) {
-                    usernameTextField.getStyleClass().removeAll("nonEmptyField");
-                    usernameTextField.getStyleClass().add("emptyField");
-                } else {
-                    usernameTextField.getStyleClass().removeAll("emptyField");
-                    usernameTextField.getStyleClass().add("nonEmptyField");
-                }
+        usernameTextField.textProperty().addListener((observableValue, o, n) -> {
+            if (usernameTextField.getText().trim().isEmpty()) {
+                usernameTextField.getStyleClass().removeAll("nonEmptyField");
+                usernameTextField.getStyleClass().add("emptyField");
+            } else {
+                usernameTextField.getStyleClass().removeAll("emptyField");
+                usernameTextField.getStyleClass().add("nonEmptyField");
             }
         });
         passwordTextField.getStyleClass().add("emptyField");
-        passwordTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (passwordTextField.getText().trim().isEmpty()) {
-                    passwordTextField.getStyleClass().removeAll("nonEmptyField");
-                   passwordTextField.getStyleClass().add("emptyField");
-                } else {
-                    passwordTextField.getStyleClass().removeAll("emptyField");
-                    passwordTextField.getStyleClass().add("nonEmptyField");
-                }
+        passwordTextField.textProperty().addListener((observableValue, o, n) -> {
+            if (passwordTextField.getText().trim().isEmpty()) {
+                passwordTextField.getStyleClass().removeAll("nonEmptyField");
+                passwordTextField.getStyleClass().add("emptyField");
+            } else {
+                passwordTextField.getStyleClass().removeAll("emptyField");
+                passwordTextField.getStyleClass().add("nonEmptyField");
             }
         });
 
@@ -83,7 +75,6 @@ public class ControllerLogin {
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
-            CurrentUser user = CurrentUser.getInstance();
             user.setUsername(usernameTextField.getText());
         }
         else {

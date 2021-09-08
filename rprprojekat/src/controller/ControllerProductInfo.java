@@ -49,7 +49,6 @@ public class ControllerProductInfo implements Initializable {
     @FXML
     public Label notesFld;
 
-
     private Integer maxQt;
     private Double price;
     private CartDAO daoCart;
@@ -93,13 +92,13 @@ public class ControllerProductInfo implements Initializable {
     }
 
     public void addToCartBtnClick(ActionEvent actionEvent) {
-        String price = totalFld.getText().replace(",",".").substring(0,5);
+        String price2 = totalFld.getText().replace(",", ".").substring(0, 5);
         if(daoCart.getProductCount(Integer.parseInt(idFld.getText()))>0){
             //azurirati postojeci proizvod u korpi
-            daoCart.updateCart(Integer.parseInt(idFld.getText()),Integer.parseInt(quantityFld.getText())+daoCart.getQuantity(Integer.parseInt(idFld.getText())),daoCart.getPrice(Integer.parseInt(idFld.getText()))+Double.parseDouble(price));
+            daoCart.updateCart(Integer.parseInt(idFld.getText()), Integer.parseInt(quantityFld.getText()) + daoCart.getQuantity(Integer.parseInt(idFld.getText())), daoCart.getPrice(Integer.parseInt(idFld.getText())) + Double.parseDouble(price2));
         }
         else {
-            CartProduct p = new CartProduct(Integer.parseInt(idFld.getText()), nameFld.getText(), Integer.parseInt(quantityFld.getText()), Double.parseDouble(price));
+            CartProduct p = new CartProduct(Integer.parseInt(idFld.getText()), nameFld.getText(), Integer.parseInt(quantityFld.getText()), Double.parseDouble(price2));
             daoCart.addProductToCart(p);
         }
         //smanjiti dostupne kolicine
@@ -110,27 +109,25 @@ public class ControllerProductInfo implements Initializable {
 
     }
 
-    public void minusBtnClick(ActionEvent actionEvent) {
-        if(!quantityFld.getText().equals("")) {
+    public void minusBtnClick() {
+        if (!quantityFld.getText().equals("")) {
             int qt = Integer.parseInt(quantityFld.getText());
-            if(qt>1) {
+            if (qt > 1) {
                 qt = qt - 1;
                 quantityFld.setText(Integer.toString(qt));
             }
-        }
-        else if(quantityFld.getText().equals(""))
+        } else if (quantityFld.getText().equals(""))
             quantityFld.setText("1");
     }
 
-    public void plusBtnClick(ActionEvent actionEvent) {
-        if(!quantityFld.getText().equals("")){
+    public void plusBtnClick() {
+        if (!quantityFld.getText().equals("")) {
             int qt = Integer.parseInt(quantityFld.getText());
-            if(qt<=maxQt){
+            if (qt <= maxQt) {
                 qt = qt + 1;
                 quantityFld.setText(Integer.toString(qt));
             }
-        }
-        else if(quantityFld.getText().equals(""))
+        } else if (quantityFld.getText().equals(""))
             quantityFld.setText("1");
     }
 

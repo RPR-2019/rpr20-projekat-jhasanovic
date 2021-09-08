@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import sample.Language;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -31,17 +32,14 @@ public class ControllerLanguage implements Initializable {
 
     Language l = Language.getInstance();
 
-    public void btnClick(ActionEvent actionEvent) throws Exception {
-        //postaviti odabrani jezik
+    public void btnClick(ActionEvent actionEvent) throws IOException {
 
-        //otvoriti login prozor
         Stage myStage = new Stage();
         myStage.setResizable(false);
         if (languageChoice.getSelectionModel().getSelectedItem().equals("Bosanski")) {
             Locale.setDefault(new Locale("bs", "BA"));
             l.setLang("bs");
-        }
-        else if (languageChoice.getSelectionModel().getSelectedItem().equals("English")) {
+        } else if (languageChoice.getSelectionModel().getSelectedItem().equals("English")) {
             Locale.setDefault(new Locale("en", "UK"));
             l.setLang("en");
         }
@@ -51,6 +49,7 @@ public class ControllerLanguage implements Initializable {
         myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
         if(l.getLang().equals("bs")) myStage.setTitle("Prijava");
         else if(l.getLang().equals("en")) myStage.setTitle("Login");
+
         myStage.show();
         Node n = (Node) actionEvent.getSource();
         Stage stage = (Stage) n.getScene().getWindow();

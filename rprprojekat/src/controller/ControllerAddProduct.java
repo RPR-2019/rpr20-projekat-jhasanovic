@@ -1,13 +1,10 @@
 package controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import sample.IncorrectDataException;
 import sample.Language;
@@ -56,60 +53,48 @@ public class ControllerAddProduct implements Initializable {
         btnAdd.setDisable(true);
 
         try {
-            dao=ProductDAO.getInstance();
+            dao = ProductDAO.getInstance();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         fldID.getStyleClass().add("emptyField");
-        fldID.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (fldID.getText().trim().isEmpty()) {
-                    fldID.getStyleClass().removeAll("nonEmptyField");
-                    fldID.getStyleClass().add("emptyField");
-                } else {
-                    fldID.getStyleClass().removeAll("emptyField");
-                    fldID.getStyleClass().add("nonEmptyField");
-                }
+        fldID.textProperty().addListener((observableValue, o, n) -> {
+            if (fldID.getText().trim().isEmpty()) {
+                fldID.getStyleClass().removeAll("nonEmptyField");
+                fldID.getStyleClass().add("emptyField");
+            } else {
+                fldID.getStyleClass().removeAll("emptyField");
+                fldID.getStyleClass().add("nonEmptyField");
             }
         });
         fldName.getStyleClass().add("emptyField");
-        fldName.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (fldName.getText().trim().isEmpty()) {
-                    fldName.getStyleClass().removeAll("nonEmptyField");
-                    fldName.getStyleClass().add("emptyField");
-                } else {
-                    fldName.getStyleClass().removeAll("emptyField");
-                    fldName.getStyleClass().add("nonEmptyField");
-                }
+        fldName.textProperty().addListener((observableValue, o, n) -> {
+            if (fldName.getText().trim().isEmpty()) {
+                fldName.getStyleClass().removeAll("nonEmptyField");
+                fldName.getStyleClass().add("emptyField");
+            } else {
+                fldName.getStyleClass().removeAll("emptyField");
+                fldName.getStyleClass().add("nonEmptyField");
             }
         });
         fldQuantity.getStyleClass().add("emptyField");
-        fldQuantity.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (fldQuantity.getText().trim().isEmpty()) {
-                    fldQuantity.getStyleClass().removeAll("nonEmptyField");
-                    fldQuantity.getStyleClass().add("emptyField");
-                } else {
-                    fldQuantity.getStyleClass().removeAll("emptyField");
-                    fldQuantity.getStyleClass().add("nonEmptyField");
-                }
+        fldQuantity.textProperty().addListener((observableValue, o, n) -> {
+            if (fldQuantity.getText().trim().isEmpty()) {
+                fldQuantity.getStyleClass().removeAll("nonEmptyField");
+                fldQuantity.getStyleClass().add("emptyField");
+            } else {
+                fldQuantity.getStyleClass().removeAll("emptyField");
+                fldQuantity.getStyleClass().add("nonEmptyField");
             }
         });
         fldPrice.getStyleClass().add("emptyField");
-        fldPrice.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (fldPrice.getText().trim().isEmpty()) {
-                    fldPrice.getStyleClass().removeAll("nonEmptyField");
-                    fldPrice.getStyleClass().add("emptyField");
-                } else {
-                    fldPrice.getStyleClass().removeAll("emptyField");
-                    fldPrice.getStyleClass().add("nonEmptyField");
-                }
+        fldPrice.textProperty().addListener((observableValue, o, n) -> {
+            if (fldPrice.getText().trim().isEmpty()) {
+                fldPrice.getStyleClass().removeAll("nonEmptyField");
+                fldPrice.getStyleClass().add("emptyField");
+            } else {
+                fldPrice.getStyleClass().removeAll("emptyField");
+                fldPrice.getStyleClass().add("nonEmptyField");
             }
         });
     }
@@ -149,10 +134,10 @@ public class ControllerAddProduct implements Initializable {
                 alert.setHeaderText("Neispravni podaci!");
                 alert.setContentText(e.getMessage());
             }
-            else if(l.getLang().equals("en")){
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Incorrect data input!");
-                    alert.setContentText(e.getMessage());
+            else if(l.getLang().equals("en")) {
+                alert.setTitle("Error");
+                alert.setHeaderText("Incorrect data input!");
+                alert.setContentText(e.getMessage());
             }
             alert.showAndWait();
         }
@@ -165,16 +150,14 @@ public class ControllerAddProduct implements Initializable {
     }
 
     //nije moguce dodati proizvod ako nisu popunjena sva required polja
-    public void keyReleased(KeyEvent keyEvent) {
-        if(fldID.getText().trim().isEmpty() || fldName.getText().trim().isEmpty() || fldQuantity.getText().trim().isEmpty() ||
-        fldPrice.getText().trim().isEmpty())
-            btnAdd.setDisable(true);
-        else btnAdd.setDisable(false);
+    public void keyReleased() {
+        btnAdd.setDisable(fldID.getText().trim().isEmpty() || fldName.getText().trim().isEmpty() || fldQuantity.getText().trim().isEmpty() ||
+                fldPrice.getText().trim().isEmpty());
     }
 
     public void validateRequiredFields(Object id,Object quantity,Object price) throws IncorrectDataException {
         try {
-            Integer x = Integer.parseInt(id.toString());
+            Integer.parseInt(id.toString());
         }
         catch(NumberFormatException e){
             String message="";
@@ -185,7 +168,7 @@ public class ControllerAddProduct implements Initializable {
             throw new IncorrectDataException(message);
         }
         try {
-            Double z = Double.parseDouble(price.toString());
+            Double.parseDouble(price.toString());
         }
         catch(NumberFormatException e){
             String message="";
@@ -196,7 +179,7 @@ public class ControllerAddProduct implements Initializable {
             throw new IncorrectDataException(message);
         }
         try {
-            Integer y = Integer.parseInt(quantity.toString());
+            Integer.parseInt(quantity.toString());
         }
         catch(NumberFormatException e){
             String message="";

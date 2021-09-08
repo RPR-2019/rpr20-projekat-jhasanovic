@@ -9,21 +9,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PrintReport extends JFrame {
-    public void showReport(Connection conn,String reportType,HashMap<String,Object> p) throws JRException {
-        String reportSrcFile="";
+    public void showReport(Connection conn, String reportType, HashMap<String, Object> p) throws JRException {
+        String reportSrcFile = "";
 
-        if(reportType.equals("Generalni izvještaj"))
-        reportSrcFile = getClass().getResource("/reports/Report1_bs.jrxml").getFile();
-        else if(reportType.equals("Dnevni izvještaj"))
+        if (reportType.equals("Generalni izvještaj"))
+            reportSrcFile = getClass().getResource("/reports/Report1_bs.jrxml").getFile();
+        else if (reportType.equals("Dnevni izvještaj"))
             reportSrcFile = getClass().getResource("/reports/Report2_bs.jrxml").getFile();
-        else if(reportType.equals("General report"))
+        else if (reportType.equals("General report"))
             reportSrcFile = getClass().getResource("/reports/Report1_en.jrxml").getFile();
-        else if(reportType.equals("Daily report"))
+        else if (reportType.equals("Daily report"))
             reportSrcFile = getClass().getResource("/reports/Report2_en.jrxml").getFile();
-        else if(reportType.equals("Receipt_bs")){
+        else if (reportType.equals("Receipt_bs")) {
             reportSrcFile = getClass().getResource("/reports/Receipt_bs.jrxml").getFile();
-        }
-        else if(reportType.equals("Receipt_en")){
+        } else if (reportType.equals("Receipt_en")) {
             reportSrcFile = getClass().getResource("/reports/Receipt_en.jrxml").getFile();
         }
 
@@ -31,10 +30,9 @@ public class PrintReport extends JFrame {
         String reportsDir = getClass().getResource("/reports/").getFile();
 
         JasperReport jasperReport = JasperCompileManager.compileReport(reportSrcFile);
-        // Fields for resources path
         HashMap<String, Object> parameters = p;
         parameters.put("reportsDirPath", reportsDir);
-        ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
         list.add(parameters);
         JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, conn);
         JasperViewer viewer = new JasperViewer(print, false);

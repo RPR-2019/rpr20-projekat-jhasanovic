@@ -1,8 +1,5 @@
 package controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
@@ -11,7 +8,6 @@ import javafx.scene.image.ImageView;
 import sample.Language;
 import sample.User;
 import dal.UserDAO;
-
 import java.sql.SQLException;
 
 public class ControllerAddAccount {
@@ -28,13 +24,11 @@ public class ControllerAddAccount {
 
     @FXML
     public void initialize() throws SQLException {
-    daoUsers = UserDAO.getInstance();
-    l=Language.getInstance();
+        daoUsers = UserDAO.getInstance();
+        l = Language.getInstance();
 
         usernameTextField.getStyleClass().add("emptyField");
-        usernameTextField.textProperty().addListener(new ChangeListener<String>() {
-        @Override
-        public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
+        usernameTextField.textProperty().addListener((observableValue, o, n) -> {
             if (usernameTextField.getText().trim().isEmpty()) {
                 usernameTextField.getStyleClass().removeAll("nonEmptyField");
                 usernameTextField.getStyleClass().add("emptyField");
@@ -42,12 +36,9 @@ public class ControllerAddAccount {
                 usernameTextField.getStyleClass().removeAll("emptyField");
                 usernameTextField.getStyleClass().add("nonEmptyField");
             }
-        }
-    });
+        });
         passwordTextField.getStyleClass().add("emptyField");
-        passwordTextField.textProperty().addListener(new ChangeListener<String>() {
-        @Override
-        public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
+        passwordTextField.textProperty().addListener((observableValue, o, n) -> {
             if (passwordTextField.getText().trim().isEmpty()) {
                 passwordTextField.getStyleClass().removeAll("nonEmptyField");
                 passwordTextField.getStyleClass().add("emptyField");
@@ -55,24 +46,22 @@ public class ControllerAddAccount {
                 passwordTextField.getStyleClass().removeAll("emptyField");
                 passwordTextField.getStyleClass().add("nonEmptyField");
             }
-        }
-    });
+        });
     }
 
-    public void loginClick(ActionEvent actionEvent){
-        User u = new User(usernameTextField.getText(),passwordTextField.getText());
-        int count=daoUsers.existingUsername(u);
-        if(count>0){
+    public void loginClick() {
+        User u = new User(usernameTextField.getText(), passwordTextField.getText());
+        int count = daoUsers.existingUser(u);
+        if (count == 0) {
             daoUsers.addUser(u);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
-            if(l.getLang().equals("bs")) alert.setContentText("Uspješno ste kreirali novi račun!");
-            else if(l.getLang().equals("en")) alert.setContentText("You have succesfully created a new account!");
+            if (l.getLang().equals("bs")) alert.setContentText("Uspješno ste kreirali novi račun!");
+            else if (l.getLang().equals("en")) alert.setContentText("You have succesfully created a new account!");
             alert.showAndWait();
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            if(l.getLang().equals("bs")) {
+            if (l.getLang().equals("bs")) {
                 alert.setTitle("Greška");
                 alert.setHeaderText("Greška pri kreiranju novog računa!");
                 alert.setContentText("Korisnik sa korisničkim imenom "+u.getUsername()+" već postoji!");
@@ -84,5 +73,5 @@ public class ControllerAddAccount {
             }
             alert.showAndWait();
         }
-        }
+    }
 }

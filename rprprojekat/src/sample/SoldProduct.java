@@ -2,15 +2,15 @@ package sample;
 
 public class SoldProduct{
     private Integer idSold;
-    private Integer ID;
+    private Integer id;
     private String name;
     private Integer quantity;
     private String sellerName;
     private String date;
 
-    public SoldProduct(Integer idSold, Integer ID, String name, Integer quantity, String sellerName, String date) {
+    public SoldProduct(Integer idSold, Integer id, String name, Integer quantity, String sellerName, String date) {
         this.idSold = idSold;
-        this.ID = ID;
+        this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.sellerName = sellerName;
@@ -25,12 +25,12 @@ public class SoldProduct{
         this.idSold = idSold;
     }
 
-    public Integer getID() {
-        return ID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setID(Integer id) {
-        this.ID = id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

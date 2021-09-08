@@ -1,24 +1,24 @@
 package sample;
 
 public class CartProduct {
-    private Integer ID;
+    private Integer id;
     private String name;
     private Integer quantity;
     private Double price;
 
-    public CartProduct(Integer ID, String name, Integer quantity, Double price) {
-        this.ID = ID;
+    public CartProduct(Integer id, String name, Integer quantity, Double price) {
+        this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
     }
 
-    public Integer getID() {
-        return ID;
+    public Integer getId() {
+        return id;
     }
 
-    public void setID(Integer ID) {
-        this.ID = ID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -2,7 +2,6 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import sample.Language;
@@ -14,11 +13,10 @@ public class ControllerHelpRemove {
     public ImageView image1;
     @FXML
     public ImageView image2;
-    private Language l;
 
     @FXML
     public void initialize() {
-        l = Language.getInstance();
+        Language l = Language.getInstance();
 
         if(l.getLang().equals("bs")){
             label1.setText("Za brisanje proizvoda prvo odaberite željeni proizvod iz tabele proizvoda, a zatim kliknite na dugme \"Ukloni proizvod\".");

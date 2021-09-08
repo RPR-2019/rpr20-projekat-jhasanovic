@@ -30,13 +30,9 @@ public class ControllerHelpCart {
     @FXML
     public ImageView image5;
 
-
-    private Language l;
-
-
     @FXML
     public void initialize() {
-        l = Language.getInstance();
+        Language l = Language.getInstance();
         if(l.getLang().equals("bs")){
             label1.setText("Za dodavanje proizvoda u korpu prvo odaberite željeni proizvod iz tabele proizvoda, a zatim kliknite na dugme \"Dodaj u korpu\".");
             label2.setText("Klik na dugme \"Dodaj u korpu\" otvara novi prozor sa detaljnim informacijama o proizvodu.");

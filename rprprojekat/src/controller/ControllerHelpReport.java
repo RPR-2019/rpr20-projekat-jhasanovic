@@ -20,12 +20,10 @@ public class ControllerHelpReport {
     @FXML
     public ImageView image3;
 
-    private Language l;
-
 
     @FXML
     public void initialize() {
-        l = Language.getInstance();
+        Language l = Language.getInstance();
         if(l.getLang().equals("bs")){
             label1.setText("Za kreiranje izvještaja odaberite opciju \"Kreiraj izvještaj\" iz menija File.");
             label2.setText("Odaberite jedan od dva dostupna tipa izvještaja.");

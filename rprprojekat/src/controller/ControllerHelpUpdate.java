@@ -21,12 +21,11 @@ public class ControllerHelpUpdate {
     public Label label4;
     @FXML
     public ImageView image3;
-    private Language l;
 
     @FXML
     public void initialize() {
 
-        l = Language.getInstance();
+        Language l = Language.getInstance();
         if(l.getLang().equals("bs")){
             label1.setText("Za ažuriranje proizvoda prvo odaberite željeni proizvod iz tabele proizvoda, a zatim kliknite na dugme \"Ažuriraj proizvod\".");
             label2.setText(" Klik na dugme \"Ažuriraj proizvod\" otvara formu za ažuriranje podataka o odabranom proizvodu. ");
