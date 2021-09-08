@@ -1,5 +1,6 @@
 package controller;
 
+import dal.UserDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
@@ -7,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import sample.Language;
 import sample.User;
-import dal.UserDAO;
+
 import java.sql.SQLException;
 
 public class ControllerAddAccount {
@@ -46,7 +47,20 @@ public class ControllerAddAccount {
     public void loginClick() {
         User u = new User(usernameTextField.getText(), passwordTextField.getText());
         int count = daoUsers.existingUser(u);
-        if (count == 0) {
+
+        if (usernameTextField.getText().trim().isEmpty() || passwordTextField.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            if (l.getLang().equals("bs")) {
+                alert.setTitle("Greška");
+                alert.setHeaderText("Greška pri kreiranju novog računa!");
+                alert.setContentText("Polja ne smiju biti prazna!");
+            } else if (l.getLang().equals("en")) {
+                alert.setTitle("Error");
+                alert.setHeaderText("Error creating new account!");
+                alert.setContentText("Fields cannot be empty!");
+            }
+            alert.showAndWait();
+        } else if (count == 0) {
             daoUsers.addUser(u);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
@@ -58,12 +72,11 @@ public class ControllerAddAccount {
             if (l.getLang().equals("bs")) {
                 alert.setTitle("Greška");
                 alert.setHeaderText("Greška pri kreiranju novog računa!");
-                alert.setContentText("Korisnik sa korisničkim imenom "+u.getUsername()+" već postoji!");
-            }
-            else if(l.getLang().equals("en")){
+                alert.setContentText("Korisnik sa korisničkim imenom " + u.getUsername() + " već postoji!");
+            } else if (l.getLang().equals("en")) {
                 alert.setTitle("Error");
                 alert.setHeaderText("Error creating new account!");
-                alert.setContentText("User with username "+u.getUsername()+" already exists!");
+                alert.setContentText("User with username " + u.getUsername() + " already exists!");
             }
             alert.showAndWait();
         }

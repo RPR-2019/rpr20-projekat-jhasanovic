@@ -1,5 +1,6 @@
 package controller;
 
+import dal.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +15,6 @@ import javafx.stage.Stage;
 import sample.CurrentUser;
 import sample.Language;
 import sample.User;
-import dal.UserDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
