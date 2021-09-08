@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
-
-<TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerMain">
+<?import java.net.URL?>
+<TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1"
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.controller.MainController">
 
     <stylesheets>
-        <URL value="@/css/menuIcons.css" />
-        <URL value="@/css/table.css" />
+        <URL value="@/css/menuIcons.css"/>
+        <URL value="@/css/table.css"/>
     </stylesheets>
 
     <tabs>
         <Tab fx:id="tabHomepage" closable="false" text="%homepage">
-            <BorderPane fx:id="mainWindow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+            <BorderPane fx:id="mainWindow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                        minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
                 <bottom>
                     <ButtonBar BorderPane.alignment="CENTER">
                         <buttons>
@@ -64,12 +65,23 @@
                                         <items>
                                             <MenuItem fx:id="mniReport" onAction="#mniReportClick" text="%createReport">
                                                 <accelerator>
-                                                    <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                                                </accelerator></MenuItem>
+                                                    <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP"
+                                                                        shift="UP" shortcut="UP"/>
+                                                </accelerator>
+                                            </MenuItem>
+                                            <MenuItem fx:id="mniWriteToFile" onAction="#mniWriteToFileClick"
+                                                      text="%zapisi">
+                                                <accelerator>
+                                                    <KeyCodeCombination alt="DOWN" code="W" control="UP" meta="UP"
+                                                                        shift="UP" shortcut="UP"/>
+                                                </accelerator>
+                                            </MenuItem>
                                             <MenuItem fx:id="mniExit" onAction="#exitMenuClick" text="%e_xit">
                                                 <accelerator>
-                                                    <KeyCodeCombination alt="DOWN" code="X" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                                                </accelerator></MenuItem>
+                                                    <KeyCodeCombination alt="DOWN" code="X" control="UP" meta="UP"
+                                                                        shift="UP" shortcut="UP"/>
+                                                </accelerator>
+                                            </MenuItem>
                                         </items>
                                         <accelerator>
                                             <KeyCodeCombination alt="DOWN" code="F" control="UP" meta="UP" shift="UP" shortcut="UP" />
