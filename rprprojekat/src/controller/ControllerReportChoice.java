@@ -31,8 +31,8 @@ public class ControllerReportChoice {
     public void initialize() {
         datePicker.setVisible(false);
         Language l = Language.getInstance();
-        ObservableList<String> optionsBS = FXCollections.observableArrayList("Generalni izvještaj", "Dnevni izvještaj");
-        ObservableList<String> optionsEN = FXCollections.observableArrayList("General report", "Daily report");
+        ObservableList<String> optionsBS = FXCollections.observableArrayList("Generalni izvještaj", "Dnevni izvještaj", "Izvještaj o stanju");
+        ObservableList<String> optionsEN = FXCollections.observableArrayList("General report", "Daily report", "Products in stock");
         if (l.getLang().equals("bs")) reportTypeCombo.setItems(optionsBS);
         else if (l.getLang().equals("en")) reportTypeCombo.setItems(optionsEN);
         reportTypeCombo.getSelectionModel().select(0);
@@ -50,7 +50,8 @@ public class ControllerReportChoice {
                 HashMap<String, Object> map = new HashMap<>();
                 map.put("datum", datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
                 new PrintReport().showReport(SqliteHelper.getConn(), reportTypeCombo.getSelectionModel().getSelectedItem(), map);
-            }
+            } else if (reportTypeCombo.getValue().equals("Izvještaj o stanju") || reportTypeCombo.getValue().equals("Products in stock"))
+                new PrintReport().showReport(SqliteHelper.getConn(), reportTypeCombo.getSelectionModel().getSelectedItem(), new HashMap<>());
         } catch (JRException | SQLException e1) {
             e1.printStackTrace();
         }

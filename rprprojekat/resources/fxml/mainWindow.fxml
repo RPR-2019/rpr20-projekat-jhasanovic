@@ -80,43 +80,56 @@
                                             <MenuItem fx:id="mniBS" onAction="#bsMenuClick" text="_Bosanski">
                                                 <accelerator>
                                                     <KeyCodeCombination alt="DOWN" code="B" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                                                </accelerator></MenuItem>
+                                                </accelerator>
+                                            </MenuItem>
                                             <MenuItem fx:id="mniEN" onAction="#enMenuClick" text="_English">
                                                 <accelerator>
-                                                    <KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                                                </accelerator></MenuItem>
+                                                    <KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP"
+                                                                        shift="UP" shortcut="UP"/>
+                                                </accelerator>
+                                            </MenuItem>
                                         </items>
                                         <accelerator>
-                                            <KeyCodeCombination alt="DOWN" code="L" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                            <KeyCodeCombination alt="DOWN" code="L" control="UP" meta="UP" shift="UP"
+                                                                shortcut="UP"/>
+                                        </accelerator>
+                                    </Menu>
+                                    <Menu fx:id="mniProfile" text="%_profil">
+                                        <items>
+                                            <MenuItem fx:id="mniCreateAcc" onAction="#mniCreateAccountClick"
+                                                      text="Kreiraj novi račun">
+                                                <accelerator>
+                                                    <KeyCodeCombination alt="DOWN" code="N" control="UP" meta="UP"
+                                                                        shift="UP" shortcut="UP"/>
+                                                </accelerator>
+                                            </MenuItem>
+                                            <MenuItem fx:id="mniLogoutBtn" mnemonicParsing="false"
+                                                      onAction="#mniLogoutClick" text="Log out"/>
+                                        </items>
+                                        <accelerator>
+                                            <KeyCodeCombination alt="DOWN" code="P" control="UP" meta="UP" shift="UP"
+                                                                shortcut="UP"/>
                                         </accelerator>
                                     </Menu>
                                     <Menu fx:id="mniHelp" text="%help">
                                         <items>
                                             <MenuItem fx:id="mniHelp2" onAction="#helpMenuClick" text="%help">
                                                 <accelerator>
-                                                    <KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                                                </accelerator></MenuItem>
+                                                    <KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP"
+                                                                        shift="UP" shortcut="UP"/>
+                                                </accelerator>
+                                            </MenuItem>
                                             <MenuItem fx:id="mniAbout" onAction="#aboutMenuClick" text="%about">
                                                 <accelerator>
-                                                    <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                                                </accelerator></MenuItem>
+                                                    <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP"
+                                                                        shift="UP" shortcut="UP"/>
+                                                </accelerator>
+                                            </MenuItem>
                                         </items>
                                         <accelerator>
                                             <KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
                                         </accelerator>
                                     </Menu>
-                           <Menu fx:id="mniProfile" text="%_profil">
-                             <items>
-                                 <MenuItem fx:id="mniCreateAcc" onAction="#mniCreateAccountClick" text="Kreiraj novi račun">
-                                    <accelerator>
-                                       <KeyCodeCombination alt="DOWN" code="N" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                                    </accelerator></MenuItem>
-                               <MenuItem fx:id="mniLogoutBtn" mnemonicParsing="false" onAction="#mniLogoutClick" text="Log out" />
-                             </items>
-                              <accelerator>
-                                 <KeyCodeCombination alt="DOWN" code="P" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                              </accelerator>
-                           </Menu>
                                 </menus>
                                 <GridPane.margin>
                                     <Insets />

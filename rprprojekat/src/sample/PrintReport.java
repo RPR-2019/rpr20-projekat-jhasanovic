@@ -17,6 +17,8 @@ public class PrintReport extends JFrame {
             case "Daily report" -> getClass().getResource("/reports/Report2_en.jrxml").getFile();
             case "Receipt_bs" -> getClass().getResource("/reports/Receipt_bs.jrxml").getFile();
             case "Receipt_en" -> getClass().getResource("/reports/Receipt_en.jrxml").getFile();
+            case "Izvještaj o stanju" -> getClass().getResource("/reports/Report3_bs.jrxml").getFile();
+            case "Products in stock" -> getClass().getResource("/reports/Report3_en.jrxml").getFile();
             default -> "";
         };
 
