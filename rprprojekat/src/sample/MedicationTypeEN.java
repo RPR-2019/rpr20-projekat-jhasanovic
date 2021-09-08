@@ -7,14 +7,14 @@ public enum MedicationTypeEN {
     INJECTION("Injection"),
     CAPSULES("Capsules"),
     CREAM("Cream"),
-    OITNMENT("Ointment"),
+    OINTMENT("Ointment"),
     SOLUTION("Solution"),
     SYRUP("Syrup"),
     PILLS("Pills");
 
     public final String label;
 
-    private MedicationTypeEN(String label) {
+    MedicationTypeEN(String label) {
         this.label = label;
     }
 

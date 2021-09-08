@@ -38,7 +38,7 @@ public class ControllerReportChoice {
         reportTypeCombo.getSelectionModel().select(0);
         datePicker.setValue(LocalDate.parse(LocalDate.now().toString()));
 
-        reportTypeCombo.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) ->
+        reportTypeCombo.valueProperty().addListener((ov, t, t1) ->
                 datePicker.setVisible(t1.equals("Dnevni izvještaj") || t1.equals("Daily report")));
     }
 

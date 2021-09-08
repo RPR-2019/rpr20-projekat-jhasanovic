@@ -31,17 +31,17 @@ public class UserDAO {
     }
 
     private void createDatabase() {
-        Scanner input = null;
+        Scanner input;
         try {
             input = new Scanner(new FileInputStream("apoteka.db.sql"));
-            String sqlQuery = "";
+            StringBuilder sqlQuery = new StringBuilder();
             while (input.hasNext()) {
-                sqlQuery += input.nextLine();
+                sqlQuery.append(input.nextLine());
                 if (sqlQuery.length() > 1 && sqlQuery.charAt(sqlQuery.length() - 1) == ';') {
                     try {
                         Statement stmt = conn.createStatement();
-                        stmt.execute(sqlQuery);
-                        sqlQuery = "";
+                        stmt.execute(sqlQuery.toString());
+                        sqlQuery = new StringBuilder();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }

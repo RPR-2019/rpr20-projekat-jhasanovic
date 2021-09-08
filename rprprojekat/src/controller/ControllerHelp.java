@@ -35,21 +35,21 @@ public class ControllerHelp {
     TreeItem<String> nodeA2;
     TreeItem<String> nodeC2;
 
-    private Language l = Language.getInstance();
+    private final Language l = Language.getInstance();
 
-    Image icon=new Image(getClass().getResourceAsStream("/img/folder.png"));
-    private List<String> bs = new ArrayList<>();
-    private List<String> en = new ArrayList<>();
+    Image icon = new Image(getClass().getResourceAsStream("/img/folder.png"));
+    private final List<String> bs = new ArrayList<>();
+    private final List<String> en = new ArrayList<>();
 
     @FXML
     public void initialize() throws IOException {
-        bs.addAll(Arrays.asList("Početna","Kreiranje izvještaja","Dodavanje novog proizvoda",
-                "Ažuriranje proizvoda","Brisanje proizvoda","Dodavanje proizvoda u korpu","Naplata"));
-        en.addAll(Arrays.asList("Get started","Creating reports","Adding new products",
-                "Updating products","Removing products","Adding to cart","Finalizing the purchase"));
+        bs.addAll(Arrays.asList("Početna", "Kreiranje izvještaja", "Dodavanje novog proizvoda",
+                "Ažuriranje proizvoda", "Brisanje proizvoda", "Dodavanje proizvoda u korpu"));
+        en.addAll(Arrays.asList("Get started", "Creating reports", "Adding new products",
+                "Updating products", "Removing products", "Adding to cart"));
 
-        if(l.getLang().equals("bs")) values(bs);
-        else if(l.getLang().equals("en"))values(en);
+        if (l.getLang().equals("bs")) values(bs);
+        else if (l.getLang().equals("en")) values(en);
 
         ResourceBundle bundle = ResourceBundle.getBundle("Translation");
         connectionPage = FXMLLoader.load(getClass().getResource("/fxml/helpHome.fxml"), bundle);

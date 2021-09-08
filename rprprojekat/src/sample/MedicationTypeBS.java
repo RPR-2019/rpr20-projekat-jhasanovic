@@ -14,10 +14,11 @@ public enum MedicationTypeBS {
 
     public final String label;
 
-    private MedicationTypeBS(String label) {
+    MedicationTypeBS(String label) {
         this.label = label;
     }
-    public static ObservableList<String> getValues(){
+
+    public static ObservableList<String> getValues() {
         ObservableList<String> list = FXCollections.observableArrayList();
         for (MedicationTypeBS a : MedicationTypeBS.values())
             list.add(a.toString());

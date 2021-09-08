@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public enum PurposeBS {
-    ANTIPYRETIK("Antipiretik"),
+    ANTIPYRETIC("Antipiretik"),
     ANALGESIC("Analgetik"),
     ANTIBIOTIC("Antibiotik"),
     ANTIDEPRESSANT("Antidepresant"),
@@ -16,7 +16,7 @@ public enum PurposeBS {
 
     public final String label;
 
-    private PurposeBS(String label) {
+    PurposeBS(String label) {
         this.label = label;
     }
 

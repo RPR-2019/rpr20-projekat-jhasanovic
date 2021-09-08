@@ -47,7 +47,7 @@ public class ControllerUpdateProduct implements Initializable {
 
 
     private ProductDAO dao;
-    private Language l = Language.getInstance();
+    private final Language l = Language.getInstance();
 
     private Integer index;
 
@@ -57,52 +57,26 @@ public class ControllerUpdateProduct implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         try {
             dao = ProductDAO.getInstance();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        setFieldColor(fldID);
+        setFieldColor(fldName);
+        setFieldColor(fldQuantity);
+        setFieldColor(fldPrice);
+    }
 
-
-        fldID.getStyleClass().add("emptyField");
-        fldID.textProperty().addListener((observableValue, o, n) -> {
-            if (fldID.getText().trim().isEmpty()) {
-                fldID.getStyleClass().removeAll("nonEmptyField");
-                fldID.getStyleClass().add("emptyField");
+    private void setFieldColor(TextField field) {
+        field.getStyleClass().add("emptyField");
+        field.textProperty().addListener((observableValue, o, n) -> {
+            if (field.getText().trim().isEmpty()) {
+                field.getStyleClass().removeAll("nonEmptyField");
+                field.getStyleClass().add("emptyField");
             } else {
-                fldID.getStyleClass().removeAll("emptyField");
-                fldID.getStyleClass().add("nonEmptyField");
-            }
-        });
-        fldName.getStyleClass().add("emptyField");
-        fldName.textProperty().addListener((observableValue, o, n) -> {
-            if (fldName.getText().trim().isEmpty()) {
-                fldName.getStyleClass().removeAll("nonEmptyField");
-                fldName.getStyleClass().add("emptyField");
-            } else {
-                fldName.getStyleClass().removeAll("emptyField");
-                fldName.getStyleClass().add("nonEmptyField");
-            }
-        });
-        fldQuantity.getStyleClass().add("emptyField");
-        fldQuantity.textProperty().addListener((observableValue, o, n) -> {
-            if (fldQuantity.getText().trim().isEmpty()) {
-                fldQuantity.getStyleClass().removeAll("nonEmptyField");
-                fldQuantity.getStyleClass().add("emptyField");
-            } else {
-                fldQuantity.getStyleClass().removeAll("emptyField");
-                fldQuantity.getStyleClass().add("nonEmptyField");
-            }
-        });
-        fldPrice.getStyleClass().add("emptyField");
-        fldPrice.textProperty().addListener((observableValue, o, n) -> {
-            if (fldPrice.getText().trim().isEmpty()) {
-                fldPrice.getStyleClass().removeAll("nonEmptyField");
-                fldPrice.getStyleClass().add("emptyField");
-            } else {
-                fldPrice.getStyleClass().removeAll("emptyField");
-                fldPrice.getStyleClass().add("nonEmptyField");
+                field.getStyleClass().removeAll("emptyField");
+                field.getStyleClass().add("nonEmptyField");
             }
         });
     }

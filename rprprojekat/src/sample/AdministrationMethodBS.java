@@ -16,7 +16,7 @@ public enum AdministrationMethodBS {
 
     public final String label;
 
-    private AdministrationMethodBS(String label) {
+    AdministrationMethodBS(String label) {
         this.label = label;
     }
 

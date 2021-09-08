@@ -24,7 +24,7 @@ import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class ControllerLogin {
     private CurrentUser user;
-    private Language l = Language.getInstance();
+    private final Language l = Language.getInstance();
     private UserDAO daoUsers;
     @FXML
     public Button loginBtn;
@@ -37,30 +37,25 @@ public class ControllerLogin {
     public void initialize() throws SQLException {
         user = CurrentUser.getInstance();
         daoUsers = UserDAO.getInstance();
-        usernameTextField.getStyleClass().add("emptyField");
-        usernameTextField.textProperty().addListener((observableValue, o, n) -> {
-            if (usernameTextField.getText().trim().isEmpty()) {
-                usernameTextField.getStyleClass().removeAll("nonEmptyField");
-                usernameTextField.getStyleClass().add("emptyField");
-            } else {
-                usernameTextField.getStyleClass().removeAll("emptyField");
-                usernameTextField.getStyleClass().add("nonEmptyField");
-            }
-        });
-        passwordTextField.getStyleClass().add("emptyField");
-        passwordTextField.textProperty().addListener((observableValue, o, n) -> {
-            if (passwordTextField.getText().trim().isEmpty()) {
-                passwordTextField.getStyleClass().removeAll("nonEmptyField");
-                passwordTextField.getStyleClass().add("emptyField");
-            } else {
-                passwordTextField.getStyleClass().removeAll("emptyField");
-                passwordTextField.getStyleClass().add("nonEmptyField");
-            }
-        });
-
+        setFieldColor(usernameTextField);
+        setFieldColor(passwordTextField);
     }
+
+    private void setFieldColor(TextField field) {
+        field.getStyleClass().add("emptyField");
+        field.textProperty().addListener((observableValue, o, n) -> {
+            if (field.getText().trim().isEmpty()) {
+                field.getStyleClass().removeAll("nonEmptyField");
+                field.getStyleClass().add("emptyField");
+            } else {
+                field.getStyleClass().removeAll("emptyField");
+                field.getStyleClass().add("nonEmptyField");
+            }
+        });
+    }
+
     public void loginClick(ActionEvent actionEvent) throws IOException {
-        if(daoUsers.credentialsValidation(new User(usernameTextField.getText(),passwordTextField.getText()))>0){
+        if (daoUsers.credentialsValidation(new User(usernameTextField.getText(), passwordTextField.getText())) > 0) {
             Stage myStage = new Stage();
             ResourceBundle bundle = ResourceBundle.getBundle("Translation");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/mainWindow.fxml"),bundle);

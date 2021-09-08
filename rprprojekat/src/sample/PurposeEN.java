@@ -15,7 +15,7 @@ public enum PurposeEN {
 
     public final String label;
 
-    private PurposeEN(String label) {
+    PurposeEN(String label) {
         this.label = label;
     }
 

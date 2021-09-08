@@ -12,7 +12,7 @@ public enum SearchCriteriaEN {
 
     public final String label;
 
-    private SearchCriteriaEN(String label) {
+    SearchCriteriaEN(String label) {
         this.label = label;
     }
 
