@@ -95,7 +95,8 @@
             <ButtonBar>
                 <buttons>
                     <Button fx:id="cancelBtn" cancelButton="true" mnemonicParsing="false" onAction="#cancelBtnClick" text="%odustani" />
-                    <Button fx:id="addToCartBtn" defaultButton="true" mnemonicParsing="false" onAction="#addToCartBtnClick" text="%cartAdd" />
+                    <Button fx:id="addToCartBtn2" defaultButton="true" mnemonicParsing="false"
+                            onAction="#addToCartBtnClick" text="%cartAdd"/>
                 </buttons>
             </ButtonBar>
         </children>

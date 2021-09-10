@@ -20,13 +20,17 @@
                 <bottom>
                     <ButtonBar BorderPane.alignment="CENTER">
                         <buttons>
-                            <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#addBtnClick" text="%dodaj" />
-                            <Button fx:id="btnUpdateProduct" mnemonicParsing="false" onAction="#updateBtnClick" text="%azurirajProizvod" />
-                     <Button fx:id="btnRemoveProduct" mnemonicParsing="false" onAction="#removeBtnClick" text="%obrisi_proizvod" />
-                            <Button fx:id="addToCartBtn" defaultButton="true" mnemonicParsing="false" onAction="#addToCartBtnClick" text="%cartAdd" />
+                            <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#addBtnClick"
+                                    text="%dodaj"/>
+                            <Button fx:id="btnUpdateProduct" mnemonicParsing="false" onAction="#updateBtnClick"
+                                    text="%azurirajProizvod"/>
+                            <Button fx:id="btnRemoveProduct" mnemonicParsing="false" onAction="#removeBtnClick"
+                                    text="%obrisi_proizvod"/>
+                            <Button fx:id="addToCartBtn" defaultButton="true" mnemonicParsing="false"
+                                    onAction="#addToCartBtnClick" text="%cartAdd"/>
                         </buttons>
                         <padding>
-                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                         </padding>
                     </ButtonBar>
                 </bottom>
@@ -170,17 +174,17 @@
 
         </Tab>
 
-        <Tab fx:id="barTabPage" closable="false" onSelectionChanged="#onCartUnselected" text="%cart">
+        <Tab fx:id="tabCart" closable="false" onSelectionChanged="#onCartUnselected" text="%cart">
             <content>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <center>
                         <TableView fx:id="tableCart" BorderPane.alignment="CENTER">
                             <columns>
-                                <TableColumn fx:id="columnIDCart" prefWidth="75.0" text="%kolona1" />
-                                <TableColumn fx:id="columnNameCart" prefWidth="75.0" text="%kolona2" />
-                        <TableColumn fx:id="columnQuantityCart" prefWidth="75.0" text="%kolona5" />
-                        <TableColumn fx:id="columnPriceCart" prefWidth="75.0" text="%kolona4" />
-                        <TableColumn fx:id="colBtn" prefWidth="75.0" />
+                                <TableColumn fx:id="columnIDCart" prefWidth="75.0" text="%kolona1"/>
+                                <TableColumn fx:id="columnNameCart" prefWidth="75.0" text="%kolona2"/>
+                                <TableColumn fx:id="columnQuantityCart" prefWidth="75.0" text="%kolona5"/>
+                                <TableColumn fx:id="columnPriceCart" prefWidth="75.0" text="%kolona4"/>
+                                <TableColumn fx:id="colBtn" prefWidth="75.0"/>
                             </columns>
                      <BorderPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

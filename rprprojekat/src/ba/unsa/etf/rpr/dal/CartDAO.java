@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class CartDAO {
     private static CartDAO instance = null;
     private final Connection conn;
-    private PreparedStatement allProductsQuery;
+    private PreparedStatement allProducts;
     private final PreparedStatement removeProductQuery;
     private final PreparedStatement addToCartQuery;
     private final PreparedStatement updateCartQuery;
@@ -29,10 +29,10 @@ public class CartDAO {
         String url = "jdbc:sqlite:apoteka.db";
         conn = SqliteHelper.getConn();
         try {
-            allProductsQuery = conn.prepareStatement("SELECT * FROM korpa");
+            allProducts = conn.prepareStatement("SELECT * FROM korpa");
         } catch (SQLException e) {
             createDatabase();
-            allProductsQuery = conn.prepareStatement("SELECT * FROM korpa");
+            allProducts = conn.prepareStatement("SELECT * FROM korpa");
         }
         removeProductQuery = conn.prepareStatement("DELETE FROM korpa WHERE id=?");
         addToCartQuery = conn.prepareStatement("INSERT INTO korpa VALUES(?,?,?,?)");
@@ -76,7 +76,7 @@ public class CartDAO {
     public ObservableList<CartProduct> getProducts(){
         ObservableList<CartProduct> result = FXCollections.observableArrayList();
         try {
-            ResultSet rs = allProductsQuery.executeQuery();
+            ResultSet rs = allProducts.executeQuery();
             while(rs.next()){
                 Integer id = rs.getInt(1);
                 String name = rs.getString(2);
@@ -93,7 +93,7 @@ public class CartDAO {
     public ArrayList<CartProduct> getProductsArrayList(){
         ArrayList<CartProduct> result = new ArrayList<>();
         try {
-            ResultSet rs = allProductsQuery.executeQuery();
+            ResultSet rs = allProducts.executeQuery();
             while(rs.next()){
                 Integer id = rs.getInt(1);
                 String name = rs.getString(2);

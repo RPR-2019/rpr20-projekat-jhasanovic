@@ -14,7 +14,7 @@ public class Language {
 
     private Language()
     {
-        lang = "bs";
+        lang = "en";
     }
 
     public static Language getInstance()

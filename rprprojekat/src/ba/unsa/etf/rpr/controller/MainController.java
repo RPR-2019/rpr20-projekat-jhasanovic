@@ -192,12 +192,12 @@ public class MainController {
                 return true;
             }
             String lowerCaseFilter = newValue.toLowerCase();
-            if (choiceSearch.getValue().equals("Po nazivu") &&
+            if ((choiceSearch.getValue().equals("Po nazivu") || choiceSearch.getValue().equals("By name")) &&
                     p.getName().toLowerCase().contains(lowerCaseFilter)) return true;
-            if (choiceSearch.getValue().equals("Po šifri") &&
+            if ((choiceSearch.getValue().equals("Po šifri") || choiceSearch.getValue().equals("By ID")) &&
                     p.getId().toString().contains(lowerCaseFilter)) return true;
-            return choiceSearch.getValue().equals("Po namjeni") && p.getPurpose() != null &&
-                    p.getPurpose().toLowerCase().contains(lowerCaseFilter);
+            return (choiceSearch.getValue().equals("Po namjeni") || choiceSearch.getValue().equals("By purpose"))
+                    && p.getPurpose() != null && p.getPurpose().toLowerCase().contains(lowerCaseFilter);
         }));
 
         SortedList<Product> sortedData = new SortedList<>(filteredProducts);
@@ -383,7 +383,7 @@ public class MainController {
 
             productInfo.nameFld.setText(productList.getSelectionModel().getSelectedItem().getName());
             productInfo.idFld.setText(String.valueOf(productList.getSelectionModel().getSelectedItem().getId()));
-            productInfo.typeFld.setText(productList.getSelectionModel().getSelectedItem().getPurpose());
+            productInfo.typeFld.setText(productList.getSelectionModel().getSelectedItem().getMedicationType());
             productInfo.quantityFld.setText("1");
             productInfo.totalFld.setText((String.format("%.2f", productList.getSelectionModel().getSelectedItem().getPrice())) + " KM");
 
@@ -487,22 +487,6 @@ public class MainController {
         });
 
         if (daoCart.getCartSize() > 0) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            if (l.getLang().equals("bs")) {
-                ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Da");
-                ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Ne");
-                alert.setTitle("Račun");
-                alert.setHeaderText("");
-                alert.setContentText("Da li želite prikazati račun?");
-            } else if (l.getLang().equals("en")) {
-                ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
-                ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
-                alert.setTitle("Receipt");
-                alert.setHeaderText("");
-                alert.setContentText("Do you want to show the receipt?");
-            }
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
                 try {
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("total", daoCart.getTotal());
@@ -513,7 +497,6 @@ public class MainController {
                 } catch (JRException | SQLException e1) {
                     e1.printStackTrace();
                 }
-            }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             if (l.getLang().equals("en")) {

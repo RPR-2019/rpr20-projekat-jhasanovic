@@ -1,0 +1,33 @@
+
+>
+java:S1481"(Remove this unused "url" local variable.(»š¿€
+P
+java:S1117b":Rename "idSold" which hides the field declared at line 86.(ĞŸÇ
+K
+java:S1117c"6Rename "id" which hides the field declared at line 87.(ß“X
+S
+java:S1117d"8Rename "name" which hides the field declared at line 88.(¦İÒ‹şÿÿÿÿ
+W
+java:S1117e"<Rename "quantity" which hides the field declared at line 89.(³üèÔúÿÿÿÿ
+T
+java:S1117f">Rename "sellerName" which hides the field declared at line 90.(»ÏµØ
+N
+java:S1117g"8Rename "date" which hides the field declared at line 91.(ÅÜÖÎ
+@
+java:S1068V"*Remove this unused "idSold" private field.(‰¾“Ï
+A
+java:S1068W"&Remove this unused "id" private field.(â¼°Ñûÿÿÿÿ
+>
+java:S1068X"(Remove this unused "name" private field.(Ë¥¼
+G
+java:S1068Y",Remove this unused "quantity" private field.(÷ç¥‚ùÿÿÿÿ
+I
+java:S1068Z".Remove this unused "sellerName" private field.(¿›•«ùÿÿÿÿ
+C
+java:S1068["(Remove this unused "date" private field.(°‡è›üÿÿÿÿ
+†
+java:S1319]"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(¢¦¿¶
+P
+java:S1141("5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+b
+java:S2095)"GUse try-with-resources or close this "Statement" in a "finally" clause.(ìï‡Àûÿÿÿÿ

@@ -33,7 +33,7 @@ public class ProductInfoController implements Initializable {
     @FXML
     public Label totalFld;
     @FXML
-    public Button addToCartBtn;
+    public Button addToCartBtn2;
     @FXML
     public Button cancelBtn;
     @FXML

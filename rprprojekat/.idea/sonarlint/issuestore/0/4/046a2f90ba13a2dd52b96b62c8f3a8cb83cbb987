@@ -1,0 +1,14 @@
+
+u
+java:S2142"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€
+?	java:S108")Either remove or fill this block of code.(ä ¹€
+u
+java:S2142›"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€
+?	java:S108›")Either remove or fill this block of code.(ä ¹€
+n
+java:S3776¼"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Şï Æüÿÿÿÿ
+u
+java:S1171Ù"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
+D
+java:S1604Ò"(Make this anonymous inner class a lambda(¾œÉâûÿÿÿÿ
+Q	java:S110Õ"<This class has 9 parents which is greater than 5 authorized.(‰n

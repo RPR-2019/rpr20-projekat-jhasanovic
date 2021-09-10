@@ -12,7 +12,8 @@
             <ImageView fitHeight="200.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                 <image>
                     <Image url="@../png/meds.png" />
-                </image></ImageView>
+                </image>
+            </ImageView>
             <HBox alignment="CENTER_LEFT" spacing="10.0">
                 <children>
                     <Label text="%ime" />
@@ -93,7 +94,7 @@
             <ButtonBar>
                 <buttons>
                     <Button fx:id="cancelBtn" cancelButton="true" mnemonicParsing="false" onAction="#cancelBtnClick" text="%odustani" />
-                    <Button fx:id="addToCartBtn" defaultButton="true" mnemonicParsing="false" onAction="#addToCartBtnClick" text="%cartAdd" />
+                    <Button fx:id="addToCartBtn2" defaultButton="true" mnemonicParsing="false" onAction="#addToCartBtnClick" text="%cartAdd" />
                 </buttons>
             </ButtonBar>
         </children>

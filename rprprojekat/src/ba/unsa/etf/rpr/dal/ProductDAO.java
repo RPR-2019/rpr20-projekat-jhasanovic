@@ -32,7 +32,7 @@ public class ProductDAO {
         try {
             allProductsQuery = conn.prepareStatement("SELECT * FROM proizvod ORDER BY name");
         } catch (SQLException e) {
-            createDatabase();
+            regenerateDatabase();
             allProductsQuery = conn.prepareStatement("SELECT * FROM proizvod ORDER BY name");
         }
         searchByIDQuery = conn.prepareStatement("SELECT * FROM proizvod WHERE id=?");
@@ -44,7 +44,19 @@ public class ProductDAO {
         getQuantityQuery = conn.prepareStatement("SELECT quantity FROM proizvod WHERE id=?");
     }
 
-    private void createDatabase() {
+    public void vratiBazuNaDefault() throws SQLException {
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate("DELETE FROM korisnici");
+        stmt.executeUpdate("DELETE FROM proizvod");
+        stmt.executeUpdate("DELETE FROM prodani");
+        stmt.executeUpdate("DELETE FROM korpa");
+        // Regeneriši bazu neće ponovo kreirati tabele jer u .sql datoteci stoji
+        // CREATE TABLE IF NOT EXISTS
+        // Ali će ponovo napuniti default podacima
+        regenerateDatabase();
+    }
+
+    private void regenerateDatabase() {
         Scanner input;
         try {
             input = new Scanner(new FileInputStream("apoteka.db.sql"));
