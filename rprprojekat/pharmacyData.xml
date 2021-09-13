@@ -4,16 +4,16 @@
   <void property="products">
    <void method="add">
     <object class="ba.unsa.etf.rpr.beans.Product">
-        <void property="description">
-            <string></string>
-        </void>
-        <void property="id">
-            <int>3</int>
-        </void>
-        <void property="ingredients">
-            <string></string>
-        </void>
-        <void property="manufacturer">
+     <void property="description">
+      <string></string>
+     </void>
+     <void property="id">
+      <int>3</int>
+     </void>
+     <void property="ingredients">
+      <string></string>
+     </void>
+     <void property="manufacturer">
       <string>Bosnalijek d.d.</string>
      </void>
      <void property="name">
@@ -29,25 +29,25 @@
       <string>Analgetik</string>
      </void>
      <void property="quantity">
-         <int>151</int>
+      <int>151</int>
      </void>
     </object>
    </void>
    <void method="add">
-       <object class="ba.unsa.etf.rpr.beans.Product">
-           <void property="administrationMethod">
-               <string>Peroralno</string>
-           </void>
-           <void property="description">
-               <string>Lijek BRUFEN se može kratkotrajno upotrebljavati u terapiji bolnih stanja poput zubobolje, bolova
-                   nakon operativnih zahvata, bolnih menstruacija i glavobolje (uključujući migrenu).Brufen može da se
-                   koristi kod povreda mekih tkiva kao što su uganuća i istegnuća.
-               </string>
-           </void>
-           <void property="id">
-               <int>1</int>
-           </void>
-           <void property="ingredients">
+    <object class="ba.unsa.etf.rpr.beans.Product">
+     <void property="administrationMethod">
+      <string>Peroralno</string>
+     </void>
+     <void property="description">
+      <string>Lijek BRUFEN se može kratkotrajno upotrebljavati u terapiji bolnih stanja poput zubobolje, bolova nakon
+       operativnih zahvata, bolnih menstruacija i glavobolje (uključujući migrenu).Brufen može da se koristi kod povreda
+       mekih tkiva kao što su uganuća i istegnuća.
+      </string>
+     </void>
+     <void property="id">
+      <int>1</int>
+     </void>
+     <void property="ingredients">
       <string>600 mg ibuprofena</string>
      </void>
      <void property="manufacturer">
@@ -74,30 +74,29 @@
     </object>
    </void>
    <void method="add">
-       <object class="ba.unsa.etf.rpr.beans.Product">
-           <void property="administrationMethod">
-               <string>Peroralno</string>
-           </void>
-           <void property="description">
-               <string>Tablete bijele do gotovo bijele boje, okruglog oblika, sa diobenom crtom na jednoj
-                   strani.PARACETAMOL BOSNALIJEK je blagi analgetik i antipiretik i preporučuje se za liječenje većine
-                   bolnih i febrilnih stanja, naprimjer: glavobolje uključujući i migrenu i tenzione glavobolje,
-                   zubobolje, bola u leđima, reumatskog bola i bola u mišićima, dismenoreje, grlobolje, te za olakšanje
-                   povišene tjelesne temperature i bolova uzrokovanih s prehladom i gripom. Također, preporučuje se za
-                   simptomatsko olakšanje bola kod blažeg oblika artritisa.
-               </string>
-           </void>
-           <void property="id">
-               <int>2</int>
-           </void>
-           <void property="ingredients">
+    <object class="ba.unsa.etf.rpr.beans.Product">
+     <void property="administrationMethod">
+      <string>Peroralno</string>
+     </void>
+     <void property="description">
+      <string>Tablete bijele do gotovo bijele boje, okruglog oblika, sa diobenom crtom na jednoj strani.PARACETAMOL
+       BOSNALIJEK je blagi analgetik i antipiretik i preporučuje se za liječenje većine bolnih i febrilnih stanja,
+       naprimjer: glavobolje uključujući i migrenu i tenzione glavobolje, zubobolje, bola u leđima, reumatskog bola i
+       bola u mišićima, dismenoreje, grlobolje, te za olakšanje povišene tjelesne temperature i bolova uzrokovanih s
+       prehladom i gripom. Također, preporučuje se za simptomatsko olakšanje bola kod blažeg oblika artritisa.
+      </string>
+     </void>
+     <void property="id">
+      <int>2</int>
+     </void>
+     <void property="ingredients">
       <string>Paracetamola 500,00 mg</string>
      </void>
      <void property="manufacturer">
       <string>Bosnalijek d.d.</string>
      </void>
      <void property="medicationType">
-         <string>Tablete</string>
+      <string>Tablete</string>
      </void>
      <void property="name">
       <string>Paracetamol</string>
@@ -119,17 +118,17 @@
   </void>
   <void property="soldProducts">
    <void method="add">
-       <object class="ba.unsa.etf.rpr.beans.SoldProduct">
-           <void property="date">
-               <string>2021-09-05</string>
-           </void>
-           <void property="id">
-               <int>2</int>
-           </void>
-           <void property="idSold">
-               <int>1</int>
-           </void>
-           <void property="name">
+    <object class="ba.unsa.etf.rpr.beans.SoldProduct">
+     <void property="date">
+      <string>2021-09-05</string>
+     </void>
+     <void property="id">
+      <int>2</int>
+     </void>
+     <void property="idSold">
+      <int>1</int>
+     </void>
+     <void property="name">
       <string>Paracetamol</string>
      </void>
      <void property="quantity">
@@ -141,17 +140,17 @@
     </object>
    </void>
    <void method="add">
-       <object class="ba.unsa.etf.rpr.beans.SoldProduct">
-           <void property="date">
-               <string>2021-09-05</string>
-           </void>
-           <void property="id">
-               <int>3</int>
-           </void>
-           <void property="idSold">
-               <int>2</int>
-           </void>
-           <void property="name">
+    <object class="ba.unsa.etf.rpr.beans.SoldProduct">
+     <void property="date">
+      <string>2021-09-05</string>
+     </void>
+     <void property="id">
+      <int>3</int>
+     </void>
+     <void property="idSold">
+      <int>2</int>
+     </void>
+     <void property="name">
       <string>Analgin</string>
      </void>
      <void property="quantity">
@@ -164,32 +163,45 @@
    </void>
   </void>
   <void property="users">
-      <void method="add">
-          <object class="ba.unsa.etf.rpr.beans.User">
-              <void property="email">
-                  <string>jhasanovic1@etf.unsa.ba</string>
-              </void>
-              <void property="password">
-                  <string>1q2w3e4r</string>
-              </void>
-              <void property="username">
-                  <string>root</string>
-              </void>
-          </object>
-      </void>
-      <void method="add">
-          <object class="ba.unsa.etf.rpr.beans.User">
-              <void property="email">
-                  <string></string>
-              </void>
-              <void property="password">
-                  <string>lozinka</string>
-              </void>
-              <void property="username">
-                  <string>novi</string>
-              </void>
-          </object>
-      </void>
+   <void method="add">
+    <object class="ba.unsa.etf.rpr.beans.User">
+     <void property="email">
+      <string>jhasanovic1@etf.unsa.ba</string>
+     </void>
+     <void property="password">
+      <string>1q2w3e4r</string>
+     </void>
+     <void property="username">
+      <string>root</string>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="ba.unsa.etf.rpr.beans.User">
+     <void property="email">
+      <string></string>
+     </void>
+     <void property="password">
+      <string>lozinka</string>
+     </void>
+     <void property="username">
+      <string>novi</string>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="ba.unsa.etf.rpr.beans.User">
+     <void property="email">
+      <string></string>
+     </void>
+     <void property="password">
+      <string>sifra</string>
+     </void>
+     <void property="username">
+      <string>jasmina</string>
+     </void>
+    </object>
+   </void>
   </void>
  </object>
 </java>

@@ -12,25 +12,25 @@ import java.util.Scanner;
 public class UserDAO {
     private static UserDAO instance = null;
     private final Connection conn;
-    private PreparedStatement addUserQuery;
+    private final PreparedStatement addUserQuery;
     private final PreparedStatement updateDataQuery;
     private final PreparedStatement userAlreadyExistsQuery;
     private final PreparedStatement existingUsernameQuery;
-    private final PreparedStatement allUsersQuery;
+    private PreparedStatement allUsersQuery;
 
     private UserDAO() throws SQLException {
         String url = "jdbc:sqlite:apoteka.db";
         conn = SqliteHelper.getConn();
         try {
-            addUserQuery = conn.prepareStatement("INSERT INTO korisnici VALUES(?,?,?)");
+            allUsersQuery = conn.prepareStatement("SELECT * FROM korisnici");
         } catch (SQLException e) {
+            allUsersQuery = conn.prepareStatement("SELECT * FROM korisnici");
             regenerateDatabase();
-            addUserQuery = conn.prepareStatement("INSERT INTO korisnici VALUES(?,?,?)");
         }
-        allUsersQuery = conn.prepareStatement("SELECT * FROM korisnici");
+        addUserQuery = conn.prepareStatement("INSERT INTO korisnici VALUES(?,?,?)");
+        existingUsernameQuery = conn.prepareStatement("SELECT COUNT(*) FROM korisnici WHERE username=?");
         updateDataQuery = conn.prepareStatement("UPDATE korisnici SET password=?,email=? WHERE username=?");
         userAlreadyExistsQuery = conn.prepareStatement("SELECT COUNT(*) FROM korisnici WHERE username=? AND password=?");
-        existingUsernameQuery = conn.prepareStatement("SELECT COUNT(*) FROM korisnici WHERE username=?");
     }
 
     private void regenerateDatabase() {

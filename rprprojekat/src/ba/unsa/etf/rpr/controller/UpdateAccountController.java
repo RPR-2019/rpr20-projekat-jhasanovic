@@ -4,7 +4,6 @@ import ba.unsa.etf.rpr.CurrentUser;
 import ba.unsa.etf.rpr.Language;
 import ba.unsa.etf.rpr.beans.User;
 import ba.unsa.etf.rpr.dal.UserDAO;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -42,9 +41,8 @@ public class UpdateAccountController {
 
     public boolean validateEmail(String email) {
         String uri = "https://zerobounce1.p.rapidapi.com/v2/validate?email=";
-        String mail = email;
-        mail.replace("@", "%40");
-        uri += mail;
+        email.replace("@", "%40");
+        uri += email;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(uri + "&ip_address=%20"))
                 .header("x-rapidapi-host", "zerobounce1.p.rapidapi.com")
@@ -62,7 +60,7 @@ public class UpdateAccountController {
         return jsonObject.getString("status").equals("valid");
     }
 
-    public void updateBtnClick(ActionEvent actionEvent) {
+    public void updateBtnClick() {
 
         if (!emailTextField.getText().trim().isEmpty() && !validateEmail(emailTextField.getText())) {//dozvoliti da se mail ne unese
             Alert alert = new Alert(Alert.AlertType.ERROR);
