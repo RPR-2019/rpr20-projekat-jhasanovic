@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.controller;
 
-import ba.unsa.etf.rpr.CartProduct;
+import ba.unsa.etf.rpr.beans.CartProduct;
 import ba.unsa.etf.rpr.dal.CartDAO;
 import ba.unsa.etf.rpr.dal.ProductDAO;
 import javafx.event.ActionEvent;

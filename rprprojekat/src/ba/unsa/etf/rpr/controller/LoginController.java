@@ -2,7 +2,7 @@ package ba.unsa.etf.rpr.controller;
 
 import ba.unsa.etf.rpr.CurrentUser;
 import ba.unsa.etf.rpr.Language;
-import ba.unsa.etf.rpr.User;
+import ba.unsa.etf.rpr.beans.User;
 import ba.unsa.etf.rpr.dal.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,17 +55,17 @@ public class LoginController {
     }
 
     public void loginClick(ActionEvent actionEvent) throws IOException {
-        if (daoUsers.credentialsValidation(new User(usernameTextField.getText(), passwordTextField.getText())) > 0) {
+        if (daoUsers.credentialsValidation(new User(usernameTextField.getText(), passwordTextField.getText(), "")) > 0) {
             Stage myStage = new Stage();
             ResourceBundle bundle = ResourceBundle.getBundle("Translation");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/mainWindow.fxml"),bundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/mainWindow.fxml"), bundle);
             Parent root = loader.load();
 
             myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             myStage.setMinWidth(640);
             myStage.setMinHeight(480);
-            if(l.getLang().equals("bs")) myStage.setTitle("Apoteka");
-            else if(l.getLang().equals("en")) myStage.setTitle("Pharmacy");
+            if (l.getLang().equals("bs")) myStage.setTitle("Apoteka");
+            else if (l.getLang().equals("en")) myStage.setTitle("Pharmacy");
             myStage.show();
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();

@@ -2,8 +2,8 @@ package ba.unsa.etf.rpr.controller;
 
 import ba.unsa.etf.rpr.IncorrectDataException;
 import ba.unsa.etf.rpr.Language;
-import ba.unsa.etf.rpr.Product;
 import ba.unsa.etf.rpr.UniqueIdException;
+import ba.unsa.etf.rpr.beans.Product;
 import ba.unsa.etf.rpr.dal.ProductDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

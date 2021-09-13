@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.dal;
 
-import ba.unsa.etf.rpr.CartProduct;
 import ba.unsa.etf.rpr.SqliteHelper;
+import ba.unsa.etf.rpr.beans.CartProduct;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -31,7 +31,7 @@ public class CartDAO {
         try {
             allProducts = conn.prepareStatement("SELECT * FROM korpa");
         } catch (SQLException e) {
-            createDatabase();
+            regenerateDatabase();
             allProducts = conn.prepareStatement("SELECT * FROM korpa");
         }
         removeProductQuery = conn.prepareStatement("DELETE FROM korpa WHERE id=?");
@@ -45,7 +45,7 @@ public class CartDAO {
         getCartSizeQuery = conn.prepareStatement("SELECT COUNT(*) FROM korpa");
     }
 
-    private void createDatabase() {
+    private void regenerateDatabase() {
         Scanner input;
         try {
             input = new Scanner(new FileInputStream("apoteka.db.sql"));

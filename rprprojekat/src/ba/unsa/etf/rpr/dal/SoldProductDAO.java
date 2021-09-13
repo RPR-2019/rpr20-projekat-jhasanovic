@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.dal;
 
-import ba.unsa.etf.rpr.SoldProduct;
 import ba.unsa.etf.rpr.SqliteHelper;
+import ba.unsa.etf.rpr.beans.SoldProduct;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,14 +22,14 @@ public class SoldProductDAO {
         try {
             allSoldProductsQuery = conn.prepareStatement("SELECT * FROM prodani");
         } catch (SQLException e) {
-            kreirajBazu();
+            regenerateDatabase();
             allSoldProductsQuery = conn.prepareStatement("SELECT * FROM prodani");
         }
         addSoldQuery = conn.prepareStatement("INSERT INTO prodani VALUES(?,?,?,?,?,?)");
         getMaxIDQuery = conn.prepareStatement("SELECT IFNULL(MAX(idSold),0) FROM prodani");
     }
 
-    private void kreirajBazu() {
+    private void regenerateDatabase() {
         Scanner ulaz;
         try {
             ulaz = new Scanner(new FileInputStream("apoteka.db.sql"));

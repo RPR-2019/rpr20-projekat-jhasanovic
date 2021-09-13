@@ -1,6 +1,9 @@
 package ba.unsa.etf.rpr.controller;
 
 import ba.unsa.etf.rpr.*;
+import ba.unsa.etf.rpr.beans.CartProduct;
+import ba.unsa.etf.rpr.beans.Product;
+import ba.unsa.etf.rpr.beans.SoldProduct;
 import ba.unsa.etf.rpr.dal.CartDAO;
 import ba.unsa.etf.rpr.dal.ProductDAO;
 import ba.unsa.etf.rpr.dal.SoldProductDAO;
@@ -133,7 +136,8 @@ public class MainController {
         ArrayList<CartProduct> cart = new ArrayList<>(daoCart.getProducts());
         cart.forEach(c -> dao.changeQuantity(c.getId(), dao.getQuantity(c.getId()) + c.getQuantity()));
 
-        daoCart.emptyOut();//korpa se prazni nakon svakog zatvaranja programa
+        if (LanguageChanged.getInstance().getFlag() == false)
+            daoCart.emptyOut();//korpa se prazni nakon svakog zatvaranja programa
         tableCart.getSelectionModel().clearSelection();
         new Thread(() -> {
             try {
@@ -151,6 +155,17 @@ public class MainController {
                 while (true) {
                     Platform.runLater(() -> mniCreateAcc.setVisible(user.getUsername().equals("root")));
                     Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+
+            }
+        }).start();
+
+        new Thread(() -> {
+            try {
+                while (true) {
+                    Platform.runLater(() -> writePharmacyDataToXML());
+                    Thread.sleep(1000);
                 }
             } catch (InterruptedException e) {
 
@@ -428,7 +443,7 @@ public class MainController {
         if (!l.getLang().equals("bs")) {
             Stage stage = (Stage) menu.getScene().getWindow();
             stage.close();
-
+            LanguageChanged.getInstance().setFlag(true);
             l.setLang("bs");
             Locale.setDefault(new Locale("bs", "BA"));
             Stage myStage = new Stage();
@@ -445,7 +460,7 @@ public class MainController {
         if (!l.getLang().equals("en")) {
             Stage stage = (Stage) menu.getScene().getWindow();
             stage.close();
-
+            LanguageChanged.getInstance().setFlag(true);
             l.setLang("en");
             Locale.setDefault(new Locale("en", "UK"));
             Stage myStage = new Stage();
@@ -571,6 +586,18 @@ public class MainController {
         myStage.show();
     }
 
+    public void mniUpdateAccountClick() throws IOException {
+        Stage myStage = new Stage();
+        myStage.setResizable(false);
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/updateUser.fxml"), bundle);
+        myStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        if (l.getLang().equals("bs")) myStage.setTitle("Ažuriranje korisničkog računa");
+        else if (l.getLang().equals("en")) myStage.setTitle("Updating user account");
+        myStage.initModality(Modality.APPLICATION_MODAL);
+        myStage.show();
+    }
+
     public void mniLogoutClick(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         if (l.getLang().equals("bs")) {
@@ -588,6 +615,7 @@ public class MainController {
         }
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
+            LanguageChanged.getInstance().setFlag(false);
             Window window = ((MenuItem) actionEvent.getTarget()).getParentPopup().getOwnerWindow();
             Stage thisStage = (Stage) window.getScene().getWindow();
             thisStage.close();
@@ -618,6 +646,20 @@ public class MainController {
     public void onCartUnselected() {
         productList.getSelectionModel().clearSelection();
         productList.setItems(dao.getProducts());
+    }
+
+    private void writePharmacyDataToXML() {
+        PharmacyData d = new PharmacyData();
+        d.setProducts(dao.getAllProducts());
+        d.setSoldProducts(daoSold.getAllSoldProducts());
+        d.setUsers(daoUser.getAllUsers());
+        try {
+            XMLEncoder encoder = new XMLEncoder(new FileOutputStream("pharmacyData.xml"));
+            encoder.writeObject(d);
+            encoder.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void mniWriteToFileClick() {

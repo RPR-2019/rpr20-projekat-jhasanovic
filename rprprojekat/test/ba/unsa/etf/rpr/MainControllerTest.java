@@ -29,7 +29,7 @@ class MainControllerTest {
     @BeforeEach
     public void before() throws SQLException {
         ProductDAO dao = ProductDAO.getInstance();
-        dao.vratiBazuNaDefault();
+        dao.DefaultDatabase();
     }
 
     @Start

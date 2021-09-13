@@ -72,6 +72,7 @@
                                                     <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP"
                                                                         shift="UP" shortcut="UP"/>
                                                 </accelerator>
+
                                             </MenuItem>
                                             <MenuItem fx:id="mniWriteToFile" onAction="#mniWriteToFileClick"
                                                       text="%zapisi">
@@ -79,7 +80,10 @@
                                                     <KeyCodeCombination alt="DOWN" code="W" control="UP" meta="UP"
                                                                         shift="UP" shortcut="UP"/>
                                                 </accelerator>
+
                                             </MenuItem>
+                                            <SeparatorMenuItem mnemonicParsing="false"/>
+
                                             <MenuItem fx:id="mniExit" onAction="#exitMenuClick" text="%e_xit">
                                                 <accelerator>
                                                     <KeyCodeCombination alt="DOWN" code="X" control="UP" meta="UP"
@@ -113,12 +117,20 @@
                                     <Menu fx:id="mniProfile" text="%_profil">
                                         <items>
                                             <MenuItem fx:id="mniCreateAcc" onAction="#mniCreateAccountClick"
-                                                      text="Kreiraj novi račun">
+                                                      text="%kreirajNovi">
                                                 <accelerator>
                                                     <KeyCodeCombination alt="DOWN" code="N" control="UP" meta="UP"
                                                                         shift="UP" shortcut="UP"/>
                                                 </accelerator>
                                             </MenuItem>
+                                            <MenuItem fx:id="mniUpdateAccount" onAction="#mniUpdateAccountClick"
+                                                      text="%azurirajRacun">
+                                                <accelerator>
+                                                    <KeyCodeCombination alt="DOWN" code="U" control="UP" meta="UP"
+                                                                        shift="UP" shortcut="UP"/>
+                                                </accelerator>
+                                            </MenuItem>
+                                            <SeparatorMenuItem mnemonicParsing="false"/>
                                             <MenuItem fx:id="mniLogoutBtn" mnemonicParsing="false"
                                                       onAction="#mniLogoutClick" text="Log out"/>
                                         </items>

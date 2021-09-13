@@ -1,9 +1,9 @@
 package ba.unsa.etf.rpr.dal;
 
 import ba.unsa.etf.rpr.Language;
-import ba.unsa.etf.rpr.Product;
 import ba.unsa.etf.rpr.SqliteHelper;
 import ba.unsa.etf.rpr.UniqueIdException;
+import ba.unsa.etf.rpr.beans.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -44,15 +44,13 @@ public class ProductDAO {
         getQuantityQuery = conn.prepareStatement("SELECT quantity FROM proizvod WHERE id=?");
     }
 
-    public void vratiBazuNaDefault() throws SQLException {
+    public void DefaultDatabase() throws SQLException {
         Statement stmt = conn.createStatement();
         stmt.executeUpdate("DELETE FROM korisnici");
         stmt.executeUpdate("DELETE FROM proizvod");
         stmt.executeUpdate("DELETE FROM prodani");
         stmt.executeUpdate("DELETE FROM korpa");
-        // Regeneriši bazu neće ponovo kreirati tabele jer u .sql datoteci stoji
-        // CREATE TABLE IF NOT EXISTS
-        // Ali će ponovo napuniti default podacima
+
         regenerateDatabase();
     }
 

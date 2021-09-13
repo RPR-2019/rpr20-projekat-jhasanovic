@@ -1,9 +1,0 @@
-
->
-java:S1481"(Remove this unused "url" local variable.(»š¿€
-†
-java:S1319]"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ˆÿ…
-P
-java:S11418"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-b
-java:S20959"GUse try-with-resources or close this "Statement" in a "finally" clause.(ìï‡Àûÿÿÿÿ

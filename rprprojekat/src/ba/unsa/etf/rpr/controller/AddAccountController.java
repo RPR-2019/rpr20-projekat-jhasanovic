@@ -1,13 +1,14 @@
 package ba.unsa.etf.rpr.controller;
 
 import ba.unsa.etf.rpr.Language;
-import ba.unsa.etf.rpr.User;
+import ba.unsa.etf.rpr.beans.User;
 import ba.unsa.etf.rpr.dal.UserDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
@@ -45,7 +46,7 @@ public class AddAccountController {
     }
 
     public void loginClick() {
-        User u = new User(usernameTextField.getText(), passwordTextField.getText());
+        User u = new User(usernameTextField.getText(), passwordTextField.getText(), "");
         int count = daoUsers.existingUser(u);
 
         if (usernameTextField.getText().trim().isEmpty() || passwordTextField.getText().trim().isEmpty()) {
@@ -67,6 +68,8 @@ public class AddAccountController {
             if (l.getLang().equals("bs")) alert.setContentText("Uspješno ste kreirali novi račun!");
             else if (l.getLang().equals("en")) alert.setContentText("You have succesfully created a new account!");
             alert.showAndWait();
+            Stage stage = (Stage) passwordTextField.getScene().getWindow();
+            stage.close();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             if (l.getLang().equals("bs")) {

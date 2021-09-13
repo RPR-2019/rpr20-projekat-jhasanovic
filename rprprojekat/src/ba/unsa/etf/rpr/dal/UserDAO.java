@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.dal;
 
 import ba.unsa.etf.rpr.SqliteHelper;
-import ba.unsa.etf.rpr.User;
+import ba.unsa.etf.rpr.beans.User;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,7 +13,7 @@ public class UserDAO {
     private static UserDAO instance = null;
     private final Connection conn;
     private PreparedStatement addUserQuery;
-    private final PreparedStatement updatePasswordQuery;
+    private final PreparedStatement updateDataQuery;
     private final PreparedStatement userAlreadyExistsQuery;
     private final PreparedStatement existingUsernameQuery;
     private final PreparedStatement allUsersQuery;
@@ -22,18 +22,18 @@ public class UserDAO {
         String url = "jdbc:sqlite:apoteka.db";
         conn = SqliteHelper.getConn();
         try {
-            addUserQuery = conn.prepareStatement("INSERT INTO korisnici VALUES(?,?)");
+            addUserQuery = conn.prepareStatement("INSERT INTO korisnici VALUES(?,?,?)");
         } catch (SQLException e) {
-            createDatabase();
-            addUserQuery = conn.prepareStatement("INSERT INTO korisnici VALUES(?,?)");
+            regenerateDatabase();
+            addUserQuery = conn.prepareStatement("INSERT INTO korisnici VALUES(?,?,?)");
         }
         allUsersQuery = conn.prepareStatement("SELECT * FROM korisnici");
-        updatePasswordQuery = conn.prepareStatement("UPDATE korisnici SET password=? WHERE username=?");
+        updateDataQuery = conn.prepareStatement("UPDATE korisnici SET password=?,email=? WHERE username=?");
         userAlreadyExistsQuery = conn.prepareStatement("SELECT COUNT(*) FROM korisnici WHERE username=? AND password=?");
         existingUsernameQuery = conn.prepareStatement("SELECT COUNT(*) FROM korisnici WHERE username=?");
     }
 
-    private void createDatabase() {
+    private void regenerateDatabase() {
         Scanner input;
         try {
             input = new Scanner(new FileInputStream("apoteka.db.sql"));
@@ -67,7 +67,7 @@ public class UserDAO {
         try {
             addUserQuery.setString(1, u.getUsername());
             addUserQuery.setString(2, u.getPassword());
-
+            addUserQuery.setString(3, u.getEmail());
             addUserQuery.executeUpdate();
 
         } catch (SQLException sqlException) {
@@ -75,12 +75,13 @@ public class UserDAO {
         }
     }
 
-    public void updateUser(String username,String password){
+    public void updateUser(User u) {
         try {
-            updatePasswordQuery.setString(1, password);
-            updatePasswordQuery.setString(2, username);
+            updateDataQuery.setString(1, u.getPassword());
+            updateDataQuery.setString(2, u.getEmail());
+            updateDataQuery.setString(3, u.getUsername());
 
-           updatePasswordQuery.executeUpdate();
+            updateDataQuery.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println("Greška prilikom promjene šifre korisnika\nIzuzetak: " + sqlException.getMessage());
@@ -119,7 +120,8 @@ public class UserDAO {
             while (rs.next()) {
                 String username = rs.getString(1);
                 String password = rs.getString(2);
-                User u = new User(username, password);
+                String email = rs.getString(3);
+                User u = new User(username, password, email);
                 result.add(u);
             }
         } catch (SQLException throwables) {
